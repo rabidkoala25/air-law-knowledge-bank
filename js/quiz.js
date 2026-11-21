@@ -80,7 +80,7 @@ function answerQuestion(button, question) {
   } else if (!wrongQuestionIds.includes(question.id)) {
     wrongQuestionIds.push(question.id);
   }
-  storage.write("airlaw-wrong", wrongQuestionIds);
+  storage.write("airlaw-mistakes", wrongQuestionIds);
   quizState.results.push({ question, isCorrect });
   appElement.querySelectorAll(".option").forEach(option => {
     option.disabled = true;

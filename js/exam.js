@@ -169,7 +169,7 @@ function submitExam(timeRanOut) {
       wrongQuestionIds.push(question.id);
     }
   });
-  storage.write("airlaw-wrong", wrongQuestionIds);
+  storage.write("airlaw-mistakes", wrongQuestionIds);
   const timeUsed = Math.min(Date.now(), examState.endTime) - examState.startTime;
   examState.lastResult = { results, timeRanOut, timeUsed };
   const history = storage.read("airlaw-exam-history", []);

@@ -307,7 +307,7 @@ const AIRCRAFT_CATEGORIES = {
 const CATEGORY_PAIRS = [["powered", "towing"], ["powered", "airship"], ["powered", "glider"], ["powered", "balloon"], ["airship", "glider"], ["airship", "balloon"], ["glider", "balloon"]];
 
 function makeRightOfWayScenario() {
-  const kind = pickRandom(["category", "category", "category", "converging", "converging", "headon", "overtaking", "landing", "emergency"]);
+  const kind = pickRandom(["category", "category", "category", "converging", "converging", "headon", "overtaking", "landing", "gliderLanding", "emergency"]);
   const side = pickRandom(["right", "left"]);
   const sideDiagram = side === "right" ? { x: 205, y: 70, heading: 270 } : { x: 35, y: 70, heading: 90 };
   if (kind === "category") {
@@ -345,6 +345,9 @@ function makeRightOfWayScenario() {
       explanation: youAreHigher ? "The <b>higher aircraft gives way to the lower</b> — so you give way." : "The higher aircraft gives way to the lower, so <b>it gives way</b> — but you must not cut in front of another aircraft on final or overtake it.",
       diagram: null
     };
+  }
+  if (kind === "gliderLanding") {
+    return { text: "You are in a <b>powered aeroplane</b> approaching to land. A <b>glider</b> is also approaching to land on the same runway, and it is <b>higher</b> than you.", answer: "you", explanation: "Power-driven aircraft give way to gliders approaching to land — <b>you give way</b>, even though the glider is higher.", diagram: null };
   }
   return { text: "You are on the downwind leg. You hear and see another aircraft declaring that it has an engine problem and is <b>compelled to land</b>.", answer: "you", explanation: "Aircraft must give way to any aircraft known to be <b>compelled to land</b> — <b>you give way</b>.", diagram: null };
 }
@@ -510,11 +513,180 @@ function mountCollisionCourse(element) {
 }
 
 const SIMULATORS = {
-  lights: { title: "Light Signal Trainer", topic: 4, sub: "Watch the tower's lamp and choose what it means. Switch between in flight and on the ground.", mount: mountLightSignalTrainer },
-  declared: { title: "Declared Distances Runway", topic: 5, sub: "Drag the sliders and watch TORA, TODA, ASDA and LDA change.", mount: mountDeclaredDistances },
-  papi: { title: "PAPI Simulator", topic: 3, sub: "Change your approach angle and see what the PAPI shows.", mount: mountPapi },
-  navlights: { title: "Night Navigation Lights", topic: 11, sub: "Place another aircraft around you at night. See which of its lights you'd see — and what to do.", mount: mountNavLights },
-  rightofway: { title: "Right-of-Way Scenario Trainer", topic: 12, sub: "Random encounters — decide who gives way.", mount: mountRightOfWay },
-  lowflying: { title: "Low Flying Rules Checker", topic: 16, sub: "Set up a situation and check it against the rules.", mount: mountLowFlying },
-  collision: { title: "Constant Bearing = Collision", topic: 17, sub: "Watch the line of sight: if it stays parallel (constant bearing) you're on a collision course.", mount: mountCollisionCourse }
+  lights: { title: "Light Signal Trainer", topicId: "light-signals", sub: "Watch the tower's lamp and choose what it means. Switch between in flight and on the ground.", mount: mountLightSignalTrainer },
+  declared: { title: "Declared Distances Runway", topicId: "declared-distances", sub: "Drag the sliders and watch TORA, TODA, ASDA and LDA change.", mount: mountDeclaredDistances },
+  papi: { title: "PAPI Simulator", topicId: "aerodrome-lighting", sub: "Change your approach angle and see what the PAPI shows.", mount: mountPapi },
+  navlights: { title: "Night Navigation Lights", topicId: "night-navigation-lights", sub: "Place another aircraft around you at night. See which of its lights you'd see — and what to do.", mount: mountNavLights },
+  rightofway: { title: "Right-of-Way Scenario Trainer", topicId: "in-flight-right-of-way", sub: "Random encounters — decide who gives way.", mount: mountRightOfWay },
+  lowflying: { title: "Low Flying Rules Checker", topicId: "low-flying", sub: "Set up a situation and check it against the rules.", mount: mountLowFlying },
+  collision: { title: "Constant Bearing = Collision", topicId: "collision-avoidance", sub: "Watch the line of sight: if it stays parallel (constant bearing) you're on a collision course.", mount: mountCollisionCourse }
 };
+
+const NOTAM_SUBJECTS = { FA: "Aerodrome", MR: "Runway", MX: "Taxiway", OB: "Obstacle", RT: "Temporary restricted area", RD: "Danger area", RR: "Restricted area", RP: "Prohibited area", WA: "Air display", WP: "Parachute jumping exercise", WE: "Exercises", WU: "Unmanned aircraft", NV: "VOR", NB: "NDB", ND: "DME" };
+const NOTAM_CONDITIONS = { LC: "closed", AS: "unserviceable", CA: "activated", CH: "changed", LT: "limited", HW: "work in progress", LW: "will take place", CE: "erected", XX: "see plain-language text" };
+const NOTAM_TRAFFIC = { I: "IFR", V: "VFR", IV: "IFR and VFR" };
+const NOTAM_PURPOSE = { N: "selected for immediate attention", B: "included in Pre-flight Information Bulletins", O: "significant for flight operations", M: "miscellaneous" };
+const NOTAM_SCOPE = { A: "aerodrome", E: "en route", W: "navigation warning", K: "checklist" };
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+const SAMPLE_NOTAMS = [
+  { label: "Aerodrome closed", text: "Q) EGTT/QFALC/IV/NBO/A/000/999/5150N00119W005\nA) EGTK B) 2611250800 C) 2611251600\nE) AD CLSD DUE WORKS IN PROGRESS" },
+  { label: "Runway closed at night", text: "Q) EGPX/QMRLC/IV/NBO/A/000/999/5552N00426W005\nA) EGPF B) 2612010000 C) 2612150600 EST\nD) 0000-0600 DAILY\nE) RWY 05/23 CLSD DUE MAINT" },
+  { label: "Air display", text: "Q) EGTT/QWALW/IV/M/W/000/080/5130N00030W006\nA) EGTT B) 2607041400 C) 2607041530\nE) AEROBATIC DISPLAY WI 6NM RADIUS 513000N 0003000W. RESTRICTED AREA (TEMPORARY) ESTABLISHED.\nF) SFC G) 8000FT AMSL" },
+  { label: "New obstacle", text: "Q) EGTT/QOBCE/IV/M/AE/000/015/5205N00010E002\nA) EGSC B) 2611200900 C) PERM\nE) CRANE ERECTED 1.2NM SE OF AD, 1350FT AMSL, LIT." }
+];
+
+function formatNotamTime(value) {
+  const match = value.trim().match(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})(\s*EST)?$/);
+  if (!match) {
+    if (value.trim() === "PERM") return "<b>PERM</b> — permanent (will be incorporated into the AIP)";
+    return value;
+  }
+  const [, year, month, day, hour, minute, estimated] = match;
+  return `<b>${Number(day)} ${MONTH_NAMES[Number(month) - 1]} 20${year}, ${hour}:${minute} UTC</b>${estimated ? " — <b>EST</b>imated (may be extended or cancelled)" : ""}`;
+}
+
+function decodeQualifier(line) {
+  const parts = line.trim().split("/");
+  if (parts.length < 8) return `<span class="mono">${line}</span>`;
+  const [fir, code, traffic, purpose, scope, lower, upper, area] = parts;
+  const subject = NOTAM_SUBJECTS[code.slice(1, 3)] || `subject "${code.slice(1, 3)}"`;
+  const condition = NOTAM_CONDITIONS[code.slice(3, 5)] || `condition "${code.slice(3, 5)}"`;
+  const purposes = purpose.split("").map(letter => NOTAM_PURPOSE[letter] || letter).join("; ");
+  const scopes = scope.split("").map(letter => NOTAM_SCOPE[letter] || letter).join(" + ");
+  const areaMatch = area.match(/^(\d{4}[NS])(\d{5}[EW])(\d{3})$/);
+  const areaText = areaMatch ? `centred ${areaMatch[1]} ${areaMatch[2]}, radius ${Number(areaMatch[3])} nm` : area;
+  return `<ul class="check-list">
+    <li><span class="mono">${fir}</span><span>FIR (Flight Information Region)</span></li>
+    <li><span class="mono">${code}</span><span><b>${subject} — ${condition}</b> (letters 2–3 subject, 4–5 condition)</span></li>
+    <li><span class="mono">${traffic}</span><span>Traffic affected: ${NOTAM_TRAFFIC[traffic] || traffic}</span></li>
+    <li><span class="mono">${purpose}</span><span>Purpose: ${purposes}</span></li>
+    <li><span class="mono">${scope}</span><span>Scope: ${scopes}</span></li>
+    <li><span class="mono">${lower}/${upper}</span><span>Vertical limits: FL${lower} to FL${upper} (hundreds of feet; 000/999 = surface to unlimited)</span></li>
+    <li><span class="mono">${area}</span><span>Area: ${areaText}</span></li>
+  </ul>`;
+}
+
+function mountNotamDecoder(element) {
+  element.innerHTML = `
+    <div class="preset-row">${SAMPLE_NOTAMS.map((sample, index) => `<button class="btn small ghost" data-sample="${index}">${sample.label}</button>`).join("")}</div>
+    <textarea class="notam-input mono" rows="5" style="width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:13.5px"></textarea>
+    <div class="sim-controls"><button class="btn small notam-decode">Decode NOTAM</button><span style="font-size:13px;color:var(--muted)">Paste your own NOTAM or pick a sample (samples are illustrative).</span></div>
+    <div class="readout notam-output"></div>`;
+  const input = element.querySelector(".notam-input");
+  const output = element.querySelector(".notam-output");
+  const fieldNames = { Q: "Qualifier", A: "Location", B: "Valid from", C: "Valid until", D: "Schedule", E: "Text", F: "Lower limit", G: "Upper limit" };
+
+  function decode() {
+    const fields = {};
+    const pattern = /([QABCDEFG])\)\s*([\s\S]*?)(?=\s+[QABCDEFG]\)|$)/g;
+    let match;
+    while ((match = pattern.exec(input.value)) !== null) {
+      fields[match[1]] = match[2].trim();
+    }
+    if (!Object.keys(fields).length) {
+      output.innerHTML = "Couldn't find any NOTAM fields like <span class=\"mono\">A)</span>, <span class=\"mono\">B)</span>…";
+      return;
+    }
+    output.innerHTML = Object.entries(fields).map(([letter, value]) => {
+      let meaning = value;
+      if (letter === "Q") meaning = decodeQualifier(value);
+      if (letter === "B" || letter === "C") meaning = formatNotamTime(value);
+      if (letter === "A") meaning = `<b class="mono">${value}</b> — ICAO location indicator`;
+      return `<div style="margin:8px 0"><b class="mono">${letter})</b> <b>${fieldNames[letter]}</b><div style="margin-left:26px">${meaning}</div></div>`;
+    }).join("");
+  }
+  element.querySelectorAll("[data-sample]").forEach(button => button.addEventListener("click", () => {
+    input.value = SAMPLE_NOTAMS[Number(button.dataset.sample)].text;
+    decode();
+  }));
+  element.querySelector(".notam-decode").addEventListener("click", decode);
+  input.value = SAMPLE_NOTAMS[0].text;
+  decode();
+}
+
+const AIRCRAFT_DEFECTS = [
+  { text: "None open", airworthy: true },
+  { text: "None open", airworthy: true },
+  { text: "Rear seat cover torn", airworthy: true },
+  { text: "Small paint chip on the spinner", airworthy: true },
+  { text: "Oil leak from the engine — oil found on the cowling", airworthy: false },
+  { text: "Elevator trim stiff and jamming", airworthy: false },
+  { text: "Magnetic compass missing from its mount", airworthy: false },
+  { text: "Left fuel gauge reading erratically", airworthy: false }
+];
+
+function formatDate(date) {
+  return `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+function makePreflightScenario() {
+  const today = new Date();
+  const dayInMs = 24 * 60 * 60 * 1000;
+  const arcValid = Math.random() > 0.2;
+  const arcExpiry = new Date(today.getTime() + (arcValid ? (10 + Math.random() * 300) : -(1 + Math.random() * 40)) * dayInMs);
+  const currentHours = Math.round((1100 + Math.random() * 900) * 10) / 10;
+  const plannedHours = Math.round((0.8 + Math.random() * 1.2) * 10) / 10;
+  const checkTight = Math.random() < 0.25;
+  const hoursToCheck = checkTight ? Math.round((0.2 + Math.random() * (plannedHours - 0.3)) * 10) / 10 : Math.round((plannedHours + 2 + Math.random() * 35) * 10) / 10;
+  const nextCheckDue = Math.round((currentHours + hoursToCheck) * 10) / 10;
+  const hoursOk = currentHours + plannedHours <= nextCheckDue;
+  const crsSigned = Math.random() > 0.2;
+  const defect = pickRandom(AIRCRAFT_DEFECTS);
+  const insuranceValid = Math.random() > 0.15;
+  const items = [
+    { label: "C of A / ARC", value: `ARC expires ${formatDate(arcExpiry)}`, ok: arcValid, reason: arcValid ? "ARC is current." : "ARC has expired — the C of A isn't valid without it." },
+    { label: "Maintenance due", value: `Tech log: ${currentHours.toFixed(1)} h · next 50-hour check due at ${nextCheckDue.toFixed(1)} h · planned flight ${plannedHours.toFixed(1)} h`, ok: hoursOk, reason: hoursOk ? `${currentHours.toFixed(1)} + ${plannedHours.toFixed(1)} = ${(currentHours + plannedHours).toFixed(1)} h — within the limit.` : `${currentHours.toFixed(1)} + ${plannedHours.toFixed(1)} = ${(currentHours + plannedHours).toFixed(1)} h — the check would be overdue during your flight.` },
+    { label: "Last maintenance", value: crsSigned ? "Brake pads replaced — CRS signed" : "Brake pads replaced — CRS not signed", ok: crsSigned, reason: crsSigned ? "Work has been released to service." : "No CRS: the aircraft hasn't been released to service after maintenance." },
+    { label: "Tech log defects", value: defect.text, ok: defect.airworthy, reason: defect.airworthy ? "Nothing here affects airworthiness." : "This affects airworthiness and must be rectified (or properly assessed) before flight." },
+    { label: "Insurance", value: insuranceValid ? "Certificate valid" : "Certificate expired last week", ok: insuranceValid, reason: insuranceValid ? "Insured." : "Flying without valid insurance is not allowed." }
+  ];
+  return { items, go: items.every(item => item.ok) };
+}
+
+function mountPreflightCheck(element) {
+  let scenario = null;
+  let correctCount = 0;
+  let attemptCount = 0;
+  element.innerHTML = `
+    <table class="ref preflight-table"></table>
+    <div class="sim-controls">
+      <button class="btn preflight-go" style="background:var(--good)">✅ GO</button>
+      <button class="btn preflight-nogo" style="background:var(--bad)">⛔ NO-GO</button>
+      <span style="margin-left:auto;font-weight:700" class="preflight-score">Score: 0/0</span>
+    </div>
+    <div class="readout hidden preflight-readout"></div>
+    <div class="sim-controls"><button class="btn small ghost preflight-next">Next aircraft →</button></div>
+    <p style="font-size:12.5px;color:var(--muted);margin:4px 0 0">Simplified training scenarios — in real life, ask an engineer whenever you're unsure whether a defect affects airworthiness.</p>`;
+  const table = element.querySelector(".preflight-table");
+  const readout = element.querySelector(".preflight-readout");
+  const buttons = [element.querySelector(".preflight-go"), element.querySelector(".preflight-nogo")];
+
+  function showScenario() {
+    scenario = makePreflightScenario();
+    table.innerHTML = `<tr><th>Item</th><th>What the paperwork shows</th></tr>${scenario.items.map(item => `<tr><td><b>${item.label}</b></td><td>${item.value}</td></tr>`).join("")}`;
+    readout.classList.add("hidden");
+    buttons.forEach(button => { button.disabled = false; });
+  }
+  function answer(saysGo) {
+    if (buttons[0].disabled) return;
+    attemptCount++;
+    const isCorrect = saysGo === scenario.go;
+    if (isCorrect) correctCount++;
+    buttons.forEach(button => { button.disabled = true; });
+    readout.className = "readout preflight-readout " + (isCorrect ? "ok" : "no");
+    readout.innerHTML = `<b>${isCorrect ? "✅ Correct" : "❌ Not quite"} — this aircraft is a ${scenario.go ? "GO" : "NO-GO"}.</b><ul class="check-list">${scenario.items.map(item => `<li><span>${item.ok ? "✅" : "❌"}</span><span><b>${item.label}:</b> ${item.reason}</span></li>`).join("")}</ul>`;
+    element.querySelector(".preflight-score").textContent = `Score: ${correctCount}/${attemptCount}`;
+  }
+  buttons[0].addEventListener("click", () => answer(true));
+  buttons[1].addEventListener("click", () => answer(false));
+  element.querySelector(".preflight-next").addEventListener("click", showScenario);
+  showScenario();
+}
+
+SIMULATORS.notam = { title: "NOTAM Decoder", topicId: "notams", sub: "Pick a sample NOTAM (or paste a real one) and see every field explained.", mount: mountNotamDecoder };
+SIMULATORS.preflight = { title: "Pre-Flight Paperwork: Go or No-Go?", topicId: "preflight-docs", sub: "Check each aircraft's documents and decide whether you can fly it.", mount: mountPreflightCheck };
+
+Object.values(SIMULATORS).forEach(simulator => {
+  simulator.topic = TOPICS.find(topic => topic.id === simulator.topicId).num;
+});

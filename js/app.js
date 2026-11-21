@@ -1,6 +1,6 @@
 const appElement = document.getElementById("app");
-let confidentTopics = storage.read("airlaw-confident", []);
-let wrongQuestionIds = storage.read("airlaw-wrong", []);
+let confidentTopics = storage.read("airlaw-confident-ids", []);
+let wrongQuestionIds = storage.read("airlaw-mistakes", []);
 let currentView = "home";
 
 function setActiveTab(view) {
@@ -44,7 +44,7 @@ function renderHome() {
   setActiveTab("home");
   const confidentCount = confidentTopics.length;
   const topicCards = lessonId => TOPICS.filter(topic => topic.lesson === lessonId).map(topic => `
-    <button class="topic-card ${confidentTopics.includes(topic.num) ? "done" : ""}" data-topic="${topic.num}">
+    <button class="topic-card ${confidentTopics.includes(topic.id) ? "done" : ""}" data-topic="${topic.num}">
       <span class="tc-num">#${topic.num} · ${topic.tag}</span>
       <span class="tc-title">${topic.title}</span>
       <span class="tc-meta">${topic.summary}</span>
@@ -90,7 +90,7 @@ function renderStudy(topicNumber) {
   const sidebar = LESSON_ORDER.map(lessonId => `
     <div class="side-lesson">${LESSONS[lessonId].name}</div>
     ${TOPICS.filter(item => item.lesson === lessonId).map(item => `
-      <button class="side-item ${item.num === topic.num ? "active" : ""} ${confidentTopics.includes(item.num) ? "done" : ""}" data-topic="${item.num}" data-search="${(item.title + " " + item.tag + " " + stripTags(item.body())).toLowerCase().replace(/"/g, "")}">
+      <button class="side-item ${item.num === topic.num ? "active" : ""} ${confidentTopics.includes(item.id) ? "done" : ""}" data-topic="${item.num}" data-search="${(item.title + " " + item.tag + " " + stripTags(item.body())).toLowerCase().replace(/"/g, "")}">
         <span class="side-num">${item.num}</span><span>${item.title}</span>
       </button>`).join("")}`).join("");
   const topicIndex = TOPICS.indexOf(topic);
@@ -109,7 +109,7 @@ function renderStudy(topicNumber) {
         <h1>${topic.title}</h1>
         <p class="lead">${topic.summary}</p>
         <div class="topic-actions">
-          <label class="confident"><input type="checkbox" data-confident="${topic.num}" ${confidentTopics.includes(topic.num) ? "checked" : ""}> I'm confident with this</label>
+          <label class="confident"><input type="checkbox" data-confident="${topic.id}" ${confidentTopics.includes(topic.id) ? "checked" : ""}> I'm confident with this</label>
           <button class="btn" data-practice="${topic.num}">📝 Practise this topic (${topicQuestionCount})</button>
         </div>
         ${bodyHtml}
@@ -212,9 +212,10 @@ document.addEventListener("click", event => {
 document.addEventListener("change", event => {
   const checkbox = event.target.closest("[data-confident]");
   if (!checkbox) return;
-  const topicNumber = Number(checkbox.dataset.confident);
-  confidentTopics = checkbox.checked ? [...new Set([...confidentTopics, topicNumber])] : confidentTopics.filter(number => number !== topicNumber);
-  storage.write("airlaw-confident", confidentTopics);
+  const topicId = checkbox.dataset.confident;
+  const topicNumber = TOPICS.find(topic => topic.id === topicId).num;
+  confidentTopics = checkbox.checked ? [...new Set([...confidentTopics, topicId])] : confidentTopics.filter(id => id !== topicId);
+  storage.write("airlaw-confident-ids", confidentTopics);
   document.querySelectorAll(`.side-item[data-topic="${topicNumber}"]`).forEach(item => item.classList.toggle("done", checkbox.checked));
 });
 

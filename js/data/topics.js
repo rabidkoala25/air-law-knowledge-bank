@@ -1,310 +1,286 @@
 const LESSONS = {
+  l1: { name: "Lesson 1 — Legislation", short: "Lesson 1" },
   l3: { name: "Lesson 3 — Aerodromes", short: "Lesson 3" },
   l2: { name: "Lesson 2 — Registration, Airworthiness & Rules of the Air", short: "Lesson 2" }
 };
 
-const LESSON_ORDER = ["l3", "l2"];
+const LESSON_ORDER = ["l1", "l2", "l3"];
 
 const TOPICS = [
   {
-    num: 1, lesson: "l3", title: "Aerodrome Signal Area", tag: "Signals",
-    summary: "Ground signals laid out in a square near the tower — mainly for non-radio pilots to read from overhead.",
+    id: "aics", lesson: "l1", title: "Aeronautical Information Circulars (AICs)", tag: "Information",
+    summary: "Colour-coded circulars for information that belongs in neither the AIP nor a NOTAM.",
     body: () => `
-      <p>The <b>signals area</b> (signals square) is a marked square at the aerodrome, normally <b>near the control tower / ATSU</b>, positioned so it can be read <b>from the air</b>. Non-radio pilots typically overfly the aerodrome at a safe height to read it (and the windsock) before joining. Some signals are also hoisted on a <b>mast</b>, or shown on the tower.</p>
-      <h2>Signals displayed in the signals area</h2>
-      ${gallery(
-        signalCard("oneDiagonal", "Red square, ONE yellow diagonal", "Special precautions needed on approach/landing — state of the manoeuvring area is poor (or other reason).") +
-        signalCard("crossDiagonals", "Red square, yellow CROSS (both diagonals)", "Aerodrome unsafe for movement of aircraft — LANDING PROHIBITED, and the prohibition is liable to continue.") +
-        signalCard("dumbbell", "White dumb-bell", "Aircraft movements on the ground are confined to paved/hard surfaces (land, take off AND taxi on hard surfaces).") +
-        signalCard("dumbbellStripes", "Dumb-bell with black stripe on each disc", "Take off and land on RUNWAYS only, but other ground movements need not be confined to hard surfaces.") +
-        signalCard("dumbbellRedL", "Red letter L on the dumb-bell", "Light aircraft may take off and land on a runway OR on the special area marked by a white L.") +
-        signalCard("letterL", "White letter L", "Marks the part of the manoeuvring area provided for light aircraft.") +
-        signalCard("doubleCross", "White double cross", "Glider flying is in progress.") +
-        signalCard("landingT", "White landing T", "Land and take off PARALLEL to the shaft, TOWARDS the cross-arm.") +
-        signalCard("tWithDisc", "White disc above the T cross-arm", "Directions of landing and take-off do not necessarily coincide.") +
-        signalCard("rightHandArrow", "Red & yellow striped arrow (bent 90°)", "Right-hand circuit in force — turns after take-off and before landing are to the right.") +
-        signalCard("letterH", "White letter H", "Helicopters shall take off and land only within the area designated by the H.") +
-        signalCard("unserviceable", "Orange & white markers / flags", "Boundary of an unserviceable part of the manoeuvring area — keep off.")
-      )}
-      <h2>Signals on a mast, or on/near the tower</h2>
-      ${gallery(
-        signalCard("twoRedBalls", "Two red balls on a mast (vertical)", "Glider flying is in progress (mast version of the double cross).") +
-        signalCard("blackBall", "Black ball on a mast", "Directions of take-off and landing are not necessarily the same (mast version of the disc).") +
-        signalCard("greenFlag", "Rectangular green flag on a mast", "Right-hand circuit in force (mast version of the striped arrow).") +
-        signalCard("letterC", "Black letter C on yellow", "Location of the ATS reporting office — where pilots report (book in/out).") +
-        signalCard("checker", "Red & yellow chequered flag/board", "Aircraft may move on the manoeuvring area and apron only with ATC permission.") +
-        signalCard("runwayBoard", "Black numbers on a yellow board", "Shows the runway in use (direction for take-off), displayed on/near the tower.")
-      )}
-      <div class="callout key"><b class="title">Exam must-knows</b><ul>
-        <li><b>One</b> diagonal = take care. <b>Two</b> diagonals (cross) = do not land.</li>
-        <li>Plain dumb-bell = <b>everything</b> on hard surfaces. Striped dumb-bell = <b>only take-off/landing</b> on runways.</li>
-        <li>Landing T: land along the shaft <b>towards the cross-arm</b> (like the T is pointing at you on finals — the cross-arm is the far end).</li>
-        <li>Glider ops: white double cross (ground) or two red balls (mast).</li>
-        <li>"C" = <b>C</b>ontact/report here. Chequered board = ATC permission needed to move.</li>
-      </ul></div>
-      <div class="callout trap"><b class="title">Exam traps</b><ul>
-        <li>Answer options will swap "special care" and "landing prohibited" — count the yellow diagonals.</li>
-        <li>The striped arrow shows a <b>right-hand</b> circuit; left-hand is the default so it has no signal.</li>
-      </ul></div>
-      <div class="callout law">Source: SERA (UK Reg (EU) 923/2012) Appendix 1 ground signals; Rules of the Air Regulations 2015; CAP 637 Visual Aids Handbook.</div>`,
-    mnemonics: [
-      { title: "One line = Look out, Cross = Can't land", text: "A single diagonal is like a single warning line — be careful. Two diagonals cross it out — no landing." },
-      { title: "Dumb-bell = Don't leave the tarmac", text: "Plain dumb-bell: all movement on hard surfaces. Add black stripes and you're 'striped' down to runway-only for take-off & landing — taxi on grass is OK." },
-      { title: "Two red balls = 'Gliders are on the ball'", text: "Two red balls and a double cross both mean gliders. Two = double." },
-      { title: "C = Come and see us", text: "Black C on yellow is where you report to ATC/the ATSU." }
-    ]
-  },
-  {
-    num: 2, lesson: "l3", title: "Notification of Arrival", tag: "Procedures",
-    summary: "Booking in and out, closing flight plans, and stopping an unnecessary search-and-rescue call-out.",
-    body: () => `
-      <p>The <b>pilot-in-command (commander)</b> is responsible for making sure the aerodrome/ATS knows about the aircraft's departure and arrival. In practice this is called <b>booking out</b> (before departure) and <b>booking in</b> (on arrival) — in person at the ATSU/reporting office (look for the <b>black C on yellow</b>), by phone, or by radio where accepted.</p>
-      <h2>If you filed a flight plan</h2>
-      <table class="ref"><tr><th>Situation</th><th>What you must do</th></tr>
-        <tr><td>Land at destination with an ATS unit</td><td>Make an <b>arrival report</b> (close the flight plan) <b>as soon as possible after landing</b>.</td></tr>
-        <tr><td>Land at an aerodrome with <b>no ATS unit</b></td><td>Report arrival as soon as practicable after landing, by the <b>quickest means available</b> (normally phone) to the <b>nearest ATS unit</b>.</td></tr>
-        <tr><td>Divert / land somewhere else</td><td>Inform ATS (destination or the nearest ATSU) <b>within 30 minutes of your ETA</b> at the planned destination, otherwise <b>overdue / search & rescue action</b> may begin.</td></tr>
-        <tr><td>Delay before departure</td><td>Inform ATS so the flight plan can be amended or cancelled.</td></tr>
-      </table>
-      <div class="callout key"><b class="title">Exam must-knows</b><ul>
-        <li>Closing the flight plan is the <b>pilot's</b> responsibility — ATS don't do it for you.</li>
-        <li>The magic number is <b>30 minutes after ETA</b> — after this, the alerting service treats you as overdue.</li>
-        <li>No ATSU at arrival aerodrome → phone the nearest ATSU by the quickest means.</li>
-        <li><b>PPR</b> (Prior Permission Required) aerodromes: you must get permission <b>before</b> you arrive.</li>
-      </ul></div>
-      <div class="callout trap"><b class="title">Exam traps</b><ul>
-        <li>"Within 30 minutes of landing" ≠ "within 30 minutes of ETA". The alerting clock runs from your <b>ETA</b>.</li>
-      </ul></div>
-      <div class="callout law">Source: SERA.4020 (closing a flight plan); Rules of the Air Regulations 2015; UK AIP ENR 1.10.</div>`,
-    mnemonics: [
-      { title: "Book out, Book in, Close it, 30 min", text: "Before you go: book out. When you land: book in. Flight plan? Close it. Landed elsewhere? Tell ATS within 30 minutes of ETA." },
-      { title: "\"Thirty and they search\"", text: "30 minutes past ETA with no arrival report and SAR starts asking questions." }
-    ]
-  },
-  {
-    num: 3, lesson: "l3", title: "Aerodrome Lighting", tag: "Lighting",
-    summary: "Colours of runway, taxiway, approach and obstacle lighting, beacons, and the PAPI glide-slope indicator.",
-    body: () => `
-      ${lightingDiagram()}
-      <p class="diagram-cap">Schematic night view. Approach from the left. The yellow runway guard lights and the green beacon flash.</p>
-      <h2>Light colours</h2>
-      <table class="ref"><tr><th>Lighting</th><th>Colour</th><th>Notes</th></tr>
-        <tr><td>Runway edge</td><td><span class="swatch" style="background:#fff"></span>White</td><td>May be <b>yellow</b> over the last 600 m (or last third) of an instrument runway — the "caution zone".</td></tr>
-        <tr><td>Runway threshold & wing bars</td><td><span class="swatch" style="background:#2ecc71"></span>Green</td><td>Seen by aircraft on approach. "Green to go in."</td></tr>
-        <tr><td>Runway end</td><td><span class="swatch" style="background:#e53935"></span>Red</td><td>Seen by aircraft on the runway. (A green threshold light is usually red from the other side.)</td></tr>
-        <tr><td>Runway centreline</td><td><span class="swatch" style="background:#fff"></span>White</td><td>Alternating red/white from 900 m to 300 m before the end, then all red for the last 300 m.</td></tr>
-        <tr><td>Touchdown zone</td><td><span class="swatch" style="background:#fff"></span>White</td><td>Barrettes either side of centreline.</td></tr>
-        <tr><td>Approach lighting</td><td><span class="swatch" style="background:#fff"></span>White</td><td>Centreline with crossbars (UK "Calvert" pattern).</td></tr>
-        <tr><td>Taxiway edge</td><td><span class="swatch" style="background:#4c8dff"></span>Blue</td><td>"Blue for boundaries."</td></tr>
-        <tr><td>Taxiway centreline</td><td><span class="swatch" style="background:#2ecc71"></span>Green</td><td>Alternate green/yellow where it crosses a runway or ILS-sensitive area.</td></tr>
-        <tr><td>Stop bar</td><td><span class="swatch" style="background:#e53935"></span>Red</td><td>Row across taxiway at a holding position. <b>Never cross a lit red stop bar</b> — even with a clearance.</td></tr>
-        <tr><td>Runway guard lights</td><td><span class="swatch" style="background:#ffd600"></span>Flashing yellow</td><td>Pairs flashing alternately ("wig-wags") at runway-holding positions: runway ahead!</td></tr>
-        <tr><td>Obstacle lights</td><td><span class="swatch" style="background:#e53935"></span>Red</td><td>Steady or flashing; very tall obstacles may have flashing high-intensity white.</td></tr>
-        <tr><td>Aerodrome identification beacon</td><td><span class="swatch" style="background:#2ecc71"></span>Green / <span class="swatch" style="background:#e53935"></span>Red</td><td>Flashes a two-letter <b>Morse</b> ID: <b>green at civil</b> aerodromes, <b>red at military</b>.</td></tr>
-        <tr><td>Aerodrome location beacon</td><td><span class="swatch" style="background:#fff"></span>Flashing white</td><td>(or alternating white & colour) to show where an aerodrome is.</td></tr>
-      </table>
-      <h2>PAPI — Precision Approach Path Indicator</h2>
-      <p>Usually <b>four</b> light units in a row beside the runway (normally on the left), each showing white above its set angle and red below. For a standard <b>3°</b> approach you should see <b>two white, two red</b>. An <b>APAPI</b> (abbreviated) has only two units.</p>
-      <div class="sim-slot" data-sim="papi"></div>
-      <div class="callout key"><b class="title">Exam must-knows</b><ul>
-        <li>Threshold <b>green</b>, end <b>red</b>, runway edge <b>white</b>; taxiway edge <b>blue</b>, taxiway centreline <b>green</b>.</li>
-        <li>PAPI: 2 white + 2 red = on slope. All white = too high. All red = too low.</li>
-        <li>Civil identification beacon: <b>green Morse</b>. Military: <b>red</b>.</li>
-      </ul></div>
-      <div class="callout law">Source: ICAO Annex 14; CAP 168 Licensing of Aerodromes; CAP 637.</div>`,
-    mnemonics: [
-      { title: "\"Green to get in, red at the end\"", text: "Threshold lights green as you arrive; runway end lights red to stop you running off." },
-      { title: "\"Blue for boundaries\"", text: "Taxiway EDGE lights are blue; the centreline you follow is green." },
-      { title: "PAPI: \"Two and two, you're true\"", text: "2 white/2 red = 3° slope. \"All white, you're out of sight (too high). All red, you're dead (too low).\"" },
-      { title: "Civil = Green = Grass & Gliders", text: "Civil aerodrome ID beacon flashes green Morse; military flashes red." }
-    ]
-  },
-  {
-    num: 4, lesson: "l3", title: "Aerodrome Light Signals", tag: "Signals",
-    summary: "Signal lamp (light gun) signals from the tower to aircraft in the air and on the ground — and how you acknowledge.",
-    body: () => `
-      <p>Used for radio failure or non-radio aircraft. The tower aims a signal lamp at you. Same colours mean different things in the air and on the ground, but they follow a pattern.</p>
-      <div class="two-col">
-        <div><h3>To aircraft IN FLIGHT</h3>
-        <table class="ref"><tr><th>Signal</th><th>Meaning</th></tr>
-          <tr><td><span class="swatch" style="background:#2ecc71"></span>Steady green</td><td>Cleared to <b>land</b></td></tr>
-          <tr><td><span class="swatch" style="background:#e53935"></span>Steady red</td><td><b>Give way</b> to other aircraft and <b>continue circling</b></td></tr>
-          <tr><td><span class="swatch" style="background:#2ecc71"></span>Green flashes</td><td><b>Return for landing</b> (a steady green to land will follow)</td></tr>
-          <tr><td><span class="swatch" style="background:#e53935"></span>Red flashes</td><td>Aerodrome <b>unsafe — do not land</b></td></tr>
-          <tr><td><span class="swatch" style="background:#fff"></span>White flashes</td><td><b>Land at this aerodrome and proceed to the apron</b></td></tr>
-          <tr><td>🎆 Red pyrotechnic</td><td>Notwithstanding any previous instructions, <b>do not land for the time being</b></td></tr>
-        </table></div>
-        <div><h3>To aircraft ON THE GROUND</h3>
-        <table class="ref"><tr><th>Signal</th><th>Meaning</th></tr>
-          <tr><td><span class="swatch" style="background:#2ecc71"></span>Steady green</td><td>Cleared for <b>take-off</b></td></tr>
-          <tr><td><span class="swatch" style="background:#e53935"></span>Steady red</td><td><b>Stop</b></td></tr>
-          <tr><td><span class="swatch" style="background:#2ecc71"></span>Green flashes</td><td>Cleared to <b>taxi</b></td></tr>
-          <tr><td><span class="swatch" style="background:#e53935"></span>Red flashes</td><td><b>Taxi clear</b> of the landing area in use</td></tr>
-          <tr><td><span class="swatch" style="background:#fff"></span>White flashes</td><td><b>Return to starting point</b> on the aerodrome</td></tr>
-        </table></div>
-      </div>
-      <h2>Acknowledging signals</h2>
-      <table class="ref"><tr><th></th><th>By day</th><th>By night</th></tr>
-        <tr><td><b>In flight</b></td><td><b>Rock the wings</b> (not on base or final turns)</td><td>Flash <b>landing lights twice</b> (or nav lights twice if no landing lights)</td></tr>
-        <tr><td><b>On the ground</b></td><td>Move <b>ailerons or rudder</b></td><td>Flash <b>landing lights twice</b> (or nav lights twice)</td></tr>
-      </table>
-      <h2>Signals FROM an aircraft</h2>
-      <table class="ref"><tr><th>Signal</th><th>Meaning</th></tr>
-        <tr><td>Repeated switching on/off of <b>landing lights</b>, or irregular flashing of nav lights</td><td><b>Urgency</b> — difficulties compel the aircraft to land, but it doesn't need immediate assistance</td></tr>
-        <tr><td><b>Red pyrotechnic / red flare</b> fired by the aircraft</td><td><b>Distress</b> — immediate assistance required</td></tr>
-      </table>
-      <div class="sim-slot" data-sim="lights"></div>
-      <div class="callout trap"><b class="title">Exam traps</b><ul>
-        <li>Steady red in the air ≠ "don't land" — it means <b>give way and keep circling</b>. "Don't land" is <b>flashing</b> red.</li>
-        <li>White flashes: in the air = land & go to the apron; on the ground = go back to the start.</li>
-        <li>Never rock wings to acknowledge on base or final — you need the wings level.</li>
-      </ul></div>
-      <div class="callout law">Source: SERA Appendix 1 (signals) section 4.2; Rules of the Air Regulations 2015.</div>`,
-    mnemonics: [
-      { title: "Steady = Simple", text: "Steady GREEN = go (land / take off). Steady RED = stop (circle and give way / stop)." },
-      { title: "Flashing = do something else", text: "Flashing GREEN = 'Get ready / come back' (return to land · taxi). Flashing RED = 'Get out of here' (don't land here · taxi off the runway). Flashing WHITE = 'Go home' (land & go to apron · back to start)." },
-      { title: "\"Red rocket, don't drop it\"", text: "Red pyrotechnic from the tower: don't land for now, whatever you were told before." },
-      { title: "Day: rock & roll · Night: flash flash", text: "In the air by day, rock the wings; on the ground by day, wiggle the ailerons/rudder. At night, flash the landing lights twice." }
-    ]
-  },
-  {
-    num: 5, lesson: "l3", title: "Declared Distances", tag: "Performance",
-    summary: "TORA, TODA, ASDA (EDA) and LDA — what each runway distance includes, with an interactive runway.",
-    body: () => `
-      <table class="ref"><tr><th>Distance</th><th>Definition</th><th>Formula</th></tr>
-        <tr><td><b>TORA</b><br>Take-Off Run Available</td><td>Length of runway declared available and suitable for the <b>ground run</b> of an aeroplane taking off.</td><td class="mono">Runway</td></tr>
-        <tr><td><b>TODA</b><br>Take-Off Distance Available</td><td>TORA plus any <b>clearway</b> — the distance for the take-off run AND initial climb (to screen height).</td><td class="mono">TORA + clearway</td></tr>
-        <tr><td><b>ASDA</b> (UK also: <b>EDA</b>)<br>Accelerate-Stop / Emergency Distance Available</td><td>TORA plus any <b>stopway</b> — distance to accelerate and then stop after an abandoned take-off.</td><td class="mono">TORA + stopway</td></tr>
-        <tr><td><b>LDA</b><br>Landing Distance Available</td><td>Length of runway available and suitable for the <b>ground run of a landing</b> aeroplane. Starts at the (possibly displaced) threshold.</td><td class="mono">Runway − displaced threshold</td></tr>
-      </table>
-      <h3>Clearway vs stopway</h3>
+      <p><b>Aeronautical Information Circulars (AICs)</b> are published by the UK Aeronautical Information Service (AIS, run by NATS for the CAA). They carry information that <b>does not qualify for the AIP or a NOTAM</b>:</p>
       <ul>
-        <li><b>Clearway</b>: a defined area beyond the end of the TORA, on the ground or water, under the aerodrome's control, <b>free of obstacles</b>, over which an aeroplane can make part of its initial climb. It doesn't need to be able to bear the aircraft's weight. Normally no longer than <b>half the TORA</b>.</li>
-        <li><b>Stopway</b>: a prepared rectangular area beyond the end of the TORA, able to <b>support the aircraft</b> if a take-off is abandoned. Not for normal take-off or landing (often marked with yellow chevrons).</li>
-        <li>A <b>displaced threshold</b> reduces the <b>LDA</b> (in that direction) but the displaced section is usually still available for <b>take-off</b>, so TORA is unaffected.</li>
+        <li>Advance notice of <b>major changes</b> in legislation, regulations, procedures or facilities.</li>
+        <li>Purely <b>explanatory or advisory</b> information affecting flight safety (e.g. carburettor icing, wake turbulence).</li>
+        <li>Explanatory information on <b>technical, legislative or administrative</b> matters.</li>
       </ul>
-      <div class="sim-slot" data-sim="declared"></div>
-      <div class="callout key"><b class="title">Exam must-knows</b><ul>
-        <li>TODA ≥ TORA and ASDA ≥ TORA always. LDA ≤ runway length.</li>
-        <li>Clear<b>way</b> = <b>air</b>borne part (climb). Stop<b>way</b> = <b>stop</b>ping part (ground).</li>
-        <li>UK uses <b>EDA</b> for the same thing as ASDA.</li>
-      </ul></div>
-      <div class="callout law">Source: ICAO Annex 14; CAP 168; UK AIP AD 2 aerodrome entries (declared distances table).</div>`,
-    mnemonics: [
-      { title: "\"Clearway Climbs, Stopway Stops\"", text: "Clearway is added to TORA to give TODA (you're climbing over it). Stopway is added to TORA to give ASDA (you're braking on it)." },
-      { title: "TODA = TORA + 'Open Air'", text: "The extra letters in TODA hint at Distance in the air → clearway." },
-      { title: "\"Displaced threshold, Damaged LDA\"", text: "A displaced threshold only shortens the Landing Distance Available." }
-    ]
-  },
-  {
-    num: 6, lesson: "l3", title: "Ground Right-of-Way Rules", tag: "Rules",
-    summary: "Who gives way when aircraft (and vehicles) meet on the manoeuvring area.",
-    body: () => `
-      ${groundRightOfWayDiagram()}
-      <h2>Aircraft taxiing on the manoeuvring area</h2>
-      <table class="ref"><tr><th>Situation</th><th>Rule</th></tr>
-        <tr><td><b>Head-on</b> (or approximately)</td><td>Both <b>stop</b>, or where practicable <b>alter course to the right</b> so as to keep well clear.</td></tr>
-        <tr><td><b>Converging</b></td><td>The aircraft that has the other <b>on its right</b> gives way.</td></tr>
-        <tr><td><b>Overtaking</b></td><td>The aircraft being overtaken has right of way; the <b>overtaking</b> aircraft keeps <b>well clear</b>.</td></tr>
-        <tr><td>Aircraft taking off / landing</td><td>A taxiing aircraft <b>gives way</b> to aircraft taking off, about to take off, or landing.</td></tr>
-        <tr><td>Runway-holding positions</td><td><b>Stop and hold</b> at all runway-holding positions unless ATC clears you further.</td></tr>
-        <tr><td>Stop bars</td><td><b>Stop and hold at a lit stop bar</b>; proceed only when the lights are switched off (and you're cleared).</td></tr>
-      </table>
-      <h2>UK order of priority on the ground</h2>
-      <ol>
-        <li>Aircraft <b>taking off or landing</b></li>
-        <li>Aircraft <b>taxiing</b></li>
-        <li><b>Vehicles towing aircraft</b></li>
-        <li>Other vehicles and persons (give way to all of the above)</li>
-      </ol>
-      <p>Emergency vehicles responding to an emergency should be given priority over all other surface traffic.</p>
-      <div class="callout key"><b class="title">Exam must-knows</b><ul>
-        <li>Ground and air share the same three geometry rules: head-on → right; converging → give way to the one on your right; overtaken has priority.</li>
-        <li>On the ground, head-on also allows "<b>stop</b>".</li>
-      </ul></div>
-      <div class="callout law">Source: SERA.3210(d)(4); Rules of the Air Regulations 2015.</div>`,
-    mnemonics: [
-      { title: "\"Right is might\"", text: "Converging: whoever is on the RIGHT has right of way." },
-      { title: "\"Planes before trains (of tugs) before cars\"", text: "Take-off/landing aircraft → taxiing aircraft → vehicles towing aircraft → other vehicles & people." }
-    ]
-  },
-  {
-    num: 7, lesson: "l3", title: "Airfield Signage", tag: "Signs",
-    summary: "Mandatory (red), location (black) and information/direction (yellow) signs on the manoeuvring area.",
-    body: () => `
-      <div class="gallery-wrap"><button class="btn small ghost gallery-toggle">🙈 Hide meanings — test yourself</button>
-      <div class="gallery" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">
-        <figure class="sigcard"><div class="sign-row"><span class="sign mand">09-27</span></div><figcaption><b class="hideable">Runway designation sign (mandatory)</b><span class="meaning">White on red. Runway-holding position for runway 09/27 — do not enter without clearance.</span></figcaption></figure>
-        <figure class="sigcard"><div class="sign-row"><span class="sign mand">B2</span></div><figcaption><b class="hideable">Holding position sign (mandatory)</b><span class="meaning">White on red. A designated holding point — stop here unless cleared beyond.</span></figcaption></figure>
-        <figure class="sigcard"><div class="sign-row"><span class="sign mand">⊖</span></div><figcaption><b class="hideable">NO ENTRY sign (mandatory)</b><span class="meaning">White symbol on red. Entry to this area is prohibited.</span></figcaption></figure>
-        <figure class="sigcard"><div class="sign-row"><span class="sign mand">CAT II</span></div><figcaption><b class="hideable">Category holding sign (mandatory)</b><span class="meaning">Holding position for ILS CAT II/III operations.</span></figcaption></figure>
-        <figure class="sigcard"><div class="sign-row"><span class="sign loc">A</span></div><figcaption><b class="hideable">Location sign</b><span class="meaning">Yellow on black with a yellow border. "You are on taxiway A."</span></figcaption></figure>
-        <figure class="sigcard"><div class="sign-row"><span class="sign dir">← B</span><span class="sign dir">C ↗</span></div><figcaption><b class="hideable">Direction signs</b><span class="meaning">Black on yellow with arrows. Show the direction to other taxiways.</span></figcaption></figure>
-        <figure class="sigcard"><div class="sign-row"><span class="sign loc">A</span><span class="sign dir">← B</span></div><figcaption><b class="hideable">Location + direction (combined)</b><span class="meaning">You are on A; B is to the left.</span></figcaption></figure>
-        <figure class="sigcard"><div class="sign-row"><span class="sign dir">APRON →</span></div><figcaption><b class="hideable">Destination sign</b><span class="meaning">Black on yellow. Direction to a destination (apron, fuel, cargo…).</span></figcaption></figure>
-        <figure class="sigcard"><div class="sign-row"><span class="sign dir">B ↘</span></div><figcaption><b class="hideable">Runway exit sign</b><span class="meaning">Black on yellow. Identifies the exit taxiway from the runway.</span></figcaption></figure>
-        <figure class="sigcard"><div class="sign-row"><span class="sign dir" style="padding:4px 10px"><svg width="56" height="26" viewBox="0 0 56 26"><line x1="2" y1="5" x2="54" y2="5" stroke="#111" stroke-width="2.5" stroke-dasharray="5 4"/><line x1="2" y1="11" x2="54" y2="11" stroke="#111" stroke-width="2.5" stroke-dasharray="5 4"/><line x1="2" y1="17" x2="54" y2="17" stroke="#111" stroke-width="2.5"/><line x1="2" y1="23" x2="54" y2="23" stroke="#111" stroke-width="2.5"/></svg></span></div><figcaption><b class="hideable">Runway vacated sign</b><span class="meaning">Black holding-marking symbol on yellow. Seen when leaving the runway: once past it you're clear of the runway / ILS sensitive area.</span></figcaption></figure>
-        <figure class="sigcard"><div class="sign-row"><span class="sign dist">3</span></div><figcaption><b class="hideable">Runway distance remaining</b><span class="meaning">White on black beside the runway: thousands of feet (or metres) of runway left.</span></figcaption></figure>
-      </div></div>
-      <table class="ref"><tr><th>Type</th><th>Colours</th><th>Meaning</th></tr>
-        <tr><td><b>Mandatory instruction</b></td><td>White on <b>red</b></td><td>Must be obeyed — do not proceed beyond without ATC clearance.</td></tr>
-        <tr><td><b>Location</b></td><td>Yellow on <b>black</b> (yellow border)</td><td>Where you are.</td></tr>
-        <tr><td><b>Information / direction / destination</b></td><td>Black on <b>yellow</b></td><td>Where to go.</td></tr>
-      </table>
-      <div class="callout key"><b class="title">Exam must-knows</b><ul>
-        <li>Red = rule (mandatory). Black = "you are here". Yellow = "go that way".</li>
-        <li>Mandatory signs sit on the <b>left</b> side of the taxiway (and sometimes both sides) at the holding position.</li>
-      </ul></div>
-      <div class="callout law">Source: ICAO Annex 14 Chapter 5; CAP 637.</div>`,
-    mnemonics: [
-      { title: "\"Red Rules, Yellow Yonder, Black is Base\"", text: "Red signs are mandatory rules, yellow signs point yonder (directions), black signs tell you your base location." },
-      { title: "\"Black box — you're in the box\"", text: "A location sign (black with yellow border) is like a box drawn around where you are." }
-    ]
-  },
-  {
-    num: 8, lesson: "l3", title: "ICAO Aerodrome Markings", tag: "Markings",
-    summary: "Runway designators, thresholds, displaced thresholds, chevrons, holding positions and closed areas.",
-    body: () => `
-      ${markingsDiagram()}
-      <p class="diagram-cap">Runway markings are <b>white</b>; taxiway markings are <b>yellow</b>.</p>
-      <h2>Runway markings</h2>
-      <ul>
-        <li><b>Designator</b>: magnetic direction of the runway to the nearest 10°, divided by 10 (e.g. 087°M → 09). Parallel runways add L / C / R.</li>
-        <li><b>Threshold markings ("piano keys")</b>: longitudinal white stripes; the number of stripes indicates runway width (e.g. 4 for 18 m, 6 for 23 m, 8 for 30 m, 12 for 45 m, 16 for 60 m).</li>
-        <li><b>Aiming point</b>: two large white rectangles — the visual aiming point.</li>
-        <li><b>Touchdown zone markings</b>: pairs of white bars at intervals from the threshold.</li>
-        <li><b>Centreline</b>: white dashes. <b>Side stripes</b> mark runway edges.</li>
-      </ul>
-      <h2>Displaced thresholds and pre-threshold areas</h2>
-      ${thresholdDiagram()}
-      <h2>Other markings</h2>
+      <h2>Colour coding</h2>
       ${gallery(
-        markingCard("patternA", "Runway-holding position — Pattern A", "Two solid + two dashed yellow lines. STOP on the solid side. Dashed side faces the runway — you can cross from the dashed side to vacate.") +
-        markingCard("patternB", "Runway-holding position — Pattern B", "Ladder pattern. ILS / CAT II/III holding position, further from the runway than Pattern A.") +
-        markingCard("intermediate", "Intermediate holding position", "Single dashed yellow line across a taxiway (e.g. at taxiway intersections). Hold here if instructed.") +
-        markingCard("closedRunway", "White cross on a runway", "Runway (or part of it) CLOSED / unfit for use.") +
-        markingCard("closedTaxiway", "Yellow cross on a taxiway", "Taxiway (or part of it) CLOSED.") +
-        markingCard("grassMarkers", "White markers on grass", "Edge/boundary markers of an unpaved (grass) runway.")
+        colourCard("#ffffff", "#13203b", "White", "Administrative matters — e.g. charges, exam dates, licensing admin.") +
+        colourCard("#fdd835", "#13203b", "Yellow", "Operational matters, including ATS facilities and requirements.") +
+        colourCard("#f8bbd0", "#13203b", "Pink", "Safety-related topics.") +
+        colourCard("#ce93d8", "#13203b", "Mauve", "UK airspace restrictions (e.g. temporary restricted areas for displays).") +
+        colourCard("#a5d6a7", "#13203b", "Green", "Maps and charts.")
       )}
+      <p>Each AIC is numbered by colour letter, serial number and year (e.g. <span class="mono">P 012/2026</span> for a pink one). A checklist of current AICs is published periodically.</p>
+      <h2>Where AICs fit in the UK aeronautical information system</h2>
+      <table class="ref"><tr><th>Product</th><th>Used for</th></tr>
+        <tr><td><b>AIP</b> (Aeronautical Information Publication)</td><td>Permanent information. Three parts: <b>GEN</b> (general), <b>ENR</b> (en route), <b>AD</b> (aerodromes).</td></tr>
+        <tr><td><b>AIP Amendments</b></td><td>Permanent changes. Significant ones follow the <b>AIRAC</b> cycle (common effective dates every <b>28 days</b>).</td></tr>
+        <tr><td><b>AIP Supplements</b></td><td>Temporary changes of long duration, or with lots of text/charts.</td></tr>
+        <tr><td><b>NOTAM</b></td><td>Temporary or short-notice information essential to flight operations.</td></tr>
+        <tr><td><b>AIC</b></td><td>Everything else: advance notice, advice, explanation, admin.</td></tr>
+      </table>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
-        <li>White arrows before a threshold bar = displaced threshold: <b>taxi and take off OK, don't land</b> on it.</li>
-        <li>Yellow chevrons = <b>not usable</b> for normal movement (blast pad / stopway).</li>
-        <li>Pattern A: <b>solid lines = stop</b> side. Pattern B: ILS holding point.</li>
-        <li>White X = runway closed, yellow X = taxiway closed.</li>
+        <li>Pink = <b>safety</b>. Yellow = <b>operational</b> (incl. ATS). White = <b>administrative</b>. Mauve = <b>airspace restrictions</b>. Green = <b>maps/charts</b>.</li>
+        <li>AICs give information that <b>doesn't qualify</b> for the AIP or a NOTAM.</li>
       </ul></div>
-      <div class="callout trap"><b class="title">Exam traps</b><ul>
-        <li>Runway designators use <b>magnetic</b>, not true, direction.</li>
-        <li>Arrows (displaced threshold) vs chevrons (unusable) — don't mix them up.</li>
-      </ul></div>
-      <div class="callout law">Source: ICAO Annex 14 Chapter 5; CAP 637.</div>`,
+      <div class="callout law">Source: ICAO Annex 15; UK AIP GEN 3.1 (Aeronautical Information Services).</div>`,
     mnemonics: [
-      { title: "\"Solid = Stop, Dashed = Dash across\"", text: "At a Pattern A holding position you stop at the solid lines. From the runway side you may dash across the dashed lines to vacate." },
-      { title: "\"Arrows = Allowed (to roll), Chevrons = Can't\"", text: "Displaced threshold arrows: you can taxi/take off. Yellow chevrons: can't use it at all normally." },
-      { title: "\"White for wings, yellow for wheels\"", text: "Runway markings are white (where you fly from); taxiway markings yellow (where you roll)." }
+      { title: "\"Pink Peril, Yellow Yoke, White Wallet, Mauve Mind-the-airspace, Green Geography\"", text: "Pink = safety, Yellow = operational, White = admin (fees, money), Mauve = airspace restrictions, Green = maps." },
+      { title: "\"AIP = Always, NOTAM = Now, AIC = Also\"", text: "AIP is permanent, NOTAMs are short-notice/temporary, AICs cover everything else." }
     ]
   },
   {
-    num: 9, lesson: "l2", title: "Aircraft Log Books", tag: "Documents",
+    id: "chicago-search", lesson: "l1", title: "Chicago Convention: Search of Aircraft and Inspection of Documents", tag: "Chicago Convention",
+    summary: "Article 16 — states may search foreign aircraft on landing or departure and inspect their documents.",
+    body: () => `
+      <p>The <b>Convention on International Civil Aviation</b> was signed in <b>Chicago in 1944</b>. It created <b>ICAO</b> and set out the rights and duties of contracting states. Detailed Standards and Recommended Practices (SARPs) are in its <b>Annexes</b> (e.g. Annex 2 Rules of the Air, Annex 7 Registration Marks, Annex 8 Airworthiness, Annex 14 Aerodromes, Annex 15 AIS).</p>
+      <h2>Article 16 — Search of aircraft</h2>
+      <div class="callout key" style="margin-top:6px"><b class="title">The rule</b>The appropriate authorities of each contracting state have the right, <b>without unreasonable delay</b>, to <b>search</b> aircraft of the other contracting states <b>on landing or departure</b>, and to <b>inspect the certificates and other documents</b> prescribed by the Convention.</div>
+      <h3>Related articles</h3>
+      <table class="ref"><tr><th>Article</th><th>Says</th></tr>
+        <tr><td><b>11</b> Applicability of air regulations</td><td>A state's laws on admission to, departure from and operation within its territory apply to aircraft of <b>all</b> contracting states <b>without distinction of nationality</b>.</td></tr>
+        <tr><td><b>13</b> Entry and clearance regulations</td><td>A state's rules on admission/departure of <b>passengers, crew and cargo</b> (immigration, passports, customs, quarantine) must be complied with.</td></tr>
+        <tr><td><b>29</b> Documents carried</td><td>The documents the inspecting authority can ask to see — see the "Documents Carried on International Flights" topic.</td></tr>
+      </table>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>Search is allowed on <b>landing or departure</b> — not "at any time in flight".</li>
+        <li>It must be done "without <b>unreasonable delay</b>".</li>
+      </ul></div>
+      <div class="callout law">Source: Chicago Convention 1944, Articles 11, 13, 16.</div>`,
+    mnemonics: [
+      { title: "\"Sixteen: Search the Scene\"", text: "Article 16 = search aircraft and inspect documents, on landing or departure, without unreasonable delay." }
+    ]
+  },
+  {
+    id: "chicago-customs-duty", lesson: "l1", title: "Chicago Convention: Customs Duty Exemptions", tag: "Chicago Convention",
+    summary: "Article 24 — fuel, oil, spares, equipment and stores kept on board are free of customs duty.",
+    body: () => `
+      <h2>Article 24 — Customs duty</h2>
+      <ul>
+        <li>An aircraft flying to, from or across another contracting state is <b>admitted temporarily free of duty</b> (subject to that state's customs regulations).</li>
+        <li><b>Fuel, lubricating oils, spare parts, regular equipment and aircraft stores</b> on board on arrival, and <b>retained on board</b> on leaving, are <b>exempt from customs duty, inspection fees</b> and similar charges.</li>
+        <li>The exemption does <b>not</b> apply to quantities or articles <b>unloaded</b> (except in accordance with customs regulations, which may require them to be kept under customs supervision).</li>
+        <li><b>Spare parts and equipment imported</b> for installation in, or use by, an aircraft engaged in international air navigation are also admitted free of duty.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>The key words are "<b>retained on board</b>". Unload it and the exemption normally no longer applies.</li>
+        <li>Covers <b>fuel, oil, spares, regular equipment, stores</b> — not passengers' goods or cargo.</li>
+      </ul></div>
+      <div class="callout law">Source: Chicago Convention 1944, Article 24.</div>`,
+    mnemonics: [
+      { title: "\"24-hour shop: FOSES stays on board\"", text: "Article 24 — Fuel, Oil, Spares, Equipment, Stores are duty-free as long as they stay on board." }
+    ]
+  },
+  {
+    id: "chicago-rules-of-air", lesson: "l1", title: "Chicago Convention: Rules of the Air Compliance", tag: "Chicago Convention",
+    summary: "Article 12 — obey the rules of the state you're flying over; over the high seas, ICAO Annex 2 applies.",
+    body: () => `
+      ${sovereigntyDiagram()}
+      <h2>Article 12 — Rules of the air</h2>
+      <ul>
+        <li>Each state ensures that every aircraft <b>flying over its territory</b>, and every aircraft <b>carrying its nationality mark wherever it is</b>, complies with the rules and regulations on flight and manoeuvre of aircraft <b>in force there</b>.</li>
+        <li>States keep their own rules as uniform as possible with those established under the Convention.</li>
+        <li><b>Over the high seas</b>, the rules in force are those established under the Convention — <b>ICAO Annex 2 (Rules of the Air)</b>, with no national differences.</li>
+        <li>Each state undertakes to ensure the <b>prosecution</b> of all persons violating the regulations.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>A G-registered aircraft flying over France follows <b>French</b> rules.</li>
+        <li>Over international waters: <b>Annex 2</b>.</li>
+        <li>The UK uses <b>SERA</b> (Standardised European Rules of the Air), retained in UK law, plus the UK Rules of the Air Regulations 2015.</li>
+      </ul></div>
+      <div class="callout law">Source: Chicago Convention 1944, Article 12; ICAO Annex 2.</div>`,
+    mnemonics: [
+      { title: "\"When in Rome, fly as the Romans fly\"", text: "Article 12: obey the rules of the state you are over. At sea, use ICAO's Annex 2." },
+      { title: "\"Twelve miles of water, Twelve's the article\"", text: "Territorial waters are normally 12 nm, and Article 12 decides whose rules apply." }
+    ]
+  },
+  {
+    id: "radio-licensing", lesson: "l1", title: "Aircraft Radio Station and Operator Licensing", tag: "Licensing",
+    summary: "Article 30 — the radio needs a licence from the state of registry, and so does the person using it.",
+    body: () => `
+      <h2>Article 30 — Aircraft radio equipment</h2>
+      <ul>
+        <li>Aircraft of each contracting state may carry <b>radio transmitting apparatus</b> in other states only if a <b>licence to install and operate</b> it has been issued by the <b>state of registration</b>.</li>
+        <li>Radio used in another state's territory must be used <b>in accordance with that state's regulations</b>.</li>
+        <li>Radio transmitting apparatus may be used only by <b>members of the flight crew</b> who hold a <b>special licence</b> for the purpose, issued by the <b>state of registration</b>.</li>
+      </ul>
+      <h2>In the UK</h2>
+      <table class="ref"><tr><th>Licence</th><th>Covers</th><th>Issued by</th></tr>
+        <tr><td><b>Aircraft Radio Licence</b> (radio station licence)</td><td>The <b>equipment</b> installed in the aircraft</td><td><b>Ofcom</b></td></tr>
+        <tr><td><b>FRTOL</b> — Flight Radiotelephony Operator's Licence</td><td>The <b>person</b> operating the radio</td><td><b>CAA</b></td></tr>
+      </table>
+      <p>A student pilot may use the radio during flight training under the supervision of an instructor before holding an FRTOL.</p>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Two licences: one for the <b>station</b> (aircraft), one for the <b>operator</b> (pilot).</li>
+        <li>Both are issued under the authority of the <b>state of registration</b>.</li>
+        <li>The radio licence is one of the documents carried on international flights (if radio is fitted).</li>
+      </ul></div>
+      <div class="callout law">Source: Chicago Convention 1944, Article 30; Air Navigation Order 2016; Wireless Telegraphy Act 2006.</div>`,
+    mnemonics: [
+      { title: "\"Box and Brain\"", text: "The box (radio station) needs an Ofcom licence; the brain (operator) needs a CAA FRTOL." },
+      { title: "\"Thirty — talk dirty? Need a licence\"", text: "Article 30: radio needs licensing by the state of registration." }
+    ]
+  },
+  {
+    id: "chicago-customs-airports", lesson: "l1", title: "Chicago Convention: Landing at Customs Airports", tag: "Chicago Convention",
+    summary: "Article 10 — when entering or leaving a state, land at and depart from a designated customs airport.",
+    body: () => `
+      <h2>Article 10 — Landing at customs airport</h2>
+      <ul>
+        <li>Except where permitted to cross a territory without landing, every aircraft <b>entering</b> a contracting state must, if that state's regulations require, <b>land at an airport designated by that state</b> for customs and other examination.</li>
+        <li>On <b>departure</b> from the territory, the aircraft must depart from a similarly <b>designated customs airport</b>.</li>
+        <li>States <b>publish</b> the particulars of their designated customs airports (in the UK, in the AIP).</li>
+      </ul>
+      <h2>UK practice</h2>
+      <ul>
+        <li>International GA flights normally need advance notice to Border Force (the <b>General Aviation Report</b>, GAR) and may be restricted to airports with customs/immigration arrangements. Check the current requirements before any international flight.</li>
+        <li>Related: Article <b>13</b> — passengers, crew and cargo must comply with immigration, customs and quarantine rules.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Entering a state: land at a <b>designated customs airport</b>. Leaving: depart from one.</li>
+        <li>Unless the state allows you to cross without landing.</li>
+      </ul></div>
+      <div class="callout law">Source: Chicago Convention 1944, Articles 10 and 13; UK AIP GEN 1.2.</div>`,
+    mnemonics: [
+      { title: "\"Ten: in and out through the customs door\"", text: "Article 10: arrive at and depart from a designated customs airport." }
+    ]
+  },
+  {
+    id: "international-documents", lesson: "l1", title: "Documents Carried on International Flights", tag: "Documents",
+    summary: "Article 29 — the seven documents every aircraft engaged in international navigation must carry.",
+    body: () => `
+      <h2>Article 29 — Documents carried in aircraft</h2>
+      <table class="ref"><tr><th></th><th>Document</th><th>When</th></tr>
+        <tr><td>1</td><td><b>Certificate of Registration</b></td><td>Always</td></tr>
+        <tr><td>2</td><td><b>Certificate of Airworthiness</b></td><td>Always</td></tr>
+        <tr><td>3</td><td>Appropriate <b>licences for each crew member</b></td><td>Always</td></tr>
+        <tr><td>4</td><td><b>Journey log book</b></td><td>Always</td></tr>
+        <tr><td>5</td><td><b>Aircraft radio station licence</b></td><td>If equipped with radio</td></tr>
+        <tr><td>6</td><td><b>List of passengers</b> — names, places of embarkation and destination</td><td>If carrying passengers</td></tr>
+        <tr><td>7</td><td><b>Cargo manifest</b> and detailed declarations</td><td>If carrying cargo</td></tr>
+      </table>
+      <h3>Related articles</h3>
+      <ul>
+        <li><b>Art 31</b>: every aircraft in international navigation has a C of A issued or rendered valid by the <b>state of registration</b>.</li>
+        <li><b>Art 32</b>: crew licences are issued or rendered valid by the state of registration.</li>
+        <li><b>Art 33</b>: other states <b>recognise</b> certificates and licences that meet ICAO minimum standards.</li>
+        <li><b>Art 34</b>: a <b>journey log book</b> is kept for every aircraft in international navigation, recording the aircraft, crew and each journey.</li>
+      </ul>
+      <p>In practice you'll also carry the <b>insurance certificate</b>, <b>noise certificate</b> (if applicable), <b>flight manual/POH</b> and crew <b>medicals</b> — required by UK/European rules (Part-NCO) rather than by Article 29.</p>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>The pilot's <b>personal log book</b> and the <b>weight schedule</b> are <b>not</b> Article 29 documents.</li>
+        <li>Radio licence, passenger list and cargo manifest are <b>conditional</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: Chicago Convention 1944, Articles 29, 31–34; Part-NCO.GEN.135.</div>`,
+    mnemonics: [
+      { title: "\"Real Airmen Love Journeys — Radio, People, Packages\"", text: "Registration, Airworthiness, Licences, Journey log — always. Radio licence, Passenger list, cargo manifest (Packages) — when applicable." },
+      { title: "\"29 = 7 documents\"", text: "Article 29 lists seven documents: four always, three conditional." }
+    ]
+  },
+  {
+    id: "chicago-non-scheduled", lesson: "l1", title: "Chicago Convention: Right of Non-Scheduled Flight", tag: "Chicago Convention",
+    summary: "Article 5 — non-scheduled flights may enter, overfly and make technical stops without prior permission.",
+    body: () => `
+      <h2>Article 5 — Right of non-scheduled flight</h2>
+      <ul>
+        <li>Aircraft of other contracting states <b>not engaged in scheduled international air services</b> have the right to fly <b>into</b> or <b>in transit non-stop across</b> a state's territory, and to make <b>stops for non-traffic purposes</b>, <b>without obtaining prior permission</b>.</li>
+        <li>This is <b>subject to the right of the state flown over to require landing</b>.</li>
+        <li>For safety, a state may require aircraft wishing to fly over <b>regions which are inaccessible or without adequate air navigation facilities</b> to follow <b>prescribed routes</b> or obtain special permission.</li>
+        <li>Non-scheduled aircraft carrying passengers, cargo or mail <b>for remuneration or hire</b> may also do so, subject to the regulations the state may impose.</li>
+      </ul>
+      <p><b>Non-traffic purposes</b> = e.g. refuelling, repairs, weather — <b>not</b> taking on or putting down passengers, cargo or mail.</p>
+      <h3>Related articles</h3>
+      <table class="ref"><tr><th>Article</th><th>Says</th></tr>
+        <tr><td><b>6</b> Scheduled air services</td><td>No scheduled international air service may operate over or into a state <b>without special permission</b> or authorisation.</td></tr>
+        <tr><td><b>7</b> Cabotage</td><td>A state may refuse foreign aircraft permission to carry passengers, mail or cargo for hire <b>between two points within its own territory</b>.</td></tr>
+        <tr><td><b>9</b> Prohibited areas</td><td>States may restrict or prohibit flight over certain areas for military or public safety reasons.</td></tr>
+      </table>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Non-scheduled (e.g. private GA) flights: <b>no prior permission</b> needed to overfly or make technical stops.</li>
+        <li>Scheduled services: <b>need permission</b> (Art 6).</li>
+        <li>The state can still <b>require you to land</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: Chicago Convention 1944, Articles 5, 6, 7, 9.</div>`,
+    mnemonics: [
+      { title: "\"Five: free to fly (and fuel)\"", text: "Article 5: non-scheduled aircraft can enter, overfly and stop for non-traffic purposes without prior permission." },
+      { title: "\"Six needs a ticket\"", text: "Article 6: scheduled services need special permission." }
+    ]
+  },
+  {
+    id: "chicago-sovereignty", lesson: "l1", title: "Chicago Convention: Sovereignty of Airspace", tag: "Chicago Convention",
+    summary: "Article 1 — every state has complete and exclusive sovereignty over the airspace above its territory.",
+    body: () => `
+      ${sovereigntyDiagram()}
+      <h2>Article 1 — Sovereignty</h2>
+      <div class="callout key" style="margin-top:6px"><b class="title">The rule</b>The contracting states recognise that <b>every state has complete and exclusive sovereignty over the airspace above its territory</b>.</div>
+      <h3>Related articles</h3>
+      <table class="ref"><tr><th>Article</th><th>Says</th></tr>
+        <tr><td><b>2</b> Territory</td><td>A state's territory = its <b>land areas and the territorial waters adjacent</b> to them.</td></tr>
+        <tr><td><b>3</b> Civil and state aircraft</td><td>The Convention applies <b>only to civil aircraft</b>. <b>State aircraft</b> (military, customs, police) are excluded, and may not fly over or land in another state without authorisation.</td></tr>
+        <tr><td><b>9</b> Prohibited areas</td><td>A state may establish prohibited areas for military necessity or public safety, applied without distinction of nationality.</td></tr>
+        <tr><td><b>17</b> Nationality</td><td>Aircraft have the <b>nationality of the state in which they are registered</b>.</td></tr>
+        <tr><td><b>18</b> Dual registration</td><td>An aircraft <b>cannot be validly registered in more than one state</b> (but registration can be changed).</td></tr>
+        <tr><td><b>20</b> Display of marks</td><td>Aircraft in international navigation must bear their nationality and registration marks (e.g. <span class="mono">G-ABCD</span>).</td></tr>
+      </table>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>"Complete <b>and exclusive</b>" — both words matter.</li>
+        <li>Territory includes <b>territorial waters</b>, not just land.</li>
+        <li>Military, police and customs aircraft are <b>state aircraft</b> — outside the Convention.</li>
+      </ul></div>
+      <div class="callout law">Source: Chicago Convention 1944, Articles 1, 2, 3, 9, 17, 18, 20.</div>`,
+    mnemonics: [
+      { title: "\"Article One: the sky is our own\"", text: "Article 1: complete and exclusive sovereignty over the airspace above a state's territory." },
+      { title: "\"Two adds the water, Three drops the soldiers\"", text: "Art 2: territory includes territorial waters. Art 3: Convention covers civil aircraft only — not military/police/customs." }
+    ]
+  },
+  {
+    id: "notams", lesson: "l1", title: "Notice to Airmen (NOTAMs)", tag: "Information",
+    summary: "Short-notice and temporary information essential to flight — how to read the format and why you must check it.",
+    body: () => `
+      <p>A <b>NOTAM</b> is a notice distributed by telecommunication containing information about the <b>establishment, condition or change of any aeronautical facility, service, procedure or hazard</b>, the timely knowledge of which is <b>essential</b> to personnel concerned with flight operations.</p>
+      <p>Before every flight, the pilot-in-command must become familiar with <b>all available information</b> appropriate to the intended operation — that includes NOTAMs (in the UK, via NATS AIS Pre-flight Information Bulletins or flight-planning apps).</p>
+      <h2>NOTAM format</h2>
+      <table class="ref"><tr><th>Field</th><th>Contains</th></tr>
+        <tr><td class="mono">Q)</td><td><b>Qualifier line</b>: FIR / NOTAM code / traffic (I, V, IV) / purpose / scope / lower / upper limits (flight levels) / coordinates + radius (nm)</td></tr>
+        <tr><td class="mono">A)</td><td><b>Location</b> — ICAO indicator of the aerodrome or FIR affected (e.g. EGTK)</td></tr>
+        <tr><td class="mono">B)</td><td><b>Start</b> of validity — <span class="mono">YYMMDDHHMM</span> in <b>UTC</b></td></tr>
+        <tr><td class="mono">C)</td><td><b>End</b> of validity — UTC, <b>EST</b> (estimated) or <b>PERM</b> (permanent)</td></tr>
+        <tr><td class="mono">D)</td><td><b>Schedule</b> if active only at certain times (e.g. <span class="mono">0800-1600 DAILY</span>)</td></tr>
+        <tr><td class="mono">E)</td><td><b>Plain-language text</b> (abbreviated)</td></tr>
+        <tr><td class="mono">F) G)</td><td><b>Lower and upper limits</b> (for navigation warnings/airspace)</td></tr>
+      </table>
+      <p>The NOTAM code always starts with <b>Q</b>: letters 2–3 give the <b>subject</b> (e.g. FA aerodrome, MR runway), letters 4–5 the <b>condition</b> (e.g. LC closed, AS unserviceable). So <span class="mono">QMRLC</span> = runway closed.</p>
+      <div class="sim-slot" data-sim="notam"></div>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>NOTAM times are always <b>UTC</b>.</li>
+        <li>NOTAMs are for <b>temporary or short-notice</b> information; permanent changes go into the <b>AIP</b> (significant ones on the <b>28-day AIRAC</b> cycle).</li>
+        <li>Field <b>A</b> = where, <b>B</b> = from, <b>C</b> = until, <b>E</b> = what.</li>
+        <li>Checking NOTAMs is the <b>PIC's responsibility</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: ICAO Annex 15 and PANS-AIM; SERA.2010(b) (pre-flight action); UK AIP GEN 3.1.</div>`,
+    mnemonics: [
+      { title: "\"A Bee Can Eat\"", text: "A = where, B = begins, C = ceases, E = explanation." },
+      { title: "\"Q-code: Subject then State\"", text: "Letters 2–3 = what it is (subject), letters 4–5 = what's happened to it (condition). QFALC = aerodrome closed." },
+      { title: "\"NOTAM time is Zulu time\"", text: "Every NOTAM time is UTC — convert to local (BST = UTC+1 in summer)." }
+    ]
+  },
+  {
+    id: "aircraft-log-books", lesson: "l2", title: "Aircraft Log Books", tag: "Documents",
     summary: "Airframe, engine and propeller log books — what's in them and how long they're kept.",
     body: () => `
       <p>Every UK-registered aircraft must have its maintenance history recorded in log books, kept by the <b>operator/owner</b>:</p>
@@ -328,7 +304,7 @@ const TOPICS = [
     ]
   },
   {
-    num: 10, lesson: "l2", title: "Weight Schedules", tag: "Documents",
+    id: "weight-schedules", lesson: "l2", title: "Weight Schedules", tag: "Documents",
     summary: "The document giving the aircraft's basic weight and centre of gravity, and how long it's kept.",
     body: () => `
       <p>Every aircraft with a C of A must have been <b>weighed</b> and its <b>centre of gravity determined</b>. The results go into a <b>weight schedule</b>, which the operator must keep.</p>
@@ -355,7 +331,7 @@ const TOPICS = [
     ]
   },
   {
-    num: 11, lesson: "l2", title: "Night Navigation Lights & Collision Avoidance", tag: "Lights",
+    id: "night-navigation-lights", lesson: "l2", title: "Night Navigation Lights & Collision Avoidance", tag: "Lights",
     summary: "Red, green and white navigation lights, their arcs, anti-collision lights, and reading other aircraft at night.",
     body: () => `
       <svg class="diagram" style="max-width:520px;margin:10px auto;background:#0a1430" viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Navigation light arcs">
@@ -397,7 +373,7 @@ const TOPICS = [
     ]
   },
   {
-    num: 12, lesson: "l2", title: "In-Flight Right-of-Way Rules", tag: "Rules",
+    id: "in-flight-right-of-way", lesson: "l2", title: "In-Flight Right-of-Way Rules", tag: "Rules",
     summary: "Head-on, converging, overtaking, landing — plus the category hierarchy that beats the 'on your right' rule.",
     body: () => `
       <p>The aircraft that has the right of way <b>maintains its heading and speed</b> — but is never relieved of the duty to avoid a collision. The aircraft giving way should avoid passing <b>over, under or in front</b> of the other unless well clear (and allowing for wake turbulence).</p>
@@ -443,7 +419,7 @@ const TOPICS = [
     ]
   },
   {
-    num: 13, lesson: "l2", title: "Certificate of Airworthiness (C of A)", tag: "Documents",
+    id: "certificate-of-airworthiness", lesson: "l2", title: "Certificate of Airworthiness (C of A)", tag: "Documents",
     summary: "What a C of A is, how it stays valid (ARC, maintenance, flight manual limits) and the Permit to Fly alternative.",
     body: () => `
       <p>A <b>Certificate of Airworthiness</b> is issued by the State of Registry (the <b>CAA</b> for G-registered aircraft) when an aircraft conforms to its approved <b>type design</b> and is in a condition for safe operation. A UK-registered aircraft must not fly without a valid C of A — or a <b>Permit to Fly</b> where it doesn't qualify for one.</p>
@@ -475,7 +451,7 @@ const TOPICS = [
     ]
   },
   {
-    num: 14, lesson: "l2", title: "Crew Log Books", tag: "Documents",
+    id: "crew-log-books", lesson: "l2", title: "Crew Log Books", tag: "Documents",
     summary: "Your personal flying log — what to record, how flight time is defined, and how long to keep it.",
     body: () => `
       <p>Every pilot must keep a <b>reliable record</b> of all flights flown (personal flying log book).</p>
@@ -499,7 +475,7 @@ const TOPICS = [
     ]
   },
   {
-    num: 15, lesson: "l2", title: "Pilot's Operating Handbook (POH)", tag: "Documents",
+    id: "poh", lesson: "l2", title: "Pilot's Operating Handbook (POH)", tag: "Documents",
     summary: "The standard POH/AFM sections, the approved limitations, and airspeed indicator markings.",
     body: () => `
       <p>The <b>Pilot's Operating Handbook (POH)</b> / <b>Aircraft Flight Manual (AFM)</b> contains the information needed to operate the aircraft safely. Its <b>limitations</b> are legally binding and form part of the conditions of the C of A. It must be <b>carried on board</b>.</p>
@@ -538,7 +514,7 @@ const TOPICS = [
     ]
   },
   {
-    num: 16, lesson: "l2", title: "Low Flying Rules", tag: "Rules",
+    id: "low-flying", lesson: "l2", title: "Low Flying Rules", tag: "Rules",
     summary: "Minimum heights over congested areas and elsewhere — and the UK's 500 ft 'bubble'.",
     body: () => `
       <svg class="diagram" style="max-width:820px" viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Low flying minima">
@@ -586,7 +562,7 @@ const TOPICS = [
     ]
   },
   {
-    num: 17, lesson: "l2", title: "Collision Avoidance Responsibility", tag: "Rules",
+    id: "collision-avoidance", lesson: "l2", title: "Collision Avoidance Responsibility", tag: "Rules",
     summary: "The PIC is always responsible for avoiding collisions — whatever the right of way, airspace or ATC clearance.",
     body: () => `
       <ul>
@@ -615,5 +591,443 @@ const TOPICS = [
       { title: "\"Still and growing — get going\"", text: "If another aircraft doesn't move on your windscreen but gets bigger, you're on a collision course — act now." },
       { title: "\"10 degrees, 1 second\"", text: "Scan in ~10° sectors, ~1 second each." }
     ]
+  },
+  {
+    id: "crs", lesson: "l2", title: "Certificate of Release to Service (CRS)", tag: "Maintenance",
+    summary: "The signature that says maintenance was done properly and the aircraft can fly again.",
+    body: () => `
+      <p>A <b>Certificate of Release to Service (CRS)</b> is issued after maintenance. It certifies that the work was <b>carried out in accordance with the applicable requirements and approved data</b>, and that the aircraft is <b>fit for release to service</b> (in respect of that work).</p>
+      <h2>Key points</h2>
+      <ul>
+        <li>An aircraft must <b>not fly after maintenance until a CRS has been issued</b>.</li>
+        <li>Issued by <b>appropriately authorised certifying staff</b> — a licensed aircraft maintenance engineer, or an approved maintenance organisation (e.g. Part-145 / Part-CAO).</li>
+        <li>Under <b>Part-ML</b>, a <b>pilot-owner</b> may carry out limited <b>pilot-owner maintenance</b> tasks on their own light aircraft and issue the CRS for those tasks.</li>
+        <li>The CRS includes basic details of the work, the date, and the identity and authorisation reference of the person certifying it.</li>
+        <li>It's recorded in the aircraft's maintenance records (log book and/or technical log).</li>
+      </ul>
+      <h2>CRS vs other certificates</h2>
+      <table class="ref"><tr><th>Document</th><th>What it shows</th></tr>
+        <tr><td><b>CRS</b></td><td>Specific <b>maintenance</b> was completed correctly</td></tr>
+        <tr><td><b>ARC</b></td><td>The aircraft passed its <b>airworthiness review</b> (valid 12 months)</td></tr>
+        <tr><td><b>C of A</b></td><td>The aircraft conforms to its <b>type design</b> and is airworthy</td></tr>
+      </table>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>No CRS after maintenance = <b>not airworthy</b> — don't fly.</li>
+        <li>Pilot-owners may certify only the limited tasks they're permitted to do.</li>
+        <li>Check the CRS is signed when doing your pre-flight document checks.</li>
+      </ul></div>
+      <div class="callout law">Source: UK Part-ML (ML.A.801), Part-M (M.A.801), Part-145; Air Navigation Order 2016.</div>`,
+    mnemonics: [
+      { title: "\"No signature, no departure\"", text: "After any maintenance the aircraft needs a signed CRS before it flies." },
+      { title: "\"CRS = Can Resume Service\"", text: "A Certificate of Release to Service means the aircraft can resume service after the work." }
+    ]
+  },
+  {
+    id: "preflight-docs", lesson: "l2", title: "Pre-Flight Maintenance Documentation Checks", tag: "Maintenance",
+    summary: "What the PIC must check in the paperwork before accepting an aircraft for flight.",
+    body: () => `
+      <p>The pilot-in-command must not start a flight unless satisfied that the aircraft is <b>airworthy</b>, its <b>documents are valid</b> and its required equipment is serviceable. Before flight, check:</p>
+      <table class="ref"><tr><th>Check</th><th>Look for</th></tr>
+        <tr><td><b>C of A + ARC</b> (or Permit to Fly)</td><td>Valid; ARC not expired</td></tr>
+        <tr><td><b>Maintenance due</b></td><td>Hours and calendar time to the next scheduled check (e.g. 50-hour / annual). Will your flight take it over the limit?</td></tr>
+        <tr><td><b>CRS</b></td><td>Signed for the last maintenance carried out</td></tr>
+        <tr><td><b>Technical / defect log</b></td><td>Any <b>open defects</b>? Deferred defects properly recorded and acceptable for your flight?</td></tr>
+        <tr><td><b>Airworthiness Directives</b></td><td>Complied with (normally tracked by the maintenance organisation)</td></tr>
+        <tr><td><b>Certificate of Registration</b></td><td>Current</td></tr>
+        <tr><td><b>Insurance</b></td><td>Valid and covers your flight and you as pilot</td></tr>
+        <tr><td><b>Flight manual / POH</b></td><td>On board, correct for the aircraft</td></tr>
+      </table>
+      <p>After the paperwork comes the <b>physical pre-flight inspection</b> ("walk-round") using the POH checklist. Anything found that affects airworthiness must be resolved — and recorded — before flight.</p>
+      <div class="sim-slot" data-sim="preflight"></div>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>The <b>PIC</b> is responsible for being satisfied the aircraft is airworthy before flight.</li>
+        <li>Check <b>hours to next check</b> against your planned flight time.</li>
+        <li>Expired ARC, unsigned CRS or an open airworthiness defect = <b>no-go</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: Part-NCO.GEN.105 (PIC responsibilities) and NCO.GEN.135; Part-ML; SERA.2010.</div>`,
+    mnemonics: [
+      { title: "\"A-M-C-D: Airworthy, Maintenance due, CRS, Defects\"", text: "ARC valid? Maintenance not overdue (including this flight)? CRS signed? Defects cleared?" },
+      { title: "\"Paper before propeller\"", text: "Check the documents before you walk round — and long before you start the engine." }
+    ]
+  },
+  {
+    id: "landing-right-of-way", lesson: "l2", title: "Landing Right-of-Way Rules", tag: "Rules",
+    summary: "Priority for aircraft landing, the higher-gives-way-to-lower rule, gliders, and emergencies.",
+    body: () => `
+      ${landingPriorityDiagram()}
+      <table class="ref"><tr><th>Situation</th><th>Rule</th></tr>
+        <tr><td>Aircraft landing / on final</td><td>An aircraft <b>in flight, or operating on the ground or water</b>, gives way to aircraft <b>landing or in the final stages of an approach</b> to land.</td></tr>
+        <tr><td>Two or more aircraft approaching to land</td><td>The aircraft at the <b>higher level gives way</b> to the one at the lower level.</td></tr>
+        <tr><td>…but</td><td>The <b>lower</b> aircraft must <b>not take advantage</b> of this to <b>cut in front</b> of another in the final stages of approach, or to <b>overtake</b> it.</td></tr>
+        <tr><td>Gliders</td><td><b>Power-driven</b> heavier-than-air aircraft give way to <b>gliders</b> (sailplanes) approaching to land — regardless of height.</td></tr>
+        <tr><td>Emergency landing</td><td>An aircraft aware that another is <b>compelled to land</b> gives way to it.</td></tr>
+        <tr><td>Taking off</td><td>An aircraft taxiing on the manoeuvring area gives way to aircraft <b>taking off or about to take off</b>.</td></tr>
+      </table>
+      <p>After landing, vacate the runway as soon as practicable. At UK aerodromes with ATC you'll normally need a landing clearance — "Land after…" clearances may be given in some conditions.</p>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>The <b>lower</b> aircraft has priority — not the faster, not the one on the right.</li>
+        <li>A glider has priority over a powered aircraft <b>even if the glider is higher</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.3210(d)(3) (landing), SERA.3210(d)(4) (taking off).</div>`,
+    mnemonics: [
+      { title: "\"Low goes first — but no queue-jumping\"", text: "Higher gives way to lower; the lower must not cut in or overtake." },
+      { title: "\"Gliders can't go around\"", text: "Powered aircraft give way to landing gliders — they have no engine for a second attempt." },
+      { title: "\"Mayday beats everyone\"", text: "Any aircraft compelled to land gets priority." }
+    ]
+  },
+  {
+    id: "technical-log", lesson: "l2", title: "Aircraft Technical Log", tag: "Documents",
+    summary: "The day-to-day record linking flights, defects and maintenance — check it before you fly, write in it after.",
+    body: () => `
+      <p>The <b>technical log</b> is the aircraft's working record between scheduled maintenance. It's required for commercial operations and used by most clubs and training organisations; for private non-complex aircraft, Part-ML calls for an equivalent <b>continuing airworthiness record</b> system.</p>
+      <h2>Typical contents</h2>
+      <ul>
+        <li><b>Aircraft details</b> and maintenance status — hours/date when the <b>next check is due</b>.</li>
+        <li><b>Flight records</b>: date, pilot, times, flight hours, landings, fuel and oil uplifted.</li>
+        <li><b>Defect reports</b> entered by the pilot, with the <b>rectification</b> and its <b>CRS</b>.</li>
+        <li><b>Deferred defects</b> — defects allowed to be carried forward under approved procedures, with limits.</li>
+      </ul>
+      <h2>The pilot's part</h2>
+      <table class="ref"><tr><th>When</th><th>What you do</th></tr>
+        <tr><td><b>Before flight</b></td><td>Check for <b>open/deferred defects</b>, last CRS, and hours remaining to the next check.</td></tr>
+        <tr><td><b>After flight</b></td><td>Record the flight (times, hours, landings) and <b>enter any defect</b> found, so the next pilot and the engineers know.</td></tr>
+      </table>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Defects found in flight are entered in the technical log by the <b>PIC</b> at the end of the flight.</li>
+        <li>Rectification of a defect is certified with a <b>CRS</b> in the tech log.</li>
+        <li>It's the first place to check before flying an aircraft that others have flown.</li>
+      </ul></div>
+      <div class="callout law">Source: UK Part-M (M.A.306 technical log system); Part-ML (ML.A.305 aircraft continuing airworthiness record system).</div>`,
+    mnemonics: [
+      { title: "\"Read it before, write it after\"", text: "Read the tech log before flight for defects and hours; write your flight and any defects in it afterwards." },
+      { title: "\"Defect → Entry → Fix → CRS\"", text: "Every defect's journey through the tech log ends with a signed CRS (or an approved deferral)." }
+    ]
+  },
+  {
+    id: "right-of-way-obligations", lesson: "l2", title: "Right-of-Way Obligations (Maintaining Speed and Heading)", tag: "Rules",
+    summary: "What the stand-on aircraft must do, what the give-way aircraft must do — and why.",
+    body: () => `
+      ${standOnDiagram()}
+      <h2>The two roles</h2>
+      <table class="ref"><tr><th>Aircraft</th><th>Obligation</th></tr>
+        <tr><td><b>Has the right of way</b> (stand-on)</td><td><b>Maintains its heading and speed.</b></td></tr>
+        <tr><td><b>Must give way</b></td><td>Keeps out of the way. Avoids passing <b>over, under or in front</b> of the other, unless passing <b>well clear</b> and taking into account <b>wake turbulence</b>.</td></tr>
+      </table>
+      <h2>Why maintain heading and speed?</h2>
+      <p>The give-way pilot plans an avoiding manoeuvre based on where the stand-on aircraft is going. If the stand-on aircraft also manoeuvres, both pilots may turn into each other. Being <b>predictable</b> is what makes the system work.</p>
+      <h2>But you're never off the hook</h2>
+      <p>Nothing in the rules relieves the PIC of the responsibility to take whatever action <b>best avoids a collision</b>. If the give-way aircraft isn't giving way, the stand-on aircraft must act.</p>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Right of way → <b>maintain heading AND speed</b> (both).</li>
+        <li>Giving way → don't pass over, under or ahead unless well clear; allow for wake.</li>
+        <li>Collision avoidance remains <b>everyone's</b> responsibility.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.3210(a)–(b); SERA.3201.</div>`,
+    mnemonics: [
+      { title: "\"Stand on, stay on\"", text: "The stand-on aircraft stays on its heading and speed." },
+      { title: "\"Give way = go behind\"", text: "The give-way aircraft normally passes behind — never over, under or in front unless well clear." },
+      { title: "\"Predictable is survivable\"", text: "You hold heading and speed so the other pilot can plan around you." }
+    ]
+  },
+  {
+    id: "signal-area", lesson: "l3", title: "Aerodrome Signal Area", tag: "Signals",
+    summary: "Ground signals laid out in a square near the tower — mainly for non-radio pilots to read from overhead.",
+    body: () => `
+      <p>The <b>signals area</b> (signals square) is a marked square at the aerodrome, normally <b>near the control tower / ATSU</b>, positioned so it can be read <b>from the air</b>. Non-radio pilots typically overfly the aerodrome at a safe height to read it (and the windsock) before joining. Some signals are also hoisted on a <b>mast</b>, or shown on the tower.</p>
+      <h2>Signals displayed in the signals area</h2>
+      ${gallery(
+        signalCard("oneDiagonal", "Red square, ONE yellow diagonal", "Special precautions needed on approach/landing — state of the manoeuvring area is poor (or other reason).") +
+        signalCard("crossDiagonals", "Red square, yellow CROSS (both diagonals)", "Aerodrome unsafe for movement of aircraft — LANDING PROHIBITED, and the prohibition is liable to continue.") +
+        signalCard("dumbbell", "White dumb-bell", "Aircraft movements on the ground are confined to paved/hard surfaces (land, take off AND taxi on hard surfaces).") +
+        signalCard("dumbbellStripes", "Dumb-bell with black stripe on each disc", "Take off and land on RUNWAYS only, but other ground movements need not be confined to hard surfaces.") +
+        signalCard("dumbbellRedL", "Red letter L on the dumb-bell", "Light aircraft may take off and land on a runway OR on the special area marked by a white L.") +
+        signalCard("letterL", "White letter L", "Marks the part of the manoeuvring area provided for light aircraft.") +
+        signalCard("doubleCross", "White double cross", "Glider flying is in progress.") +
+        signalCard("landingT", "White landing T", "Land and take off PARALLEL to the shaft, TOWARDS the cross-arm.") +
+        signalCard("tWithDisc", "White disc above the T cross-arm", "Directions of landing and take-off do not necessarily coincide.") +
+        signalCard("rightHandArrow", "Red & yellow striped arrow (bent 90°)", "Right-hand circuit in force — turns after take-off and before landing are to the right.") +
+        signalCard("letterH", "White letter H", "Helicopters shall take off and land only within the area designated by the H.") +
+        signalCard("unserviceable", "Orange & white markers / flags", "Boundary of an unserviceable part of the manoeuvring area — keep off.")
+      )}
+      <h2>Signals on a mast, or on/near the tower</h2>
+      ${gallery(
+        signalCard("twoRedBalls", "Two red balls on a mast (vertical)", "Glider flying is in progress (mast version of the double cross).") +
+        signalCard("blackBall", "Black ball on a mast", "Directions of take-off and landing are not necessarily the same (mast version of the disc).") +
+        signalCard("greenFlag", "Rectangular green flag on a mast", "Right-hand circuit in force (mast version of the striped arrow).") +
+        signalCard("letterC", "Black letter C on yellow", "Location of the ATS reporting office — where pilots report (book in/out).") +
+        signalCard("checker", "Red & yellow chequered flag/board", "Aircraft may move on the manoeuvring area and apron only with ATC permission.") +
+        signalCard("runwayBoard", "Black numbers on a yellow board", "Shows the runway in use (direction for take-off), displayed on/near the tower.")
+      )}
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li><b>One</b> diagonal = take care. <b>Two</b> diagonals (cross) = do not land.</li>
+        <li>Plain dumb-bell = <b>everything</b> on hard surfaces. Striped dumb-bell = <b>only take-off/landing</b> on runways.</li>
+        <li>Landing T: land along the shaft <b>towards the cross-arm</b> (like the T is pointing at you on finals — the cross-arm is the far end).</li>
+        <li>Glider ops: white double cross (ground) or two red balls (mast).</li>
+        <li>"C" = <b>C</b>ontact/report here. Chequered board = ATC permission needed to move.</li>
+      </ul></div>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>Answer options will swap "special care" and "landing prohibited" — count the yellow diagonals.</li>
+        <li>The striped arrow shows a <b>right-hand</b> circuit; left-hand is the default so it has no signal.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA (UK Reg (EU) 923/2012) Appendix 1 ground signals; Rules of the Air Regulations 2015; CAP 637 Visual Aids Handbook.</div>`,
+    mnemonics: [
+      { title: "One line = Look out, Cross = Can't land", text: "A single diagonal is like a single warning line — be careful. Two diagonals cross it out — no landing." },
+      { title: "Dumb-bell = Don't leave the tarmac", text: "Plain dumb-bell: all movement on hard surfaces. Add black stripes and you're 'striped' down to runway-only for take-off & landing — taxi on grass is OK." },
+      { title: "Two red balls = 'Gliders are on the ball'", text: "Two red balls and a double cross both mean gliders. Two = double." },
+      { title: "C = Come and see us", text: "Black C on yellow is where you report to ATC/the ATSU." }
+    ]
+  },
+  {
+    id: "notification-of-arrival", lesson: "l3", title: "Notification of Arrival", tag: "Procedures",
+    summary: "Booking in and out, closing flight plans, and stopping an unnecessary search-and-rescue call-out.",
+    body: () => `
+      <p>The <b>pilot-in-command (commander)</b> is responsible for making sure the aerodrome/ATS knows about the aircraft's departure and arrival. In practice this is called <b>booking out</b> (before departure) and <b>booking in</b> (on arrival) — in person at the ATSU/reporting office (look for the <b>black C on yellow</b>), by phone, or by radio where accepted.</p>
+      <h2>If you filed a flight plan</h2>
+      <table class="ref"><tr><th>Situation</th><th>What you must do</th></tr>
+        <tr><td>Land at destination with an ATS unit</td><td>Make an <b>arrival report</b> (close the flight plan) <b>as soon as possible after landing</b>.</td></tr>
+        <tr><td>Land at an aerodrome with <b>no ATS unit</b></td><td>Report arrival as soon as practicable after landing, by the <b>quickest means available</b> (normally phone) to the <b>nearest ATS unit</b>.</td></tr>
+        <tr><td>Divert / land somewhere else</td><td>Inform ATS (destination or the nearest ATSU) <b>within 30 minutes of your ETA</b> at the planned destination, otherwise <b>overdue / search & rescue action</b> may begin.</td></tr>
+        <tr><td>Delay before departure</td><td>Inform ATS so the flight plan can be amended or cancelled.</td></tr>
+      </table>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Closing the flight plan is the <b>pilot's</b> responsibility — ATS don't do it for you.</li>
+        <li>The magic number is <b>30 minutes after ETA</b> — after this, the alerting service treats you as overdue.</li>
+        <li>No ATSU at arrival aerodrome → phone the nearest ATSU by the quickest means.</li>
+        <li><b>PPR</b> (Prior Permission Required) aerodromes: you must get permission <b>before</b> you arrive.</li>
+      </ul></div>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>"Within 30 minutes of landing" ≠ "within 30 minutes of ETA". The alerting clock runs from your <b>ETA</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.4020 (closing a flight plan); Rules of the Air Regulations 2015; UK AIP ENR 1.10.</div>`,
+    mnemonics: [
+      { title: "Book out, Book in, Close it, 30 min", text: "Before you go: book out. When you land: book in. Flight plan? Close it. Landed elsewhere? Tell ATS within 30 minutes of ETA." },
+      { title: "\"Thirty and they search\"", text: "30 minutes past ETA with no arrival report and SAR starts asking questions." }
+    ]
+  },
+  {
+    id: "aerodrome-lighting", lesson: "l3", title: "Aerodrome Lighting", tag: "Lighting",
+    summary: "Colours of runway, taxiway, approach and obstacle lighting, beacons, and the PAPI glide-slope indicator.",
+    body: () => `
+      ${lightingDiagram()}
+      <p class="diagram-cap">Schematic night view. Approach from the left. The yellow runway guard lights and the green beacon flash.</p>
+      <h2>Light colours</h2>
+      <table class="ref"><tr><th>Lighting</th><th>Colour</th><th>Notes</th></tr>
+        <tr><td>Runway edge</td><td><span class="swatch" style="background:#fff"></span>White</td><td>May be <b>yellow</b> over the last 600 m (or last third) of an instrument runway — the "caution zone".</td></tr>
+        <tr><td>Runway threshold & wing bars</td><td><span class="swatch" style="background:#2ecc71"></span>Green</td><td>Seen by aircraft on approach. "Green to go in."</td></tr>
+        <tr><td>Runway end</td><td><span class="swatch" style="background:#e53935"></span>Red</td><td>Seen by aircraft on the runway. (A green threshold light is usually red from the other side.)</td></tr>
+        <tr><td>Runway centreline</td><td><span class="swatch" style="background:#fff"></span>White</td><td>Alternating red/white from 900 m to 300 m before the end, then all red for the last 300 m.</td></tr>
+        <tr><td>Touchdown zone</td><td><span class="swatch" style="background:#fff"></span>White</td><td>Barrettes either side of centreline.</td></tr>
+        <tr><td>Approach lighting</td><td><span class="swatch" style="background:#fff"></span>White</td><td>Centreline with crossbars (UK "Calvert" pattern).</td></tr>
+        <tr><td>Taxiway edge</td><td><span class="swatch" style="background:#4c8dff"></span>Blue</td><td>"Blue for boundaries."</td></tr>
+        <tr><td>Taxiway centreline</td><td><span class="swatch" style="background:#2ecc71"></span>Green</td><td>Alternate green/yellow where it crosses a runway or ILS-sensitive area.</td></tr>
+        <tr><td>Stop bar</td><td><span class="swatch" style="background:#e53935"></span>Red</td><td>Row across taxiway at a holding position. <b>Never cross a lit red stop bar</b> — even with a clearance.</td></tr>
+        <tr><td>Runway guard lights</td><td><span class="swatch" style="background:#ffd600"></span>Flashing yellow</td><td>Pairs flashing alternately ("wig-wags") at runway-holding positions: runway ahead!</td></tr>
+        <tr><td>Obstacle lights</td><td><span class="swatch" style="background:#e53935"></span>Red</td><td>Steady or flashing; very tall obstacles may have flashing high-intensity white.</td></tr>
+        <tr><td>Aerodrome identification beacon</td><td><span class="swatch" style="background:#2ecc71"></span>Green / <span class="swatch" style="background:#e53935"></span>Red</td><td>Flashes a two-letter <b>Morse</b> ID: <b>green at civil</b> aerodromes, <b>red at military</b>.</td></tr>
+        <tr><td>Aerodrome location beacon</td><td><span class="swatch" style="background:#fff"></span>Flashing white</td><td>(or alternating white & colour) to show where an aerodrome is.</td></tr>
+      </table>
+      <h2>PAPI — Precision Approach Path Indicator</h2>
+      <p>Usually <b>four</b> light units in a row beside the runway (normally on the left), each showing white above its set angle and red below. For a standard <b>3°</b> approach you should see <b>two white, two red</b>. An <b>APAPI</b> (abbreviated) has only two units.</p>
+      <div class="sim-slot" data-sim="papi"></div>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Threshold <b>green</b>, end <b>red</b>, runway edge <b>white</b>; taxiway edge <b>blue</b>, taxiway centreline <b>green</b>.</li>
+        <li>PAPI: 2 white + 2 red = on slope. All white = too high. All red = too low.</li>
+        <li>Civil identification beacon: <b>green Morse</b>. Military: <b>red</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: ICAO Annex 14; CAP 168 Licensing of Aerodromes; CAP 637.</div>`,
+    mnemonics: [
+      { title: "\"Green to get in, red at the end\"", text: "Threshold lights green as you arrive; runway end lights red to stop you running off." },
+      { title: "\"Blue for boundaries\"", text: "Taxiway EDGE lights are blue; the centreline you follow is green." },
+      { title: "PAPI: \"Two and two, you're true\"", text: "2 white/2 red = 3° slope. \"All white, you're out of sight (too high). All red, you're dead (too low).\"" },
+      { title: "Civil = Green = Grass & Gliders", text: "Civil aerodrome ID beacon flashes green Morse; military flashes red." }
+    ]
+  },
+  {
+    id: "light-signals", lesson: "l3", title: "Aerodrome Light Signals", tag: "Signals",
+    summary: "Signal lamp (light gun) signals from the tower to aircraft in the air and on the ground — and how you acknowledge.",
+    body: () => `
+      <p>Used for radio failure or non-radio aircraft. The tower aims a signal lamp at you. Same colours mean different things in the air and on the ground, but they follow a pattern.</p>
+      <div class="two-col">
+        <div><h3>To aircraft IN FLIGHT</h3>
+        <table class="ref"><tr><th>Signal</th><th>Meaning</th></tr>
+          <tr><td><span class="swatch" style="background:#2ecc71"></span>Steady green</td><td>Cleared to <b>land</b></td></tr>
+          <tr><td><span class="swatch" style="background:#e53935"></span>Steady red</td><td><b>Give way</b> to other aircraft and <b>continue circling</b></td></tr>
+          <tr><td><span class="swatch" style="background:#2ecc71"></span>Green flashes</td><td><b>Return for landing</b> (a steady green to land will follow)</td></tr>
+          <tr><td><span class="swatch" style="background:#e53935"></span>Red flashes</td><td>Aerodrome <b>unsafe — do not land</b></td></tr>
+          <tr><td><span class="swatch" style="background:#fff"></span>White flashes</td><td><b>Land at this aerodrome and proceed to the apron</b></td></tr>
+          <tr><td>🎆 Red pyrotechnic</td><td>Notwithstanding any previous instructions, <b>do not land for the time being</b></td></tr>
+        </table></div>
+        <div><h3>To aircraft ON THE GROUND</h3>
+        <table class="ref"><tr><th>Signal</th><th>Meaning</th></tr>
+          <tr><td><span class="swatch" style="background:#2ecc71"></span>Steady green</td><td>Cleared for <b>take-off</b></td></tr>
+          <tr><td><span class="swatch" style="background:#e53935"></span>Steady red</td><td><b>Stop</b></td></tr>
+          <tr><td><span class="swatch" style="background:#2ecc71"></span>Green flashes</td><td>Cleared to <b>taxi</b></td></tr>
+          <tr><td><span class="swatch" style="background:#e53935"></span>Red flashes</td><td><b>Taxi clear</b> of the landing area in use</td></tr>
+          <tr><td><span class="swatch" style="background:#fff"></span>White flashes</td><td><b>Return to starting point</b> on the aerodrome</td></tr>
+        </table></div>
+      </div>
+      <h2>Acknowledging signals</h2>
+      <table class="ref"><tr><th></th><th>By day</th><th>By night</th></tr>
+        <tr><td><b>In flight</b></td><td><b>Rock the wings</b> (not on base or final turns)</td><td>Flash <b>landing lights twice</b> (or nav lights twice if no landing lights)</td></tr>
+        <tr><td><b>On the ground</b></td><td>Move <b>ailerons or rudder</b></td><td>Flash <b>landing lights twice</b> (or nav lights twice)</td></tr>
+      </table>
+      <h2>Signals FROM an aircraft</h2>
+      <table class="ref"><tr><th>Signal</th><th>Meaning</th></tr>
+        <tr><td>Repeated switching on/off of <b>landing lights</b>, or irregular flashing of nav lights</td><td><b>Urgency</b> — difficulties compel the aircraft to land, but it doesn't need immediate assistance</td></tr>
+        <tr><td><b>Red pyrotechnic / red flare</b> fired by the aircraft</td><td><b>Distress</b> — immediate assistance required</td></tr>
+      </table>
+      <div class="sim-slot" data-sim="lights"></div>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>Steady red in the air ≠ "don't land" — it means <b>give way and keep circling</b>. "Don't land" is <b>flashing</b> red.</li>
+        <li>White flashes: in the air = land & go to the apron; on the ground = go back to the start.</li>
+        <li>Never rock wings to acknowledge on base or final — you need the wings level.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA Appendix 1 (signals) section 4.2; Rules of the Air Regulations 2015.</div>`,
+    mnemonics: [
+      { title: "Steady = Simple", text: "Steady GREEN = go (land / take off). Steady RED = stop (circle and give way / stop)." },
+      { title: "Flashing = do something else", text: "Flashing GREEN = 'Get ready / come back' (return to land · taxi). Flashing RED = 'Get out of here' (don't land here · taxi off the runway). Flashing WHITE = 'Go home' (land & go to apron · back to start)." },
+      { title: "\"Red rocket, don't drop it\"", text: "Red pyrotechnic from the tower: don't land for now, whatever you were told before." },
+      { title: "Day: rock & roll · Night: flash flash", text: "In the air by day, rock the wings; on the ground by day, wiggle the ailerons/rudder. At night, flash the landing lights twice." }
+    ]
+  },
+  {
+    id: "declared-distances", lesson: "l3", title: "Declared Distances", tag: "Performance",
+    summary: "TORA, TODA, ASDA (EDA) and LDA — what each runway distance includes, with an interactive runway.",
+    body: () => `
+      <table class="ref"><tr><th>Distance</th><th>Definition</th><th>Formula</th></tr>
+        <tr><td><b>TORA</b><br>Take-Off Run Available</td><td>Length of runway declared available and suitable for the <b>ground run</b> of an aeroplane taking off.</td><td class="mono">Runway</td></tr>
+        <tr><td><b>TODA</b><br>Take-Off Distance Available</td><td>TORA plus any <b>clearway</b> — the distance for the take-off run AND initial climb (to screen height).</td><td class="mono">TORA + clearway</td></tr>
+        <tr><td><b>ASDA</b> (UK also: <b>EDA</b>)<br>Accelerate-Stop / Emergency Distance Available</td><td>TORA plus any <b>stopway</b> — distance to accelerate and then stop after an abandoned take-off.</td><td class="mono">TORA + stopway</td></tr>
+        <tr><td><b>LDA</b><br>Landing Distance Available</td><td>Length of runway available and suitable for the <b>ground run of a landing</b> aeroplane. Starts at the (possibly displaced) threshold.</td><td class="mono">Runway − displaced threshold</td></tr>
+      </table>
+      <h3>Clearway vs stopway</h3>
+      <ul>
+        <li><b>Clearway</b>: a defined area beyond the end of the TORA, on the ground or water, under the aerodrome's control, <b>free of obstacles</b>, over which an aeroplane can make part of its initial climb. It doesn't need to be able to bear the aircraft's weight. Normally no longer than <b>half the TORA</b>.</li>
+        <li><b>Stopway</b>: a prepared rectangular area beyond the end of the TORA, able to <b>support the aircraft</b> if a take-off is abandoned. Not for normal take-off or landing (often marked with yellow chevrons).</li>
+        <li>A <b>displaced threshold</b> reduces the <b>LDA</b> (in that direction) but the displaced section is usually still available for <b>take-off</b>, so TORA is unaffected.</li>
+      </ul>
+      <div class="sim-slot" data-sim="declared"></div>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>TODA ≥ TORA and ASDA ≥ TORA always. LDA ≤ runway length.</li>
+        <li>Clear<b>way</b> = <b>air</b>borne part (climb). Stop<b>way</b> = <b>stop</b>ping part (ground).</li>
+        <li>UK uses <b>EDA</b> for the same thing as ASDA.</li>
+      </ul></div>
+      <div class="callout law">Source: ICAO Annex 14; CAP 168; UK AIP AD 2 aerodrome entries (declared distances table).</div>`,
+    mnemonics: [
+      { title: "\"Clearway Climbs, Stopway Stops\"", text: "Clearway is added to TORA to give TODA (you're climbing over it). Stopway is added to TORA to give ASDA (you're braking on it)." },
+      { title: "TODA = TORA + 'Open Air'", text: "The extra letters in TODA hint at Distance in the air → clearway." },
+      { title: "\"Displaced threshold, Damaged LDA\"", text: "A displaced threshold only shortens the Landing Distance Available." }
+    ]
+  },
+  {
+    id: "ground-right-of-way", lesson: "l3", title: "Ground Right-of-Way Rules", tag: "Rules",
+    summary: "Who gives way when aircraft (and vehicles) meet on the manoeuvring area.",
+    body: () => `
+      ${groundRightOfWayDiagram()}
+      <h2>Aircraft taxiing on the manoeuvring area</h2>
+      <table class="ref"><tr><th>Situation</th><th>Rule</th></tr>
+        <tr><td><b>Head-on</b> (or approximately)</td><td>Both <b>stop</b>, or where practicable <b>alter course to the right</b> so as to keep well clear.</td></tr>
+        <tr><td><b>Converging</b></td><td>The aircraft that has the other <b>on its right</b> gives way.</td></tr>
+        <tr><td><b>Overtaking</b></td><td>The aircraft being overtaken has right of way; the <b>overtaking</b> aircraft keeps <b>well clear</b>.</td></tr>
+        <tr><td>Aircraft taking off / landing</td><td>A taxiing aircraft <b>gives way</b> to aircraft taking off, about to take off, or landing.</td></tr>
+        <tr><td>Runway-holding positions</td><td><b>Stop and hold</b> at all runway-holding positions unless ATC clears you further.</td></tr>
+        <tr><td>Stop bars</td><td><b>Stop and hold at a lit stop bar</b>; proceed only when the lights are switched off (and you're cleared).</td></tr>
+      </table>
+      <h2>UK order of priority on the ground</h2>
+      <ol>
+        <li>Aircraft <b>taking off or landing</b></li>
+        <li>Aircraft <b>taxiing</b></li>
+        <li><b>Vehicles towing aircraft</b></li>
+        <li>Other vehicles and persons (give way to all of the above)</li>
+      </ol>
+      <p>Emergency vehicles responding to an emergency should be given priority over all other surface traffic.</p>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Ground and air share the same three geometry rules: head-on → right; converging → give way to the one on your right; overtaken has priority.</li>
+        <li>On the ground, head-on also allows "<b>stop</b>".</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.3210(d)(4); Rules of the Air Regulations 2015.</div>`,
+    mnemonics: [
+      { title: "\"Right is might\"", text: "Converging: whoever is on the RIGHT has right of way." },
+      { title: "\"Planes before trains (of tugs) before cars\"", text: "Take-off/landing aircraft → taxiing aircraft → vehicles towing aircraft → other vehicles & people." }
+    ]
+  },
+  {
+    id: "airfield-signage", lesson: "l3", title: "Airfield Signage", tag: "Signs",
+    summary: "Mandatory (red), location (black) and information/direction (yellow) signs on the manoeuvring area.",
+    body: () => `
+      <div class="gallery-wrap"><button class="btn small ghost gallery-toggle">🙈 Hide meanings — test yourself</button>
+      <div class="gallery" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">
+        <figure class="sigcard"><div class="sign-row"><span class="sign mand">09-27</span></div><figcaption><b class="hideable">Runway designation sign (mandatory)</b><span class="meaning">White on red. Runway-holding position for runway 09/27 — do not enter without clearance.</span></figcaption></figure>
+        <figure class="sigcard"><div class="sign-row"><span class="sign mand">B2</span></div><figcaption><b class="hideable">Holding position sign (mandatory)</b><span class="meaning">White on red. A designated holding point — stop here unless cleared beyond.</span></figcaption></figure>
+        <figure class="sigcard"><div class="sign-row"><span class="sign mand">⊖</span></div><figcaption><b class="hideable">NO ENTRY sign (mandatory)</b><span class="meaning">White symbol on red. Entry to this area is prohibited.</span></figcaption></figure>
+        <figure class="sigcard"><div class="sign-row"><span class="sign mand">CAT II</span></div><figcaption><b class="hideable">Category holding sign (mandatory)</b><span class="meaning">Holding position for ILS CAT II/III operations.</span></figcaption></figure>
+        <figure class="sigcard"><div class="sign-row"><span class="sign loc">A</span></div><figcaption><b class="hideable">Location sign</b><span class="meaning">Yellow on black with a yellow border. "You are on taxiway A."</span></figcaption></figure>
+        <figure class="sigcard"><div class="sign-row"><span class="sign dir">← B</span><span class="sign dir">C ↗</span></div><figcaption><b class="hideable">Direction signs</b><span class="meaning">Black on yellow with arrows. Show the direction to other taxiways.</span></figcaption></figure>
+        <figure class="sigcard"><div class="sign-row"><span class="sign loc">A</span><span class="sign dir">← B</span></div><figcaption><b class="hideable">Location + direction (combined)</b><span class="meaning">You are on A; B is to the left.</span></figcaption></figure>
+        <figure class="sigcard"><div class="sign-row"><span class="sign dir">APRON →</span></div><figcaption><b class="hideable">Destination sign</b><span class="meaning">Black on yellow. Direction to a destination (apron, fuel, cargo…).</span></figcaption></figure>
+        <figure class="sigcard"><div class="sign-row"><span class="sign dir">B ↘</span></div><figcaption><b class="hideable">Runway exit sign</b><span class="meaning">Black on yellow. Identifies the exit taxiway from the runway.</span></figcaption></figure>
+        <figure class="sigcard"><div class="sign-row"><span class="sign dir" style="padding:4px 10px"><svg width="56" height="26" viewBox="0 0 56 26"><line x1="2" y1="5" x2="54" y2="5" stroke="#111" stroke-width="2.5" stroke-dasharray="5 4"/><line x1="2" y1="11" x2="54" y2="11" stroke="#111" stroke-width="2.5" stroke-dasharray="5 4"/><line x1="2" y1="17" x2="54" y2="17" stroke="#111" stroke-width="2.5"/><line x1="2" y1="23" x2="54" y2="23" stroke="#111" stroke-width="2.5"/></svg></span></div><figcaption><b class="hideable">Runway vacated sign</b><span class="meaning">Black holding-marking symbol on yellow. Seen when leaving the runway: once past it you're clear of the runway / ILS sensitive area.</span></figcaption></figure>
+        <figure class="sigcard"><div class="sign-row"><span class="sign dist">3</span></div><figcaption><b class="hideable">Runway distance remaining</b><span class="meaning">White on black beside the runway: thousands of feet (or metres) of runway left.</span></figcaption></figure>
+      </div></div>
+      <table class="ref"><tr><th>Type</th><th>Colours</th><th>Meaning</th></tr>
+        <tr><td><b>Mandatory instruction</b></td><td>White on <b>red</b></td><td>Must be obeyed — do not proceed beyond without ATC clearance.</td></tr>
+        <tr><td><b>Location</b></td><td>Yellow on <b>black</b> (yellow border)</td><td>Where you are.</td></tr>
+        <tr><td><b>Information / direction / destination</b></td><td>Black on <b>yellow</b></td><td>Where to go.</td></tr>
+      </table>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Red = rule (mandatory). Black = "you are here". Yellow = "go that way".</li>
+        <li>Mandatory signs sit on the <b>left</b> side of the taxiway (and sometimes both sides) at the holding position.</li>
+      </ul></div>
+      <div class="callout law">Source: ICAO Annex 14 Chapter 5; CAP 637.</div>`,
+    mnemonics: [
+      { title: "\"Red Rules, Yellow Yonder, Black is Base\"", text: "Red signs are mandatory rules, yellow signs point yonder (directions), black signs tell you your base location." },
+      { title: "\"Black box — you're in the box\"", text: "A location sign (black with yellow border) is like a box drawn around where you are." }
+    ]
+  },
+  {
+    id: "aerodrome-markings", lesson: "l3", title: "ICAO Aerodrome Markings", tag: "Markings",
+    summary: "Runway designators, thresholds, displaced thresholds, chevrons, holding positions and closed areas.",
+    body: () => `
+      ${markingsDiagram()}
+      <p class="diagram-cap">Runway markings are <b>white</b>; taxiway markings are <b>yellow</b>.</p>
+      <h2>Runway markings</h2>
+      <ul>
+        <li><b>Designator</b>: magnetic direction of the runway to the nearest 10°, divided by 10 (e.g. 087°M → 09). Parallel runways add L / C / R.</li>
+        <li><b>Threshold markings ("piano keys")</b>: longitudinal white stripes; the number of stripes indicates runway width (e.g. 4 for 18 m, 6 for 23 m, 8 for 30 m, 12 for 45 m, 16 for 60 m).</li>
+        <li><b>Aiming point</b>: two large white rectangles — the visual aiming point.</li>
+        <li><b>Touchdown zone markings</b>: pairs of white bars at intervals from the threshold.</li>
+        <li><b>Centreline</b>: white dashes. <b>Side stripes</b> mark runway edges.</li>
+      </ul>
+      <h2>Displaced thresholds and pre-threshold areas</h2>
+      ${thresholdDiagram()}
+      <h2>Other markings</h2>
+      ${gallery(
+        markingCard("patternA", "Runway-holding position — Pattern A", "Two solid + two dashed yellow lines. STOP on the solid side. Dashed side faces the runway — you can cross from the dashed side to vacate.") +
+        markingCard("patternB", "Runway-holding position — Pattern B", "Ladder pattern. ILS / CAT II/III holding position, further from the runway than Pattern A.") +
+        markingCard("intermediate", "Intermediate holding position", "Single dashed yellow line across a taxiway (e.g. at taxiway intersections). Hold here if instructed.") +
+        markingCard("closedRunway", "White cross on a runway", "Runway (or part of it) CLOSED / unfit for use.") +
+        markingCard("closedTaxiway", "Yellow cross on a taxiway", "Taxiway (or part of it) CLOSED.") +
+        markingCard("grassMarkers", "White markers on grass", "Edge/boundary markers of an unpaved (grass) runway.")
+      )}
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>White arrows before a threshold bar = displaced threshold: <b>taxi and take off OK, don't land</b> on it.</li>
+        <li>Yellow chevrons = <b>not usable</b> for normal movement (blast pad / stopway).</li>
+        <li>Pattern A: <b>solid lines = stop</b> side. Pattern B: ILS holding point.</li>
+        <li>White X = runway closed, yellow X = taxiway closed.</li>
+      </ul></div>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>Runway designators use <b>magnetic</b>, not true, direction.</li>
+        <li>Arrows (displaced threshold) vs chevrons (unusable) — don't mix them up.</li>
+      </ul></div>
+      <div class="callout law">Source: ICAO Annex 14 Chapter 5; CAP 637.</div>`,
+    mnemonics: [
+      { title: "\"Solid = Stop, Dashed = Dash across\"", text: "At a Pattern A holding position you stop at the solid lines. From the runway side you may dash across the dashed lines to vacate." },
+      { title: "\"Arrows = Allowed (to roll), Chevrons = Can't\"", text: "Displaced threshold arrows: you can taxi/take off. Yellow chevrons: can't use it at all normally." },
+      { title: "\"White for wings, yellow for wheels\"", text: "Runway markings are white (where you fly from); taxiway markings yellow (where you roll)." }
+    ]
   }
 ];
+
+TOPICS.forEach((topic, index) => {
+  topic.num = index + 1;
+});

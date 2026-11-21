@@ -35,11 +35,11 @@ To run locally: `python3 -m http.server` in this folder, then open `http://local
 ## Adding a topic
 
 1. **Lesson** — if it's a new lesson, add it to `LESSONS` and `LESSON_ORDER` in `js/data/topics.js`.
-2. **Topic** — add an object to `TOPICS` in `js/data/topics.js`:
+2. **Topic** — add an object to `TOPICS` in `js/data/topics.js`, in the position it appears on the tracker. Topic numbers are worked out from the order of the array, so inserting a topic renumbers the rest automatically. The `id` is permanent — saved progress and questions are linked to it, so never change an existing one:
 
    ```js
    {
-     num: 18, lesson: "l4", title: "New Topic", tag: "Rules",
+     id: "new-topic", lesson: "l4", title: "New Topic", tag: "Rules",
      summary: "One-line summary.",
      body: () => `<p>Notes as HTML…</p>`,
      mnemonics: [{ title: "Memory aid", text: "How it works." }]
@@ -49,10 +49,10 @@ To run locally: `python3 -m http.server` in this folder, then open `http://local
 3. **Questions** — add lines to `QUESTIONS` in `js/data/questions.js`. The correct answer goes first (index `0`); options are shuffled when shown:
 
    ```js
-   Q(18, "Question text?", ["Correct answer", "Wrong", "Wrong", "Wrong"], 0, "Explanation."),
+   Q("new-topic", "Question text?", ["Correct answer", "Wrong", "Wrong", "Wrong"], 0, "Explanation."),
    ```
 
-4. **Simulator (optional)** — write a `mountSomething(element)` function in `js/simulators.js`, register it in `SIMULATORS`, and put `<div class="sim-slot" data-sim="something"></div>` in the topic body.
+4. **Simulator (optional)** — write a `mountSomething(element)` function in `js/simulators.js`, register it in `SIMULATORS` with `topicId: "new-topic"`, and put `<div class="sim-slot" data-sim="something"></div>` in the topic body.
 
 Progress (confident topics, saved mistakes, mock exam history) lives in the browser's localStorage.
 

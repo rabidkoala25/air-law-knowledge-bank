@@ -274,3 +274,72 @@ function groundRightOfWayDiagram() {
   const overtaking = box(`<rect x="100" y="28" width="4" height="170" fill="#ffd600"/>${aircraftIcon(102, 80, 0, "#ff6b6b", 1.2)}${aircraftIcon(102, 160, 0, "#4c8dff", 1.2)}<path d="M112 145 Q140 120 130 70" stroke="#4c8dff" stroke-width="2.5" fill="none"/><text x="110" y="192" text-anchor="middle" fill="#fff" font-size="11" font-family="Inter,sans-serif">Overtaker (blue) keeps well clear</text>`, "Overtaking");
   return `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0">${headOn}${converging}${overtaking}</div>`;
 }
+
+function sovereigntyDiagram() {
+  return `<svg class="diagram" viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sovereign airspace, territorial waters and high seas">
+    <rect width="820" height="300" fill="#dcecfb"/>
+    <rect x="0" y="40" width="540" height="200" fill="rgba(29,91,214,.12)" stroke="#1d5bd6" stroke-dasharray="7 5"/>
+    <rect x="0" y="240" width="380" height="60" fill="#5b8a3c"/>
+    <rect x="380" y="240" width="160" height="60" fill="#5fa8d3"/>
+    <rect x="540" y="240" width="280" height="60" fill="#2f6f9f"/>
+    <line x1="540" y1="20" x2="540" y2="300" stroke="#c42b2b" stroke-width="2"/>
+    ${aircraftIcon(200, 140, 90, "#13203b", 1.3)}
+    ${aircraftIcon(680, 140, 90, "#13203b", 1.3)}
+    <g font-family="Inter,sans-serif" font-weight="700" font-size="13">
+      <text x="20" y="64" fill="#1d5bd6">State's sovereign airspace (Art 1 &amp; 2)</text>
+      <text x="20" y="82" fill="#13203b" font-weight="400">complete and exclusive sovereignty · that state's rules apply (Art 12)</text>
+      <text x="560" y="64" fill="#c42b2b">High seas</text>
+      <text x="560" y="82" fill="#13203b" font-weight="400">ICAO Annex 2 rules apply</text>
+      <text x="560" y="98" fill="#13203b" font-weight="400">(no national deviations)</text>
+      <text x="20" y="276" fill="#fff">Land territory</text>
+      <text x="392" y="268" fill="#fff">Territorial waters</text>
+      <text x="392" y="284" fill="#fff" font-weight="400">(normally 12 nm)</text>
+      <text x="560" y="276" fill="#fff">International waters</text>
+    </g>
+  </svg>`;
+}
+
+function colourCard(colour, textColour, name, meaning) {
+  return `<figure class="sigcard"><div style="height:90px;border-radius:8px;background:${colour};display:grid;place-items:center;color:${textColour};font-weight:800;font-size:18px;border:1px solid rgba(0,0,0,.15)">AIC</div><figcaption><b class="hideable">${name}</b><span class="meaning">${meaning}</span></figcaption></figure>`;
+}
+
+function landingPriorityDiagram() {
+  return `<svg class="diagram" viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Landing priority side view">
+    <rect width="820" height="260" fill="#dcecfb"/>
+    <rect y="220" width="820" height="40" fill="#5b8a3c"/>
+    <rect x="620" y="216" width="200" height="8" fill="#4a4f57"/>
+    <line x1="640" y1="220" x2="40" y2="40" stroke="#16834a" stroke-width="2" stroke-dasharray="7 5"/>
+    ${aircraftIcon(400, 152, 106, "#1d5bd6", 1.5)}
+    ${aircraftIcon(200, 60, 106, "#d32f2f", 1.5)}
+    <path d="M200 84 Q260 120 300 110" stroke="#d32f2f" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
+    <g font-family="Inter,sans-serif" font-size="13" font-weight="700">
+      <text x="420" y="140" fill="#1d5bd6">LOWER aircraft — has priority</text>
+      <text x="420" y="156" fill="#13203b" font-weight="400">but must not cut in front of / overtake one on final</text>
+      <text x="220" y="40" fill="#d32f2f">HIGHER aircraft — gives way</text>
+      <text x="40" y="200" fill="#13203b" font-weight="400">Everyone in flight or on the ground gives way to aircraft landing / on final approach.</text>
+      <text x="40" y="216" fill="#13203b" font-weight="400">Powered aircraft give way to gliders — even if the glider is higher.</text>
+    </g>
+  </svg>`;
+}
+
+function standOnDiagram() {
+  return `<svg class="diagram" viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stand-on and give-way aircraft">
+    <rect width="820" height="300" fill="#dcecfb"/>
+    <line x1="120" y1="150" x2="760" y2="150" stroke="#16834a" stroke-width="3"/>
+    <polygon points="760,140 780,150 760,160" fill="#16834a"/>
+    ${aircraftIcon(120, 150, 90, "#16834a", 1.6)}
+    ${aircraftIcon(420, 270, 0, "#d32f2f", 1.6)}
+    <path d="M420 250 L420 205" stroke="#d32f2f" stroke-width="2.5" fill="none"/>
+    <path d="M420 205 Q425 185 460 190 Q520 205 520 175 L520 70" stroke="#d32f2f" stroke-width="2.5" fill="none" stroke-dasharray="6 4"/>
+    <line x1="420" y1="205" x2="420" y2="90" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3 5" opacity=".5"/>
+    <text x="410" y="110" text-anchor="end" font-size="28" fill="#d32f2f" font-family="Inter,sans-serif">✕</text>
+    <g font-family="Inter,sans-serif" font-size="13">
+      <text x="110" y="120" fill="#16834a" font-weight="700">Stand-on aircraft (right of way)</text>
+      <text x="110" y="136" fill="#13203b">maintains heading AND speed</text>
+      <text x="530" y="90" fill="#d32f2f" font-weight="700">Give-way aircraft</text>
+      <text x="530" y="106" fill="#13203b">passes well clear — normally behind</text>
+      <text x="530" y="122" fill="#13203b">allows for wake turbulence</text>
+      <text x="180" y="88" fill="#d32f2f">don't pass over, under or in front</text>
+    </g>
+  </svg>`;
+}
