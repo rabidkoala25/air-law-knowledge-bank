@@ -1,10 +1,16 @@
 const LESSONS = {
   l1: { name: "Lesson 1 — Legislation", short: "Lesson 1" },
   l3: { name: "Lesson 3 — Aerodromes", short: "Lesson 3" },
+  l4: { name: "Lesson 4 — Altimeter Settings & Airspace", short: "Lesson 4" },
+  l5: { name: "Lesson 5 — Air Traffic Management, Security, Customs & Immigration", short: "Lesson 5" },
+  l6: { name: "Lesson 6 — Visual Flight Rules & Instrument Flight Rules", short: "Lesson 6" },
+  l7: { name: "Lesson 7 — Pilot Licences", short: "Lesson 7" },
+  l8: { name: "Lesson 8 — Operating an Aircraft", short: "Lesson 8" },
+  l9: { name: "Lesson 9 — Distress, Urgency, Safety, Warning, SAR & Accidents", short: "Lesson 9" },
   l2: { name: "Lesson 2 — Registration, Airworthiness & Rules of the Air", short: "Lesson 2" }
 };
 
-const LESSON_ORDER = ["l1", "l2", "l3"];
+const LESSON_ORDER = ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9"];
 
 const TOPICS = [
   {
@@ -98,9 +104,12 @@ const TOPICS = [
         <li><b>Over the high seas</b>, the rules in force are those established under the Convention — <b>ICAO Annex 2 (Rules of the Air)</b>, with no national differences.</li>
         <li>Each state undertakes to ensure the <b>prosecution</b> of all persons violating the regulations.</li>
       </ul>
+      <h2>Article 38 — Departures from ICAO standards</h2>
+      <p>A state <b>may</b> adopt rules that differ from ICAO standards, but it must <b>notify ICAO</b> of the differences, and they are <b>published</b>. The UK lists its differences in <b>AIP GEN 1.7</b>. Over the high seas, no differences are allowed.</p>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>A G-registered aircraft flying over France follows <b>French</b> rules.</li>
         <li>Over international waters: <b>Annex 2</b>.</li>
+        <li>States may differ from ICAO rules <b>as long as the differences are notified and published</b> (Article 38).</li>
         <li>The UK uses <b>SERA</b> (Standardised European Rules of the Air), retained in UK law, plus the UK Rules of the Air Regulations 2015.</li>
       </ul></div>
       <div class="callout law">Source: Chicago Convention 1944, Article 12; ICAO Annex 2.</div>`,
@@ -253,7 +262,7 @@ const TOPICS = [
     summary: "Short-notice and temporary information essential to flight — how to read the format and why you must check it.",
     body: () => `
       <p>A <b>NOTAM</b> is a notice distributed by telecommunication containing information about the <b>establishment, condition or change of any aeronautical facility, service, procedure or hazard</b>, the timely knowledge of which is <b>essential</b> to personnel concerned with flight operations.</p>
-      <p>Before every flight, the pilot-in-command must become familiar with <b>all available information</b> appropriate to the intended operation — that includes NOTAMs (in the UK, via NATS AIS Pre-flight Information Bulletins or flight-planning apps).</p>
+      <p>Before every flight, the pilot-in-command must become familiar with <b>all available information</b> appropriate to the intended operation — that includes up-to-date <b>weather</b> and NOTAMs (in the UK, via NATS AIS Pre-flight Information Bulletins or flight-planning apps).</p>
       <h2>NOTAM format</h2>
       <table class="ref"><tr><th>Field</th><th>Contains</th></tr>
         <tr><td class="mono">Q)</td><td><b>Qualifier line</b>: FIR / NOTAM code / traffic (I, V, IV) / purpose / scope / lower / upper limits (flight levels) / coordinates + radius (nm)</td></tr>
@@ -351,6 +360,7 @@ const TOPICS = [
         <li><b>Anti-collision lights</b>: red or white <b>flashing</b> (beacon / strobes) to attract attention. Required at night, and on the ground when engines are running (beacon).</li>
         <li>Lights must be displayed between <b>sunset and sunrise</b>. UK <b>"night"</b> for licensing/logging is <b>from 30 minutes after sunset until 30 minutes before sunrise</b>.</li>
         <li>A pilot may switch off or reduce flashing lights if they adversely affect the pilot's duties or dazzle an observer.</li>
+        <li><b>If a required light fails at night</b>, the aircraft must <b>land as soon as it can safely do so</b>, unless ATC authorises it to continue. An aircraft with a failed light must not take off at night.</li>
       </ul>
       <h2>Reading other aircraft at night</h2>
       <table class="ref"><tr><th>You see…</th><th>What it means</th><th>Action</th></tr>
@@ -730,6 +740,30 @@ const TOPICS = [
     ]
   },
   {
+    id: "registration-marks", lesson: "l2", title: "Aircraft Registration and Nationality Marks", tag: "Registration",
+    summary: "Registering a UK aircraft, the Certificate of Registration, and where and how big the marks must be.",
+    body: () => `
+      <ul>
+        <li>UK aircraft are registered by the <b>CAA</b>, which issues a <b>Certificate of Registration</b> (C of R). An aircraft can only be registered in <b>one state</b> at a time.</li>
+        <li>UK marks: nationality mark <b>G</b>, a hyphen, then four letters — e.g. <span class="mono">G-ABCD</span>.</li>
+        <li>The CAA must be told about a change of ownership; the registration may then be cancelled or changed.</li>
+        <li>Aircraft must carry a fireproof <b>identification plate</b> with the nationality and registration marks.</li>
+      </ul>
+      <h2>Marks on aeroplanes</h2>
+      <table class="ref"><tr><th>Where</th><th>Minimum height of letters</th></tr>
+        <tr><td><b>Underside of the wings</b> (lower surface)</td><td><b>50 cm</b></td></tr>
+        <tr><td><b>Fuselage</b> or <b>vertical tail</b> surfaces</td><td><b>30 cm</b></td></tr>
+      </table>
+      <p>Marks must be painted or fixed permanently, kept clean and visible, and in a colour contrasting with the background.</p>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>Under the wings: <b>50 cm</b>. On the fuselage/tail: <b>30 cm</b>. They're swapped in answer options.</li>
+      </ul></div>
+      <div class="callout law">Source: ICAO Annex 7; ANO 2016 Part 2 and Schedule 3 (registration and marking).</div>`,
+    mnemonics: [
+      { title: "\"Wings are wide — 50; body's thinner — 30\"", text: "Underwing marks at least 50 cm high; fuselage/tail marks at least 30 cm." }
+    ]
+  },
+  {
     id: "signal-area", lesson: "l3", title: "Aerodrome Signal Area", tag: "Signals",
     summary: "Ground signals laid out in a square near the tower — mainly for non-radio pilots to read from overhead.",
     body: () => `
@@ -754,7 +788,7 @@ const TOPICS = [
         signalCard("twoRedBalls", "Two red balls on a mast (vertical)", "Glider flying is in progress (mast version of the double cross).") +
         signalCard("blackBall", "Black ball on a mast", "Directions of take-off and landing are not necessarily the same (mast version of the disc).") +
         signalCard("greenFlag", "Rectangular green flag on a mast", "Right-hand circuit in force (mast version of the striped arrow).") +
-        signalCard("letterC", "Black letter C on yellow", "Location of the ATS reporting office — where pilots report (book in/out).") +
+        signalCard("letterC", "Black letter C on yellow", "The pilot reporting point — the ATS reporting office where pilots book in/out. Not customs, not Class C airspace.") +
         signalCard("checker", "Red & yellow chequered flag/board", "Aircraft may move on the manoeuvring area and apron only with ATC permission.") +
         signalCard("runwayBoard", "Black numbers on a yellow board", "Shows the runway in use (direction for take-off), displayed on/near the tower.")
       )}
@@ -763,7 +797,7 @@ const TOPICS = [
         <li>Plain dumb-bell = <b>everything</b> on hard surfaces. Striped dumb-bell = <b>only take-off/landing</b> on runways.</li>
         <li>Landing T: land along the shaft <b>towards the cross-arm</b> (like the T is pointing at you on finals — the cross-arm is the far end).</li>
         <li>Glider ops: white double cross (ground) or two red balls (mast).</li>
-        <li>"C" = <b>C</b>ontact/report here. Chequered board = ATC permission needed to move.</li>
+        <li>"C" = the <b>pilot reporting point</b> (ATS reporting office) — not Customs, not Class C. Chequered board = ATC permission needed to move.</li>
       </ul></div>
       <div class="callout trap"><b class="title">Exam traps</b><ul>
         <li>Answer options will swap "special care" and "landing prohibited" — count the yellow diagonals.</li>
@@ -1024,6 +1058,888 @@ const TOPICS = [
       { title: "\"Solid = Stop, Dashed = Dash across\"", text: "At a Pattern A holding position you stop at the solid lines. From the runway side you may dash across the dashed lines to vacate." },
       { title: "\"Arrows = Allowed (to roll), Chevrons = Can't\"", text: "Displaced threshold arrows: you can taxi/take off. Yellow chevrons: can't use it at all normally." },
       { title: "\"White for wings, yellow for wheels\"", text: "Runway markings are white (where you fly from); taxiway markings yellow (where you roll)." }
+    ]
+  },
+  {
+    id: "altimeter-settings", lesson: "l4", title: "Altimeter Setting Procedures (QNH, QFE, 1013)", tag: "Altimetry",
+    summary: "What each pressure setting makes your altimeter read, and when to use it.",
+    body: () => `
+      ${altimeterDiagram()}
+      <table class="ref"><tr><th>Setting</th><th>Altimeter reads</th><th>Used</th></tr>
+        <tr><td><b>QFE</b></td><td><b>Height</b> above the aerodrome (reads zero on the runway)</td><td>In the circuit, if preferred</td></tr>
+        <tr><td><b>QNH</b></td><td><b>Altitude</b> above mean sea level</td><td>At and below the transition altitude; terrain clearance; in controlled airspace below TA</td></tr>
+        <tr><td><b>Regional Pressure Setting (RPS)</b></td><td>Altitude (conservatively low)</td><td>Outside controlled airspace below TA — it's the <b>lowest forecast QNH</b> for an Altimeter Setting Region, issued <b>hourly</b></td></tr>
+        <tr><td><b>Standard pressure 1013 hPa</b></td><td><b>Flight level</b> (pressure altitude ÷ 100)</td><td>Above the transition altitude/level; for vertical separation en route</td></tr>
+      </table>
+      <ul>
+        <li>1 hPa ≈ <b>27–30 ft</b>. Setting a higher pressure makes the altimeter read higher.</li>
+        <li>Flying from high to low pressure without resetting, the altimeter <b>over-reads</b> — you're lower than indicated: "<b>High to low, look out below</b>".</li>
+        <li>Because the RPS is the lowest forecast QNH, using it gives a reading that's equal to or below your true altitude — a safety margin over terrain.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>QFE → height; QNH → altitude; 1013 → flight level.</li>
+        <li>RPS = lowest forecast QNH in the region for the hour.</li>
+      </ul></div>
+      <div class="callout law">Source: UK AIP ENR 1.7 (altimeter setting procedures).</div>`,
+    mnemonics: [
+      { title: "\"QFE = Field Elevation zero, QNH = Nautical Height\"", text: "QFE gives height above the field; QNH gives height above the sea (altitude)." },
+      { title: "\"High to low, look out below\"", text: "Flying into lower pressure (or colder air) without resetting: you're lower than the altimeter says." }
+    ]
+  },
+  {
+    id: "transition", lesson: "l4", title: "Transition Altitude, Level and Layer", tag: "Altimetry",
+    summary: "Where you swap between QNH altitudes and 1013 flight levels — climbing and descending.",
+    body: () => `
+      <table class="ref"><tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td><b>Transition altitude (TA)</b></td><td>The altitude <b>at or below</b> which vertical position is given as <b>altitude (QNH)</b>. In the UK normally <b>3,000 ft</b>, higher in and around some major controlled airspace (shown on charts).</td></tr>
+        <tr><td><b>Transition level (TL)</b></td><td>The <b>lowest flight level available</b> for use above the TA. It changes with QNH.</td></tr>
+        <tr><td><b>Transition layer</b></td><td>The airspace <b>between</b> the TA and the TL. Don't cruise in it.</td></tr>
+      </table>
+      <h3>When to change setting</h3>
+      <ul>
+        <li><b>Climbing</b>: set <b>1013</b> when passing the <b>transition altitude</b>.</li>
+        <li><b>Descending</b>: set <b>QNH</b> when passing the <b>transition level</b> (unless ATC says otherwise).</li>
+        <li>Low QNH = the TL is higher (the layer gets thicker); high QNH = the TL may be lower.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Climb: change at the TA. Descent: change at the TL.</li>
+        <li>Below TA → altitude; above TL → flight level; in between → transition layer.</li>
+      </ul></div>
+      <div class="callout law">Source: UK AIP ENR 1.7.</div>`,
+    mnemonics: [
+      { title: "\"Altitude Ascending, Level Lowering\"", text: "Change to 1013 at the transition Altitude on the way up; change to QNH at the transition Level on the way down." }
+    ]
+  },
+  {
+    id: "cruising-levels", lesson: "l4", title: "Cruising Levels (Semicircular Rule)", tag: "Altimetry",
+    summary: "Which flight levels to cruise at, based on magnetic track — for IFR and VFR.",
+    body: () => `
+      ${cruisingLevelDiagram()}
+      <table class="ref"><tr><th>Magnetic track</th><th>IFR</th><th>VFR</th></tr>
+        <tr><td><b>000°–179°</b></td><td>Odd thousands: FL30, 50, 70…</td><td>Odd thousands + 500: FL35, 55, 75…</td></tr>
+        <tr><td><b>180°–359°</b></td><td>Even thousands: FL40, 60, 80…</td><td>Even thousands + 500: FL45, 65, 85…</td></tr>
+      </table>
+      <ul>
+        <li>Based on <b>magnetic track</b> (not heading).</li>
+        <li>VFR cruising levels apply when cruising <b>above 3,000 ft above the ground</b> (or a higher datum set by the authority) — in the UK, in practice, above the transition altitude.</li>
+        <li>The UK used a <b>quadrantal rule</b> until 2015; it now uses the SERA <b>semicircular</b> rule.</li>
+        <li>In controlled airspace, ATC may assign other levels.</li>
+      </ul>
+      <div class="sim-slot" data-sim="levels"></div>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>Magnetic <b>track</b>, not heading or true track.</li>
+        <li>VFR adds <b>500 ft</b> to the IFR level.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.5005(g), SERA.5015(b) and Appendix 3 (table of cruising levels).</div>`,
+    mnemonics: [
+      { title: "\"East is Odd, West is Even (Weird)\"", text: "000°–179° (easterly): odd levels. 180°–359° (westerly): even levels." },
+      { title: "\"VFR = Very Five-hundred Roofs\"", text: "VFR flies 500 ft above the IFR level for its direction." }
+    ]
+  },
+  {
+    id: "airspace-classes", lesson: "l4", title: "Airspace Classifications", tag: "Airspace",
+    summary: "UK airspace classes A, C, D, E and G — who may fly there, and what ATC provides.",
+    body: () => `
+      <table class="ref"><tr><th>Class</th><th>Flights allowed</th><th>ATC clearance</th><th>Separation / service</th></tr>
+        <tr><td><b>A</b></td><td>IFR only</td><td>Required</td><td>All aircraft separated</td></tr>
+        <tr><td><b>C</b></td><td>IFR and VFR</td><td>Required for all</td><td>IFR separated from IFR and VFR; VFR separated from IFR, and given traffic info on other VFR</td></tr>
+        <tr><td><b>D</b></td><td>IFR and VFR</td><td>Required for all</td><td>IFR separated from IFR; traffic info to IFR on VFR and to VFR on all traffic</td></tr>
+        <tr><td><b>E</b></td><td>IFR and VFR</td><td>Required for IFR only</td><td>IFR separated from IFR; traffic info as far as practicable</td></tr>
+        <tr><td><b>G</b></td><td>IFR and VFR</td><td>Not required</td><td>No separation — uncontrolled; FIS on request</td></tr>
+      </table>
+      <ul>
+        <li>The UK does <b>not</b> currently use Class B or Class F.</li>
+        <li>Classes A–E are <b>controlled airspace</b>; Class G is <b>uncontrolled</b>.</li>
+        <li>Two-way radio is required in C and D (and for IFR in E).</li>
+        <li>Most UK airspace from FL195 upward is Class C; airways below that are mostly Class A.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>No VFR in <b>Class A</b>.</li>
+        <li>VFR in C and D needs an <b>ATC clearance</b>; VFR in E doesn't.</li>
+        <li>In D, ATC do <b>not</b> separate VFR from VFR — you see and avoid.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.6001 and Appendix 4; UK AIP ENR 1.4.</div>`,
+    mnemonics: [
+      { title: "\"A = All IFR, C = Clearance for Clearly everyone, D = Do get a clearance, E = Easy for VFR, G = Go-as-you-please\"", text: "A: IFR only. C & D: clearance for all. E: clearance for IFR only. G: uncontrolled." }
+    ]
+  },
+  {
+    id: "controlled-airspace-structures", lesson: "l4", title: "Controlled Airspace Structures (CTR, CTA, TMA, Airways)", tag: "Airspace",
+    summary: "The shapes controlled airspace comes in, and how they fit together.",
+    body: () => `
+      <table class="ref"><tr><th>Structure</th><th>What it is</th></tr>
+        <tr><td><b>Control Zone (CTR)</b></td><td>Controlled airspace from the <b>surface</b> up to a specified upper limit, around one or more aerodromes.</td></tr>
+        <tr><td><b>Control Area (CTA)</b></td><td>Controlled airspace from a specified <b>base above the surface</b> up to an upper limit.</td></tr>
+        <tr><td><b>Terminal Control Area (TMA)</b></td><td>A CTA at the confluence of routes near one or more major aerodromes.</td></tr>
+        <tr><td><b>Airway</b></td><td>A CTA in the form of a <b>corridor</b> (normally 10 nm wide in the UK), mostly Class A.</td></tr>
+        <tr><td><b>Upper airspace</b></td><td>In the UK, FL195 and above — Class C.</td></tr>
+      </table>
+      <ul>
+        <li>Lower limits shown as an <b>altitude</b> (e.g. 2,500 ft) are on QNH; those shown as a <b>flight level</b> (e.g. FL55) are on 1013.</li>
+        <li>You can fly <b>underneath</b> a CTA or airway in Class G without a clearance — but not into a CTR.</li>
+        <li>Low-level routes, VRPs (visual reference points) and Special VFR help VFR traffic cross CTRs.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>CTR starts at the <b>surface</b>; CTA starts at a <b>base</b> above the surface.</li>
+      </ul></div>
+      <div class="callout law">Source: ICAO Annex 11; UK AIP ENR 2.1.</div>`,
+    mnemonics: [
+      { title: "\"Zone = ground Zero\"", text: "A control Zone goes down to the ground; a control Area floats above it." }
+    ]
+  },
+  {
+    id: "atz", lesson: "l4", title: "Aerodrome Traffic Zones (ATZ)", tag: "Airspace",
+    summary: "The 2 or 2.5 nm, 2,000 ft zone around aerodromes — and how to enter one.",
+    body: () => `
+      ${atzDiagram()}
+      <h2>Dimensions</h2>
+      <ul>
+        <li>A circle centred on the <b>midpoint of the longest runway</b>, radius <b>2 nm</b> (longest runway ≤ 1,850 m) or <b>2.5 nm</b> (longest runway &gt; 1,850 m).</li>
+        <li>From the <b>surface to 2,000 ft above aerodrome level</b>.</li>
+        <li>Active during the aerodrome's notified hours. An ATZ inside a CTR takes the CTR's classification.</li>
+      </ul>
+      <h2>Rules for flying in an ATZ</h2>
+      <table class="ref"><tr><th>Aerodrome service</th><th>You must</th></tr>
+        <tr><td><b>ATC</b> (e.g. "Tower")</td><td>Obtain <b>permission</b> from ATC</td></tr>
+        <tr><td><b>AFIS</b> ("Information") or <b>AGCS</b> ("Radio")</td><td>Obtain <b>information</b> to allow the flight to be made safely</td></tr>
+      </table>
+      <p>And in all cases: maintain a <b>listening watch</b> on the frequency, and report position and height on <b>entering</b> and <b>leaving</b> the ATZ (if radio-equipped).</p>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>2 nm / 2.5 nm radius, 2,000 ft aal, centred on the longest runway.</li>
+        <li>ATC → permission. AFIS/AGCS → information.</li>
+      </ul></div>
+      <div class="callout law">Source: Rules of the Air Regulations 2015, Rule 11; UK AIP ENR 2.2.</div>`,
+    mnemonics: [
+      { title: "\"Two, two-and-a-half, two thousand\"", text: "ATZ radius 2 or 2.5 nm, up to 2,000 ft above the aerodrome." },
+      { title: "\"Tower = Ticket, Info/Radio = Information\"", text: "ATC gives permission; AFIS and AGCS give information." }
+    ]
+  },
+  {
+    id: "special-use-airspace", lesson: "l4", title: "Prohibited, Restricted & Danger Areas, MATZ, RMZ & TMZ", tag: "Airspace",
+    summary: "Airspace with special rules or hazards — what each type means for a VFR pilot.",
+    body: () => `
+      <table class="ref"><tr><th>Area</th><th>Chart example</th><th>Meaning</th></tr>
+        <tr><td><b>Prohibited (P)</b></td><td class="mono">EG P111</td><td>Flight <b>prohibited</b>.</td></tr>
+        <tr><td><b>Restricted (R)</b></td><td class="mono">EG R157</td><td>Flight <b>restricted</b> in accordance with specified conditions.</td></tr>
+        <tr><td><b>Danger (D)</b></td><td class="mono">EG D201</td><td>Activities <b>dangerous to flight</b> may exist at specified times (firing, etc.). Not illegal to enter in most cases — but very unwise. Use the <b>DACS/DAAIS</b> services to check activity.</td></tr>
+        <tr><td><b>Restricted Area (Temporary) — RA(T)</b></td><td>—</td><td>Temporary restriction (air displays, major events), promulgated by NOTAM / mauve AIC.</td></tr>
+        <tr><td><b>MATZ</b> (Military ATZ)</td><td>—</td><td>5 nm radius, surface to 3,000 ft aal, with stubs. Penetration service is <b>not mandatory</b> for civil pilots, but strongly recommended. The ATZ inside it is mandatory.</td></tr>
+        <tr><td><b>RMZ</b> (Radio Mandatory Zone)</td><td>—</td><td>Must carry a radio, call and maintain a listening watch.</td></tr>
+        <tr><td><b>TMZ</b> (Transponder Mandatory Zone)</td><td>—</td><td>Must carry and operate a suitable transponder.</td></tr>
+      </table>
+      <p>On UK charts, the figure after the slash is the <b>upper limit</b> in thousands of feet (e.g. <span class="mono">D201/5.5</span> = up to 5,500 ft). A solid boundary means active during the published hours; a pecked (dashed) boundary means activated by NOTAM. Activity times are in the AIP.</p>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>P = prohibited, R = restricted, D = danger.</li>
+        <li>MATZ: 5 nm / 3,000 ft aal + stubs; penetration not compulsory for civil aircraft.</li>
+      </ul></div>
+      <div class="callout law">Source: UK AIP ENR 5.1 (P, R and D areas), ENR 2.2 (MATZ, RMZ, TMZ).</div>`,
+    mnemonics: [
+      { title: "\"P-R-D: Prison, Rules, Danger\"", text: "Prohibited = never; Restricted = only under conditions; Danger = activity might kill you." }
+    ]
+  },
+  {
+    id: "speed-limits", lesson: "l4", title: "Airspace Speed Limits", tag: "Airspace",
+    summary: "The 250 kt rule below FL100 — where it applies and where it doesn't.",
+    body: () => `
+      <table class="ref"><tr><th>Class</th><th>IFR</th><th>VFR</th></tr>
+        <tr><td><b>A</b></td><td>No limit</td><td>— (no VFR)</td></tr>
+        <tr><td><b>C</b></td><td>No limit</td><td><b>250 kt IAS</b> below FL100</td></tr>
+        <tr><td><b>D</b></td><td><b>250 kt IAS</b> below FL100</td><td><b>250 kt IAS</b> below FL100</td></tr>
+        <tr><td><b>E</b></td><td><b>250 kt IAS</b> below FL100</td><td><b>250 kt IAS</b> below FL100</td></tr>
+        <tr><td><b>G</b></td><td><b>250 kt IAS</b> below FL100</td><td><b>250 kt IAS</b> below FL100</td></tr>
+      </table>
+      <ul>
+        <li>The limit doesn't depend on the exact level — FL70 or 2,000 ft, it's still <b>250 kt</b> if below FL100.</li>
+        <li>ATC can approve exceptions (e.g. aircraft that can't safely fly that slowly).</li>
+        <li>Separate speed limits: <b>140 kt</b> for Special VFR and for the UK reduced VMC minima.</li>
+      </ul>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>A question naming a specific FL below 100 and a class (e.g. "FL70 in Class D") — the answer is still <b>250 kt</b>.</li>
+        <li>Don't confuse 250 kt (airspace) with 140 kt (SVFR / reduced minima).</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.6001 Appendix 4 (Table S6-1).</div>`,
+    mnemonics: [
+      { title: "\"Below 100, no more than 250\"", text: "Below FL100, 250 kt IAS — except IFR in Class A and C." }
+    ]
+  },
+  {
+    id: "air-traffic-services", lesson: "l5", title: "Air Traffic Services & UK Flight Information Services", tag: "ATM",
+    summary: "ATC, FIS and alerting service — plus the four UK FIS services outside controlled airspace.",
+    body: () => `
+      <h2>The three air traffic services</h2>
+      <table class="ref"><tr><th>Service</th><th>Purpose</th></tr>
+        <tr><td><b>Air traffic control service</b></td><td>Prevent collisions and expedite the flow of traffic — issues <b>clearances</b>.</td></tr>
+        <tr><td><b>Flight information service</b></td><td>Advice and information useful for safe and efficient flight.</td></tr>
+        <tr><td><b>Alerting service</b></td><td>Notify the right organisations about aircraft needing search and rescue, and assist them.</td></tr>
+      </table>
+      <h2>UK Flight Information Services (outside controlled airspace)</h2>
+      <table class="ref"><tr><th>Service</th><th>What you get</th><th>Who avoids collisions?</th></tr>
+        <tr><td><b>Basic Service</b></td><td>Information useful for safe flight (weather, aerodrome info). Traffic information not normally given — may be if the controller sees a definite risk.</td><td>You</td></tr>
+        <tr><td><b>Traffic Service</b></td><td>Surveillance-based <b>traffic information</b>. No deconfliction advice.</td><td>You</td></tr>
+        <tr><td><b>Deconfliction Service</b></td><td>Traffic information <b>plus deconfliction advice</b> (headings/levels).</td><td>You decide whether to follow the advice</td></tr>
+        <tr><td><b>Procedural Service</b></td><td>Non-surveillance (no radar): deconfliction between participating aircraft using reported positions.</td><td>You</td></tr>
+      </table>
+      <p>In all UK FIS services, the pilot remains responsible for collision avoidance and terrain clearance. Services are agreed by a request and acknowledgement on the radio.</p>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>ATC → clearances. FIS → information. Alerting → SAR.</li>
+        <li>Only the Deconfliction Service gives <b>avoiding action advice</b>; it's never an instruction.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA Section 7; ICAO Annex 11; CAP 774 (UK Flight Information Services).</div>`,
+    mnemonics: [
+      { title: "\"Basic, Traffic, Deconfliction, Procedural = Bread, Toast, Double-toast, Plate\"", text: "Each surveillance service adds more: info → traffic → traffic + avoiding advice. Procedural works without radar." }
+    ]
+  },
+  {
+    id: "aerodrome-services", lesson: "l5", title: "Aerodrome Services: ATC, AFIS and AGCS", tag: "ATM",
+    summary: "Who's on the radio at the aerodrome, what they can tell you to do, and their call signs.",
+    body: () => `
+      <table class="ref"><tr><th>Service</th><th>Call sign</th><th>Can they…</th></tr>
+        <tr><td><b>Air Traffic Control</b></td><td>"…<b>Tower</b>", "…<b>Ground</b>", "…<b>Approach</b>"</td><td>Issue <b>instructions and clearances</b> (e.g. "cleared to land")</td></tr>
+        <tr><td><b>Aerodrome Flight Information Service (AFIS)</b></td><td>"…<b>Information</b>"</td><td>Give <b>information</b> (runway in use, traffic, weather) — no clearances to aircraft in flight. Pilots decide ("land at your discretion").</td></tr>
+        <tr><td><b>Air/Ground Communication Service (AGCS)</b></td><td>"…<b>Radio</b>"</td><td>Give <b>basic information</b> only. The operator may not be qualified — no instructions.</td></tr>
+        <tr><td>No service (SafetyCom)</td><td>"…<b>Traffic</b>"</td><td>Pilots broadcast their intentions to each other on 135.480 MHz.</td></tr>
+      </table>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Tower = ATC; Information = AFIS; Radio = AGCS.</li>
+        <li>In an ATZ: ATC gives <b>permission</b>; AFIS/AGCS give <b>information</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: CAP 413 (Radiotelephony Manual); CAP 797 (AFIS); CAP 452 (AGCS).</div>`,
+    mnemonics: [
+      { title: "\"Tower Tells, Information Informs, Radio Relays\"", text: "ATC instructs; AFIS informs; AGCS just passes on basic information." }
+    ]
+  },
+  {
+    id: "flight-plans", lesson: "l5", title: "Flight Plans", tag: "ATM",
+    summary: "When you must file one, how far in advance, delays, and closing it.",
+    body: () => `
+      <h2>A flight plan must be submitted for</h2>
+      <ul>
+        <li>Any flight (or part) provided with an <b>air traffic control service</b> (in the UK, VFR zone transits can use an <b>abbreviated flight plan</b> passed by radio).</li>
+        <li>Any IFR flight within advisory airspace.</li>
+        <li>Any flight <b>crossing international borders</b> (unless the states agree otherwise).</li>
+        <li>Any flight at <b>night</b> leaving the vicinity of an aerodrome (SERA).</li>
+        <li>Flights where the authority requires one (e.g. to help SAR).</li>
+      </ul>
+      <h2>Timings</h2>
+      <table class="ref"><tr><th>Rule</th><th>Time</th></tr>
+        <tr><td>File at least</td><td><b>60 minutes</b> before departure</td></tr>
+        <tr><td>Delay — amend or refile if late by</td><td><b>30 minutes</b> (controlled flight) / <b>1 hour</b> (uncontrolled flight) beyond the estimated off-block time</td></tr>
+        <tr><td>Divert / land elsewhere — tell ATS within</td><td><b>30 minutes</b> of your ETA at the planned destination</td></tr>
+      </table>
+      <ul>
+        <li>Times in flight plans are <b>UTC</b>. EOBT = estimated off-block time.</li>
+        <li>Close the flight plan on arrival (see Notification of Arrival).</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>60 min before departure. Delay: 30 min controlled / 60 min uncontrolled.</li>
+        <li>Crossing an international border → flight plan.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.4001, SERA.4015, SERA.4020; UK AIP ENR 1.10.</div>`,
+    mnemonics: [
+      { title: "\"60 to file, 30 or 60 late, 30 to call\"", text: "File 60 min before; amend if 30 min (controlled) or 60 min (uncontrolled) late; report within 30 min of ETA if you land elsewhere." }
+    ]
+  },
+  {
+    id: "transponder-codes", lesson: "l5", title: "Transponder (SSR) Codes and Modes", tag: "ATM",
+    summary: "The special squawk codes every pilot must know, and what each transponder mode sends.",
+    body: () => `
+      <table class="ref"><tr><th>Code</th><th>Meaning</th></tr>
+        <tr><td class="mono"><b>7700</b></td><td><b>Emergency</b></td></tr>
+        <tr><td class="mono"><b>7600</b></td><td><b>Radio failure</b></td></tr>
+        <tr><td class="mono"><b>7500</b></td><td><b>Unlawful interference</b> (hijack)</td></tr>
+        <tr><td class="mono"><b>7000</b></td><td><b>Conspicuity</b> code — UK default when not assigned a code</td></tr>
+        <tr><td class="mono"><b>2000</b></td><td>Entering an FIR from an area where no code was assigned</td></tr>
+      </table>
+      <table class="ref"><tr><th>Mode</th><th>Transmits</th></tr>
+        <tr><td><b>A</b></td><td>The 4-digit <b>identity</b> code</td></tr>
+        <tr><td><b>C</b></td><td>Identity + <b>pressure altitude</b> (always referenced to 1013 hPa)</td></tr>
+        <tr><td><b>S</b></td><td>Selective — identity, altitude and a unique <b>aircraft address</b> (plus extra data)</td></tr>
+      </table>
+      <ul>
+        <li>When changing code, avoid passing through 7500, 7600 or 7700 by mistake (or switch to standby first, as advised by your instructor).</li>
+        <li>"Squawk ident" = press the IDENT button once.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>75 = taken alive, 76 = radio fix, 77 = going to heaven.</li>
+      </ul></div>
+      <div class="callout law">Source: UK AIP ENR 1.6; CAP 413.</div>`,
+    mnemonics: [
+      { title: "\"75 — man with a knife, 76 — radio's in a fix, 77 — going to heaven\"", text: "7500 hijack, 7600 radio failure, 7700 emergency." },
+      { title: "\"Seven-thousand: just be seen\"", text: "7000 = conspicuity in the UK." }
+    ]
+  },
+  {
+    id: "customs-immigration", lesson: "l5", title: "Customs, Immigration and Health", tag: "Border",
+    summary: "General Aviation Reports, the Common Travel Area, police notification and public health rules.",
+    body: () => `
+      <h2>General Aviation Report (GAR)</h2>
+      <ul>
+        <li>International GA flights <b>into or out of the UK</b> (to/from outside the <b>Common Travel Area</b>) must submit information about the flight and everyone on board to <b>Border Force</b>.</li>
+        <li>Submit it <b>no earlier than 48 hours and no later than 2 hours</b> before the expected time of departure — for <b>both arrivals and departures</b>.</li>
+        <li>It must be submitted <b>online</b> (Submit-a-GAR or an approved app) — not by email. Changes must be resubmitted at least 2 hours before departure.</li>
+        <li>The responsible person can be fined for missing or wrong information.</li>
+      </ul>
+      <h2>Common Travel Area (CTA) and police notification</h2>
+      <ul>
+        <li>The CTA = the UK, Ireland, the Channel Islands and the Isle of Man.</li>
+        <li>Flights between Great Britain/Northern Ireland and other parts of the CTA using an aerodrome <b>not designated for police purposes</b> must notify the police <b>12 hours</b> before departure or arrival.</li>
+        <li>International flights may be limited to designated (customs/immigration) aerodromes or need special arrangements.</li>
+      </ul>
+      <h2>Health</h2>
+      <ul>
+        <li>Chicago Convention <b>Article 14</b>: states take measures to prevent the spread of disease by air navigation.</li>
+        <li>The PIC must report any suspected communicable disease on board, and passengers and crew must comply with public health/quarantine rules (Article 13).</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>GAR window: <b>48 h → 2 h</b> before departure, online.</li>
+        <li>Non-designated aerodrome within the CTA: police notice <b>12 h</b> before.</li>
+      </ul></div>
+      <div class="callout law">Source: UK Home Office/Border Force GA guidance (General Aviation Regulations 2024); Terrorism Act 2000; Chicago Convention Articles 13–14.</div>`,
+    mnemonics: [
+      { title: "\"48 to 2, then you're through\"", text: "Submit the GAR between 48 and 2 hours before departure." },
+      { title: "\"Police need half a day\"", text: "12 hours' notice to the police for non-designated aerodromes within the CTA." }
+    ]
+  },
+  {
+    id: "aviation-security", lesson: "l5", title: "Aviation Security", tag: "Border",
+    summary: "Keeping aircraft secure, prohibited items, and what to do if something looks wrong.",
+    body: () => `
+      <ul>
+        <li>The <b>PIC</b> is responsible for the security of the aircraft and its occupants during flight.</li>
+        <li><b>Secure unattended aircraft</b>: lock it, remove keys, use control locks — and check for interference during the pre-flight inspection.</li>
+        <li>Know your passengers and check their baggage on private flights: you are responsible for what is carried.</li>
+        <li><b>Weapons, munitions of war and dangerous goods</b> must not be carried without the required permission/compliance (ICAO Technical Instructions; CAA permission for munitions of war).</li>
+        <li>Report suspicious activity at an aerodrome to the police (e.g. via Project Pegasus / "Airport Watch" schemes for GA).</li>
+        <li>In flight, unlawful interference → squawk <b>7500</b>.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Security of the aircraft in flight is the <b>PIC's</b> responsibility.</li>
+        <li>Unlawful interference: <b>7500</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: ICAO Annex 17; Aviation Security Act 1982; ANO 2016 (munitions of war and dangerous goods).</div>`,
+    mnemonics: [
+      { title: "\"Lock it, check it, know who's in it\"", text: "Secure the aircraft, inspect for interference, and know your passengers and their bags." }
+    ]
+  },
+  {
+    id: "vmc-minima", lesson: "l6", title: "VMC Minima (Visibility and Distance from Cloud)", tag: "VFR",
+    summary: "The weather a VFR flight needs in each class of airspace — including the UK's 140 kt alternatives.",
+    body: () => `
+      <table class="ref"><tr><th>Level band</th><th>Airspace</th><th>Flight visibility</th><th>Distance from cloud</th></tr>
+        <tr><td>At/above <b>FL100</b></td><td>A*–E, G</td><td><b>8 km</b></td><td>1,500 m horizontally, 1,000 ft vertically</td></tr>
+        <tr><td>Below FL100, above 3,000 ft AMSL (or 1,000 ft above terrain, whichever is higher)</td><td>A*–E, G</td><td><b>5 km</b></td><td>1,500 m horizontally, 1,000 ft vertically</td></tr>
+        <tr><td>At/below 3,000 ft AMSL (or 1,000 ft above terrain)</td><td>C, D, E</td><td><b>5 km</b></td><td>1,500 m horizontally, 1,000 ft vertically</td></tr>
+        <tr><td>At/below 3,000 ft AMSL (or 1,000 ft above terrain)</td><td>F, G</td><td><b>5 km</b></td><td><b>Clear of cloud, surface in sight</b></td></tr>
+      </table>
+      <p style="font-size:13px;color:var(--muted)">*VFR isn't permitted in Class A; the minima are listed for completeness.</p>
+      <h2>UK alternatives (at/below 3,000 ft AMSL or 1,000 ft above terrain)</h2>
+      <table class="ref"><tr><th>Airspace</th><th>Conditions</th><th>Minima</th></tr>
+        <tr><td><b>Class D</b></td><td>Day only, <b>140 kt IAS or less</b></td><td><b>5 km</b>, clear of cloud, surface in sight</td></tr>
+        <tr><td><b>Class F and G</b></td><td>Day only, <b>140 kt IAS or less</b></td><td><b>1,500 m</b>, clear of cloud, surface in sight</td></tr>
+      </table>
+      <div class="sim-slot" data-sim="vmc"></div>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>8 km at/above FL100; 5 km below.</li>
+        <li>"1,500 m and 1,000 ft" from cloud in controlled airspace and higher up.</li>
+        <li>UK Class G, day, ≤140 kt, low level: <b>1,500 m</b>, clear of cloud, surface in sight.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.5001 (Table S5-1); UK CAA SERA guidance (Aviation Safety (Amendment) Regulations 2021).</div>`,
+    mnemonics: [
+      { title: "\"Eight up high, five below\"", text: "8 km flight visibility at/above FL100; 5 km below." },
+      { title: "\"1,500 and 1,000 — one-and-a-half by one\"", text: "1,500 m horizontally, 1,000 ft vertically from cloud." },
+      { title: "\"Slow and low in G: 1,500 m and see the ground\"", text: "UK Class F/G, day, ≤140 kt, at/below 3,000 ft: 1,500 m, clear of cloud, surface in sight." }
+    ]
+  },
+  {
+    id: "special-vfr", lesson: "l6", title: "Special VFR", tag: "VFR",
+    summary: "An ATC clearance to fly in a control zone when the weather is below VMC.",
+    body: () => `
+      <p><b>Special VFR (SVFR)</b> is an ATC clearance allowing a VFR flight to operate <b>within a control zone</b> in meteorological conditions below VMC.</p>
+      <h2>Requirements</h2>
+      <ul>
+        <li>Only in a <b>control zone (CTR)</b>, and only with an <b>ATC clearance</b>.</li>
+        <li>Remain <b>clear of cloud</b> and with the <b>surface in sight</b>.</li>
+        <li>Flight visibility at least <b>1,500 m</b> (800 m for helicopters).</li>
+        <li>Fly at <b>140 kt IAS or less</b>.</li>
+        <li>For take-off and landing at an aerodrome in the CTR, ground visibility and cloud ceiling must meet the minimum the authority sets (normally 1,500 m and 600 ft).</li>
+        <li>ATC separates SVFR flights from each other and from IFR flights.</li>
+      </ul>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>SVFR speed limit is <b>140 kt</b> — not 125 kt, not 250 kt.</li>
+        <li>SVFR minimum flight visibility is <b>1,500 m</b> — not 5 km or 8 km (those are VMC values).</li>
+        <li>SVFR is only for <b>control zones</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.5010; UK AIP ENR 1.2.</div>`,
+    mnemonics: [
+      { title: "\"Special = 15-14: 1,500 m, 140 kt\"", text: "SVFR: flight visibility 1,500 m, max 140 kt IAS, clear of cloud, surface in sight, in a CTR with clearance." }
+    ]
+  },
+  {
+    id: "vfr-rules", lesson: "l6", title: "VFR Operating Rules (incl. Night VFR)", tag: "VFR",
+    summary: "Where VFR may and may not fly, clearances, radio, and the extra rules for VFR at night.",
+    body: () => `
+      <ul>
+        <li>VFR flights must not operate <b>above FL195</b> or at transonic/supersonic speeds (unless authorised), and are <b>not permitted in Class A</b>.</li>
+        <li>VFR in Class <b>C and D</b>: needs an ATC <b>clearance</b> and two-way radio.</li>
+        <li>VFR must stay in <b>VMC</b>; if VMC can't be maintained, consider SVFR (in a CTR), turning back or diverting.</li>
+        <li>Minimum heights: see the Low Flying Rules topic.</li>
+      </ul>
+      <h2>VFR at night (SERA)</h2>
+      <ul>
+        <li>If leaving the vicinity of the aerodrome, a <b>flight plan</b> is required (the UK applies some alternative arrangements — check the current AIP ENR 1.2).</li>
+        <li>Establish two-way radio communication with ATS when available.</li>
+        <li>Minimum <b>1,000 ft above the highest obstacle within 8 km</b> (except take-off/landing).</li>
+        <li>A UK PPL holder needs a <b>night rating</b> (or IR) to fly at night.</li>
+        <li>Aircraft lights must be displayed; a failed required light means landing as soon as safely possible.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>No VFR in Class A or above FL195.</li>
+        <li>VFR in C and D needs a clearance.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.5005; UK AIP ENR 1.2.</div>`,
+    mnemonics: [
+      { title: "\"VFR stops at 195\"", text: "No VFR above FL195." }
+    ]
+  },
+  {
+    id: "ifr-rules", lesson: "l6", title: "Instrument Flight Rules", tag: "IFR",
+    summary: "Minimum IFR levels, cruising levels, changing between IFR and VFR, and who may fly IFR.",
+    body: () => `
+      <ul>
+        <li><b>Minimum level</b> (except take-off/landing or when authorised): at least <b>1,000 ft above the highest obstacle within 8 km</b> of the estimated position — <b>2,000 ft</b> over high terrain or mountainous areas.</li>
+        <li>Cruising levels: semicircular rule (odd FLs for 000°–179°, even for 180°–359°), unless ATC assigns otherwise.</li>
+        <li>IFR flights in controlled airspace need a <b>flight plan</b> and <b>clearance</b>.</li>
+        <li><b>Changing IFR → VFR</b>: only when the flight is in VMC and expected to remain so. Tell ATS "<b>cancelling my IFR flight</b>". ATC don't suggest it.</li>
+        <li>To fly under IFR you need an <b>instrument rating</b> — in the UK, the national <b>IR(R)</b> (Instrument Rating (Restricted), formerly the IMC rating) allows IFR in UK airspace outside Class A.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>IFR minimum: 1,000 ft within 8 km (2,000 ft in mountains).</li>
+        <li>IR(R) = UK only, not Class A.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.5015, SERA.5025; UK ANO 2016 (IR(R)).</div>`,
+    mnemonics: [
+      { title: "\"1-8, 2 in the mountains\"", text: "IFR minimum: 1,000 ft above obstacles within 8 km — 2,000 ft over high terrain." }
+    ]
+  },
+  {
+    id: "ppl-privileges", lesson: "l7", title: "PPL(A) Privileges and Conditions", tag: "Licensing",
+    summary: "What a PPL lets you do, cost sharing, minimum ages, and what you must carry.",
+    body: () => `
+      <ul>
+        <li><b>Privileges</b>: act <b>without remuneration</b> as PIC or co-pilot of aeroplanes in <b>non-commercial operations</b> (within your class/type ratings).</li>
+        <li><b>Cost sharing</b> is allowed: the <b>direct costs</b> of the flight shared by <b>all occupants, including the pilot</b>, with a maximum of <b>6 people</b> on board.</li>
+        <li>Minimum age: <b>16</b> for first solo; <b>17</b> to hold a PPL(A).</li>
+        <li>A Part-FCL PPL is issued for life (<b>no expiry date</b>); you keep using it through valid <b>ratings</b> and a valid <b>medical</b>.</li>
+        <li>A PPL issued to ICAO Annex 1 standards is recognised by other ICAO states (when flying an aircraft registered in the issuing state).</li>
+        <li>Extra privileges need extra ratings/certificates, e.g. instructing (FI), towing, aerobatics, night, IR(R).</li>
+      </ul>
+      <h2>Documents to carry when flying</h2>
+      <p>Your valid <b>licence</b>, valid <b>medical certificate</b>, and a <b>personal identification document with a photo</b>.</p>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>No remuneration — but equal cost sharing with up to 6 on board is fine.</li>
+        <li>17 for the licence, 16 for first solo.</li>
+      </ul></div>
+      <div class="callout law">Source: UK Part-FCL FCL.205.A, FCL.100, FCL.045; Air Operations Regulation (cost-sharing flights).</div>`,
+    mnemonics: [
+      { title: "\"Share it, don't earn it — six max\"", text: "Cost sharing among up to 6 occupants including the pilot; no profit." },
+      { title: "\"Sweet sixteen solos, seventeen's licensed\"", text: "First solo at 16, PPL at 17." }
+    ]
+  },
+  {
+    id: "medical-certificates", lesson: "l7", title: "Medical Certificates", tag: "Licensing",
+    summary: "Class 2 and LAPL medical validity by age, and when you must stop flying and seek advice.",
+    body: () => `
+      <h2>Class 2 medical validity</h2>
+      <table class="ref"><tr><th>Age when examined</th><th>Valid for</th><th>But ends at</th></tr>
+        <tr><td>Under 40</td><td><b>60 months</b></td><td>Your <b>42nd</b> birthday if issued before 40</td></tr>
+        <tr><td>40 to 49</td><td><b>24 months</b></td><td>Your <b>51st</b> birthday if issued before 50</td></tr>
+        <tr><td>50 and over</td><td><b>12 months</b></td><td>—</td></tr>
+      </table>
+      <h2>LAPL medical validity</h2>
+      <p><b>60 months</b> until age 40 (ending at the 42nd birthday if issued before 40), then <b>24 months</b>.</p>
+      <h2>Decrease in medical fitness</h2>
+      <p>Don't fly if you know of any decrease in your medical fitness that might make you unable to fly safely, or if you're taking medication or treatment likely to affect safe flying. Seek aeromedical advice <b>without undue delay</b> after:</p>
+      <ul>
+        <li>a surgical operation or invasive procedure</li>
+        <li>starting regular use of any medication</li>
+        <li>significant injury or illness, or admission to hospital</li>
+        <li><b>pregnancy</b></li>
+        <li>first needing corrective lenses</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Class 2 at age 43 → <b>24 months</b>.</li>
+        <li>60 → 24 → 12 months as you pass 40 and 50.</li>
+      </ul></div>
+      <div class="callout law">Source: UK Part-MED MED.A.020, MED.A.045.</div>`,
+    mnemonics: [
+      { title: "\"60-24-12 at 40-50\"", text: "Class 2: 60 months under 40, 24 months 40–49, 12 months 50+." }
+    ]
+  },
+  {
+    id: "class-ratings", lesson: "l7", title: "Class Ratings (SEP) — Validity and Revalidation", tag: "Licensing",
+    summary: "How long an SEP rating lasts, how its expiry date is worked out, and the two ways to revalidate.",
+    body: () => `
+      <ul>
+        <li>An <b>SEP (single-engine piston)</b> class rating is valid for <b>2 years</b>, counted from the <b>end of the calendar month</b> in which you passed the skill test.</li>
+        <li>Example: skill test on <b>10 March 2025</b> → rating expires at the end of <b>31 March 2027</b>.</li>
+      </ul>
+      <h2>Revalidation (before it expires)</h2>
+      <table class="ref"><tr><th>Option</th><th>Requirements</th></tr>
+        <tr><td><b>By proficiency check</b></td><td>Pass a proficiency check with an examiner within the <b>3 months</b> before the expiry date.</td></tr>
+        <tr><td><b>By experience</b></td><td>Within the <b>12 months</b> before expiry: <b>12 hours</b> of flight time in the class, including <b>6 hours as PIC</b>, <b>12 take-offs and 12 landings</b>, and a <b>1-hour refresher training flight</b> with an instructor.</td></tr>
+      </table>
+      <h2>Renewal (after it expires)</h2>
+      <p>If the rating lapses, you can't fly as PIC on that class until it's renewed — normally refresher training as required plus a <b>proficiency check</b>.</p>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>SEP: 24 months from the end of the test month.</li>
+        <li>Experience route: 12 h / 6 h PIC / 12 T/O & landings / 1 h with an instructor, in the last 12 months.</li>
+      </ul></div>
+      <div class="callout law">Source: UK Part-FCL FCL.740, FCL.740.A; CAA SEP rating guidance.</div>`,
+    mnemonics: [
+      { title: "\"12-6-12-1\"", text: "Revalidation by experience: 12 hours, 6 as PIC, 12 take-offs and landings, 1 hour with an instructor." },
+      { title: "\"Ratings run to the month's end\"", text: "Validity counts from the end of the calendar month of the test." }
+    ]
+  },
+  {
+    id: "recency", lesson: "l7", title: "Recent Experience for Carrying Passengers", tag: "Licensing",
+    summary: "The 3-in-90-days rule, and the extra night requirement.",
+    body: () => `
+      <ul>
+        <li>To carry <b>passengers</b> as PIC or co-pilot, you must have made at least <b>3 take-offs, approaches and landings</b> as the <b>sole manipulator of the controls</b> in an aircraft of the <b>same type or class</b> in the preceding <b>90 days</b>.</li>
+        <li>To carry passengers <b>at night</b>: at least <b>one</b> of those 3 must have been <b>at night</b> (unless you hold an IR).</li>
+        <li>No passengers? These recency rules don't stop you flying solo (but your rating must still be valid).</li>
+      </ul>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>90 <b>days</b>, not 3 months or 60 days.</li>
+        <li>Take-offs <b>and</b> landings — touch-and-goes count for both.</li>
+      </ul></div>
+      <div class="callout law">Source: UK Part-FCL FCL.060(b).</div>`,
+    mnemonics: [
+      { title: "\"3 in 90 — 1 in the dark\"", text: "3 take-offs and landings in 90 days; one at night to carry passengers at night." }
+    ]
+  },
+  {
+    id: "other-ratings", lesson: "l7", title: "Night Rating and Other Ratings", tag: "Licensing",
+    summary: "What the night rating needs, and the UK IR(R).",
+    body: () => `
+      <h2>Night rating (aeroplanes)</h2>
+      <ul>
+        <li>Theory instruction, plus at least <b>5 hours</b> of flight time at night, including <b>3 hours dual</b> (with at least <b>1 hour of cross-country navigation</b>, including a dual cross-country of at least 50 km), and <b>5 solo take-offs and 5 solo full-stop landings</b>.</li>
+        <li>Required for a PPL holder to fly VFR at night (without an IR).</li>
+      </ul>
+      <h2>IR(R) — Instrument Rating (Restricted)</h2>
+      <ul>
+        <li>A UK national rating (formerly the IMC rating) allowing flight in IMC and under IFR in <b>UK airspace</b>, but <b>not in Class A</b>.</li>
+        <li>Has to be revalidated by test periodically.</li>
+      </ul>
+      <h2>Others</h2>
+      <p>Aerobatic, towing (sailplane/banner), mountain and flight instructor ratings/certificates add specific privileges.</p>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Night rating: 5 h night incl. 3 h dual (1 h nav), 5 solo take-offs and full-stop landings.</li>
+      </ul></div>
+      <div class="callout law">Source: UK Part-FCL FCL.810 (night rating); UK ANO 2016 (IR(R)).</div>`,
+    mnemonics: [
+      { title: "\"Night: 5-3-1-5\"", text: "5 hours at night, 3 dual, 1 navigation, 5 solo full-stop landings." }
+    ]
+  },
+  {
+    id: "pic-responsibilities", lesson: "l8", title: "Pilot-in-Command Authority and Responsibilities", tag: "Operations",
+    summary: "What the PIC is responsible for — before, during and after flight.",
+    body: () => `
+      <ul>
+        <li>The PIC is responsible for the <b>safety</b> of the aircraft, all crew and passengers and cargo on board, and for the operation of the aircraft — and has <b>final authority</b> over its disposition while in command.</li>
+        <li>All persons on board must obey the PIC's lawful commands for safety.</li>
+        <li>Before flight the PIC must become familiar with <b>all available information</b> (weather, NOTAMs, fuel, alternatives, performance) and be satisfied the aircraft is airworthy and its documents valid.</li>
+        <li>The PIC may <b>refuse to carry</b> (or disembark) anyone or anything that may endanger the aircraft.</li>
+        <li>In an emergency the PIC may take any action needed for safety, departing from rules where necessary — and must report it afterwards.</li>
+        <li>The PIC must not fly if unfit (illness, fatigue, alcohol, drugs).</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Weather, NOTAMs, fuel, airworthiness — all PIC responsibilities.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.2010; Part-NCO.GEN.105.</div>`,
+    mnemonics: [
+      { title: "\"The buck stops in the left seat\"", text: "Every pre-flight and in-flight responsibility comes back to the PIC." }
+    ]
+  },
+  {
+    id: "fuel-planning", lesson: "l8", title: "Fuel Planning", tag: "Operations",
+    summary: "Minimum fuel reserves for VFR flights in aeroplanes, day and night.",
+    body: () => `
+      <table class="ref"><tr><th>VFR flight in an aeroplane</th><th>Fuel required</th></tr>
+        <tr><td><b>By day</b></td><td>Enough to fly to the aerodrome of intended landing <b>and then at least 30 minutes</b> at normal cruising altitude</td></tr>
+        <tr><td><b>At night</b></td><td>Enough to fly to the aerodrome of intended landing <b>and then at least 45 minutes</b> at normal cruising altitude</td></tr>
+      </table>
+      <p>Also plan for: forecast winds and weather, expected ATC routings and delays, taxi fuel, contingencies and diversions — and check the fuel on board visually before flight.</p>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Day VFR reserve: <b>30 min</b>. Night VFR reserve: <b>45 min</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: Part-NCO.OP.125 (fuel and oil supply — aeroplanes).</div>`,
+    mnemonics: [
+      { title: "\"Day 30, night 45 — keep the engine alive\"", text: "VFR reserves: 30 minutes by day, 45 minutes at night." }
+    ]
+  },
+  {
+    id: "fitness-alcohol", lesson: "l8", title: "Fitness to Fly: Alcohol, Drugs and Fatigue", tag: "Operations",
+    summary: "The legal alcohol limit for pilots in the UK, and other reasons not to fly.",
+    body: () => `
+      <ul>
+        <li>UK legal limits for pilots (Railways and Transport Safety Act 2003): <b>20 mg of alcohol per 100 ml of blood</b> (9 µg per 100 ml of breath; 27 mg per 100 ml of urine) — about a quarter of the UK drink-drive limit.</li>
+        <li>A pilot must not fly while <b>impaired</b> by alcohol or drugs, whatever the level.</li>
+        <li>No-one may <b>enter an aircraft when drunk</b>, or be drunk on board.</li>
+        <li>Don't fly with medication that may affect performance; seek aeromedical advice (see Medical Certificates).</li>
+        <li>Avoid flying when fatigued, unwell, or soon after blood donation or scuba diving.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Pilot alcohol limit: <b>20 mg / 100 ml blood</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: Railways and Transport Safety Act 2003 (Part 5); ANO 2016 (drunkenness in aircraft); Part-MED MED.A.020.</div>`,
+    mnemonics: [
+      { title: "\"Twenty is plenty — too much\"", text: "20 mg per 100 ml of blood is the pilot limit — a quarter of the drink-drive limit." }
+    ]
+  },
+  {
+    id: "passenger-safety", lesson: "l8", title: "Passenger Briefing and Safety", tag: "Operations",
+    summary: "What passengers must be told, and when they must be strapped in.",
+    body: () => `
+      <ul>
+        <li>Before flight, brief passengers on: <b>seat belts/harnesses</b>, <b>emergency exits</b> and how to open doors, <b>emergency equipment</b> (life jackets, fire extinguisher, ELT/PLB), the brace position, and smoking/PED rules.</li>
+        <li>Each person on board must occupy a seat with the <b>seat belt fastened</b> during <b>taxi, take-off and landing</b>, and whenever the PIC considers it necessary (e.g. turbulence).</li>
+        <li><b>Life jackets</b> are required for everyone on board when flying a single-engine landplane over water <b>beyond gliding distance from land</b>.</li>
+        <li>The PIC may refuse to carry passengers who are drunk or behaving dangerously.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Belts: taxi, take-off, landing and turbulence.</li>
+        <li>Life jackets: single-engine, beyond gliding distance from land.</li>
+      </ul></div>
+      <div class="callout law">Source: Part-NCO (passenger briefing; seats, safety belts and restraint systems; flight over water equipment).</div>`,
+    mnemonics: [
+      { title: "\"SEE-PB: Seat belts, Exits, Equipment, PEDs, Brace\"", text: "The core of every passenger briefing." }
+    ]
+  },
+  {
+    id: "endangering-safety", lesson: "l8", title: "Endangering Safety and Dropping Articles", tag: "Operations",
+    summary: "The ANO offences of endangering aircraft, people and property — and what may be dropped.",
+    body: () => `
+      <ul>
+        <li><b>Endangering safety of an aircraft</b>: a person must not <b>recklessly or negligently</b> act in a way likely to endanger an aircraft or anyone in it.</li>
+        <li><b>Endangering persons or property</b>: a person must not recklessly or negligently cause or permit an aircraft to endanger any person or property.</li>
+        <li><b>Dropping articles</b>: nothing may be dropped from an aircraft so as to endanger persons or property. Permitted examples include ballast (fine sand or water), fuel jettisoned in an emergency, tow ropes/banners at an aerodrome, and articles dropped to save life.</li>
+        <li>Aerial work like <b>towing</b>, <b>parachuting</b>, <b>flying displays</b> and <b>aerobatics</b> need the appropriate permissions, ratings and conditions.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>The offence wording: "<b>recklessly or negligently</b>".</li>
+        <li>Ballast may be dropped only as <b>fine sand or water</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: Air Navigation Order 2016 (endangering safety, dropping articles and animals); SERA.3115.</div>`,
+    mnemonics: [
+      { title: "\"Sand and water, nothing harder\"", text: "Permitted ballast drops: fine sand or water only." }
+    ]
+  },
+  {
+    id: "oxygen-equipment", lesson: "l8", title: "Oxygen and Survival Equipment", tag: "Operations",
+    summary: "When pilots must use oxygen, and emergency equipment requirements.",
+    body: () => `
+      <ul>
+        <li><b>Supplemental oxygen</b> must be used by the pilot whenever the cabin pressure altitude exceeds <b>10,000 ft for more than 30 minutes</b>, and <b>always above 13,000 ft</b>.</li>
+        <li>Aircraft must carry an <b>ELT</b>; small aeroplanes (up to 6 seats) may instead carry a <b>PLB</b> carried by a crew member or passenger.</li>
+        <li><b>Life jackets</b>: single-engine landplanes over water beyond gliding distance from land.</li>
+        <li>Additional survival and signalling equipment is needed over areas where search and rescue would be especially difficult.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Oxygen: <b>10,000 ft for more than 30 min</b>, or any time above <b>13,000 ft</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: Part-NCO.OP.190 (use of supplemental oxygen); Part-NCO.IDE.A (ELT; flight over water).</div>`,
+    mnemonics: [
+      { title: "\"10 for 30, 13 for keeps\"", text: "Oxygen above 10,000 ft for more than 30 minutes; always above 13,000 ft." }
+    ]
+  },
+  {
+    id: "marshalling-signals", lesson: "l8", title: "Marshalling Signals", tag: "Signals",
+    summary: "Hand signals from the pilot to the marshaller, and from the marshaller to the pilot.",
+    body: () => `
+      <h2>Pilot → marshaller (from the cockpit)</h2>
+      <table class="ref"><tr><th>Meaning</th><th>Signal</th></tr>
+        <tr><td><b>Brakes engaged</b></td><td>Raise arm and hand, with <b>fingers extended</b>, horizontally in front of face, then <b>clench fist</b>.</td></tr>
+        <tr><td><b>Brakes released</b></td><td>Raise arm, with <b>fist clenched</b>, horizontally in front of face, then <b>extend fingers</b>.</td></tr>
+        <tr><td><b>Insert chocks</b></td><td>Arms extended, palms outwards, move hands <b>inwards to cross</b> in front of face.</td></tr>
+        <tr><td><b>Remove chocks</b></td><td>Hands crossed in front of face, palms outwards, move arms <b>outwards</b>.</td></tr>
+        <tr><td><b>Ready to start engine(s)</b></td><td>Raise the number of fingers on one hand showing the number of the engine to be started.</td></tr>
+      </table>
+      <h2>Marshaller → pilot (selected)</h2>
+      <table class="ref"><tr><th>Meaning</th><th>Signal</th></tr>
+        <tr><td><b>Normal stop</b></td><td>Arms fully extended at 90° to the sides, slowly moved above the head until the wands cross.</td></tr>
+        <tr><td><b>Emergency stop</b></td><td>Arms abruptly extended to the top of the head, wands crossed.</td></tr>
+        <tr><td><b>Cut engines</b></td><td>Wand drawn across the throat in a slicing motion.</td></tr>
+        <tr><td><b>Slow down</b></td><td>Extended arms moved downwards in a "patting" gesture, waist to knees.</td></tr>
+        <tr><td><b>Chocks inserted</b></td><td>Arms fully extended above head, wands moved <b>inwards</b> in a jabbing motion until they touch.</td></tr>
+        <tr><td><b>Chocks removed</b></td><td>Arms fully extended above head, wands moved <b>outwards</b> in a jabbing motion.</td></tr>
+      </table>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>Paired opposites: open → fist = brakes <b>on</b>; fist → open = brakes <b>off</b>.</li>
+        <li>Hands moving in to cross = chocks <b>in</b>; crossed hands moving out = chocks <b>out</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA Appendix 1, Section 5 (marshalling signals); ICAO Annex 2 Appendix 1.</div>`,
+    mnemonics: [
+      { title: "\"Grab the brakes, let go to roll\"", text: "Closing your hand into a fist = brakes engaged; opening your fist = brakes released." },
+      { title: "\"Chocks in, hands in\"", text: "Insert chocks: hands move in to cross. Remove chocks: crossed hands move out." }
+    ]
+  },
+  {
+    id: "distress-urgency", lesson: "l9", title: "Distress and Urgency Procedures", tag: "Emergencies",
+    summary: "MAYDAY and PAN PAN calls, what to say, and where to say it.",
+    body: () => `
+      <table class="ref"><tr><th>Condition</th><th>Definition</th><th>Call</th></tr>
+        <tr><td><b>Distress</b></td><td>Threatened by <b>grave and/or imminent danger</b> and requiring <b>immediate assistance</b></td><td><b>MAYDAY MAYDAY MAYDAY</b></td></tr>
+        <tr><td><b>Urgency</b></td><td>A condition concerning the safety of an aircraft or person on board, but <b>not requiring immediate assistance</b></td><td><b>PAN PAN, PAN PAN, PAN PAN</b></td></tr>
+      </table>
+      <h2>Making the call</h2>
+      <ul>
+        <li>Use the frequency you're on first; if no reply, <b>121.5 MHz</b>. Squawk <b>7700</b>.</li>
+        <li>Message content: station addressed, <b>call sign</b>, <b>aircraft type</b>, <b>nature of the emergency</b>, <b>intentions</b>, <b>position, level and heading</b>, pilot qualification, persons on board, and anything else useful.</li>
+        <li>In the UK, the <b>Distress and Diversion</b> cell answers on 121.5 as "London Centre" (or "Scottish Centre"); you can make a <b>practice PAN</b> (training fix) when they're not busy.</li>
+        <li>Visual distress signals include a <b>red flare</b> and SOS (···–––···) by light or sound.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>MAYDAY = distress (immediate assistance). PAN PAN = urgency.</li>
+        <li>121.5 MHz and squawk 7700.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA Appendix 1; CAP 413 Chapter 8.</div>`,
+    mnemonics: [
+      { title: "\"MAYDAY = may die; PAN = possible assistance needed\"", text: "Distress needs immediate help; urgency doesn't." },
+      { title: "\"Mayday: Call, Type, Nature, Intentions, Position, POB\"", text: "Who you are, what you are, what's wrong, what you'll do, where you are, how many on board." }
+    ]
+  },
+  {
+    id: "emergency-phases", lesson: "l9", title: "Emergency Phases (Alerting Service)", tag: "Emergencies",
+    summary: "Uncertainty, Alert and Distress phases — and what triggers each.",
+    body: () => `
+      <table class="ref"><tr><th>Phase</th><th>Code word</th><th>Typical triggers</th></tr>
+        <tr><td><b>Uncertainty</b></td><td>INCERFA</td><td>No communication within <b>30 minutes</b> of when it should have been received, or the aircraft fails to arrive within <b>30 minutes of its ETA</b>.</td></tr>
+        <tr><td><b>Alert</b></td><td>ALERFA</td><td>Attempts to contact it during the uncertainty phase have failed; or cleared to land and fails to land within <b>5 minutes</b> of the estimated landing time without contact; or its operating efficiency is impaired (but a forced landing isn't likely); or it's known/believed to be under unlawful interference.</td></tr>
+        <tr><td><b>Distress</b></td><td>DETRESFA</td><td><b>Reasonable certainty</b> that the aircraft and occupants are threatened by <b>grave and imminent danger</b> or need immediate assistance; or fuel is considered exhausted; or a forced landing is likely or has happened.</td></tr>
+      </table>
+      <div class="callout trap"><b class="title">Exam traps</b><ul>
+        <li>"Action phase" and "Urgency phase" are <b>not</b> alerting phases — the three are Uncertainty, Alert and Distress.</li>
+      </ul></div>
+      <div class="callout law">Source: ICAO Annex 11 Chapter 5; SERA Section 10.</div>`,
+    mnemonics: [
+      { title: "\"I-A-D: I'm Anxious, Disaster\"", text: "INCERFA → ALERFA → DETRESFA: uncertainty, alert, distress." }
+    ]
+  },
+  {
+    id: "interception", lesson: "l9", title: "Interception of Civil Aircraft", tag: "Emergencies",
+    summary: "What an intercepting aircraft's signals mean and how to respond.",
+    body: () => `
+      <h2>If intercepted</h2>
+      <ul>
+        <li>Follow the intercepting aircraft's instructions and visual signals.</li>
+        <li>Notify ATS if possible, and try to contact the interceptor on <b>121.5 MHz</b>.</li>
+        <li>Select transponder <b>7700</b> (unless instructed otherwise).</li>
+      </ul>
+      <table class="ref"><tr><th>Interceptor does</th><th>Meaning</th><th>You respond</th></tr>
+        <tr><td>Rocks wings and flashes lights from slightly above, ahead and normally to the <b>left</b>, then makes a slow level turn</td><td><b>You have been intercepted. Follow me.</b></td><td>Rock wings, flash lights, and follow</td></tr>
+        <tr><td>Abrupt <b>break-away</b>: climbing turn of 90° or more without crossing your flight path</td><td><b>You may proceed.</b></td><td>Rock wings</td></tr>
+        <tr><td>Lowers landing gear, shows steady landing lights, overflies the runway</td><td><b>Land at this aerodrome.</b></td><td>Lower gear (if possible), follow, and land</td></tr>
+      </table>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>121.5 MHz and squawk 7700.</li>
+        <li>Rocking wings = "follow me"; break-away climbing turn = "you may proceed".</li>
+      </ul></div>
+      <div class="callout law">Source: SERA.11015 and Appendix 1 (interception signals).</div>`,
+    mnemonics: [
+      { title: "\"Rock = Follow, Break = Go, Gear = Land\"", text: "The three interception signals in order." }
+    ]
+  },
+  {
+    id: "warning-signals", lesson: "l9", title: "Warning Signals (Restricted and Danger Areas)", tag: "Emergencies",
+    summary: "The ground signal that tells you you're about to infringe restricted airspace.",
+    body: () => `
+      <ul>
+        <li>A <b>series of projectiles</b> fired from the ground at intervals of <b>10 seconds</b>, each bursting to show <b>red and green lights or stars</b>, means: you are flying in, or about to enter, a <b>restricted, prohibited or danger area</b> — take remedial action.</li>
+        <li>Remedial action: turn away, check your position, contact ATS.</li>
+        <li>Avoid infringements with good planning: check NOTAMs, use the <b>DACS/DAAIS</b> services for danger areas, and use a moving-map with airspace alerts.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Red and green stars every <b>10 seconds</b> = unauthorised flight in/near restricted airspace.</li>
+      </ul></div>
+      <div class="callout law">Source: SERA Appendix 1, 1.2 (signals for use in the event of interception / warning signals).</div>`,
+    mnemonics: [
+      { title: "\"Christmas lights every ten — turn round again\"", text: "Red and green stars at 10-second intervals: you're infringing — turn away." }
+    ]
+  },
+  {
+    id: "sar-signals", lesson: "l9", title: "Search and Rescue Signals", tag: "SAR",
+    summary: "Ground-to-air signals used by survivors, and supply-dropping colour codes.",
+    body: () => `
+      <h2>Ground-to-air signals (used by survivors)</h2>
+      <table class="ref"><tr><th>Symbol</th><th>Meaning</th></tr>
+        <tr><td class="mono"><b>V</b></td><td>Require <b>assistance</b></td></tr>
+        <tr><td class="mono"><b>X</b></td><td>Require <b>medical</b> assistance</td></tr>
+        <tr><td class="mono"><b>N</b></td><td><b>No</b> or negative</td></tr>
+        <tr><td class="mono"><b>Y</b></td><td><b>Yes</b> or affirmative</td></tr>
+        <tr><td class="mono"><b>↑</b></td><td><b>Proceeding</b> in this direction</td></tr>
+      </table>
+      <p>Symbols should be at least <b>2.5 m (8 ft)</b> long and contrast with the background. An aircraft acknowledges by <b>rocking its wings</b> (day) or flashing its landing/navigation lights twice (night).</p>
+      <h2>Dropped supplies — colour codes</h2>
+      <table class="ref"><tr><th>Colour</th><th>Contents</th></tr>
+        <tr><td><span class="swatch" style="background:#e53935"></span>Red</td><td>Medical supplies and first aid</td></tr>
+        <tr><td><span class="swatch" style="background:#1e88e5"></span>Blue</td><td>Food and water</td></tr>
+        <tr><td><span class="swatch" style="background:#fdd835"></span>Yellow</td><td>Blankets and protective clothing</td></tr>
+        <tr><td><span class="swatch" style="background:#111"></span>Black</td><td>Miscellaneous equipment (stoves, axes, compasses…)</td></tr>
+      </table>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>V = assistance; X = medical; N = no; Y = yes; ↑ = going this way.</li>
+      </ul></div>
+      <div class="callout law">Source: ICAO Annex 12 Appendix; SERA Appendix 1.</div>`,
+    mnemonics: [
+      { title: "\"V for Victim, X for eXamine (medical)\"", text: "V = require assistance; X = require medical assistance." },
+      { title: "\"Red Bandage, Blue Bottle, Yellow Blanket, Black Box\"", text: "Supply drop colours: medical, food/water, clothing/blankets, equipment." }
+    ]
+  },
+  {
+    id: "accident-investigation", lesson: "l9", title: "Accident Reporting and Investigation", tag: "Accidents",
+    summary: "What counts as an accident, who to tell, and what not to touch.",
+    body: () => `
+      <h2>Definitions</h2>
+      <table class="ref"><tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td><b>Accident</b></td><td>An occurrence associated with the operation of an aircraft in which a person is <b>fatally or seriously injured</b>; or the aircraft sustains <b>damage or structural failure</b> affecting its strength, performance or flight characteristics that would normally need major repair; or the aircraft is <b>missing or inaccessible</b>.</td></tr>
+        <tr><td><b>Serious incident</b></td><td>An incident where there was a <b>high probability of an accident</b>.</td></tr>
+        <tr><td><b>Serious injury</b></td><td>e.g. hospitalisation for more than <b>48 hours</b> (starting within 7 days), most fractures (not simple fractures of fingers, toes or nose), serious burns or internal injuries.</td></tr>
+        <tr><td><b>Fatal injury</b></td><td>Death within <b>30 days</b> of the accident.</td></tr>
+      </table>
+      <h2>What to do</h2>
+      <ul>
+        <li>Notify the <b>AAIB</b> (Air Accidents Investigation Branch) and the <b>local police</b> by the <b>quickest means</b>.</li>
+        <li>Don't move or interfere with the wreckage, except to rescue people, prevent fire or further damage, or remove danger to the public or air navigation — or with AAIB permission.</li>
+        <li>The AAIB investigates to <b>prevent future accidents</b> — not to apportion blame or liability.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>Report to the AAIB <b>and</b> the police, by the quickest means.</li>
+        <li>AAIB purpose: prevention, not blame.</li>
+      </ul></div>
+      <div class="callout law">Source: UK Regulation 996/2010; Civil Aviation (Investigation of Air Accidents and Incidents) Regulations 2018; ICAO Annex 13.</div>`,
+    mnemonics: [
+      { title: "\"Hands off, phone the AAIB and the Bobby\"", text: "Don't touch the wreckage (except to save life or prevent further harm); tell the AAIB and the police." }
+    ]
+  },
+  {
+    id: "occurrence-reporting", lesson: "l9", title: "Mandatory and Voluntary Occurrence Reporting", tag: "Accidents",
+    summary: "MORs to the CAA, the 72-hour rule, and confidential reporting.",
+    body: () => `
+      <ul>
+        <li>Safety occurrences (incidents, hazards, defects, airspace infringements…) are reported through the <b>Mandatory Occurrence Reporting (MOR)</b> scheme to the <b>CAA</b>.</li>
+        <li>Reports must be made within <b>72 hours</b> of becoming aware of the occurrence.</li>
+        <li>Reporting works under a <b>"just culture"</b>: the aim is learning, and reporters aren't punished for honest mistakes (but gross negligence and wilful violations aren't protected).</li>
+        <li><b>Voluntary reports</b> can also be made to the CAA, and confidential reports to <b>CHIRP</b>.</li>
+        <li>Accidents and serious incidents still go to the <b>AAIB</b> as well.</li>
+      </ul>
+      <div class="callout key"><b class="title">Exam must-knows</b><ul>
+        <li>MOR → CAA within <b>72 hours</b>.</li>
+      </ul></div>
+      <div class="callout law">Source: UK Regulation 376/2014 (occurrence reporting).</div>`,
+    mnemonics: [
+      { title: "\"Three days to tell the CAA\"", text: "MORs within 72 hours." }
     ]
   }
 ];

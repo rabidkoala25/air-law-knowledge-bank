@@ -59,3 +59,23 @@ Progress (confident topics, saved mistakes, mock exam history) lives in the brow
 ## Sources
 
 SERA (UK Reg (EU) 923/2012), Air Navigation Order 2016, Rules of the Air Regulations 2015, CAP 637, CAP 168, ICAO Annex 14, Part-FCL, Part-NCO. Cross-check against current CAA publications and course material.
+
+## Question style guide
+
+Questions copy the style of the real UK PPL Air Law exam. Every new or edited question should follow these rules:
+
+- **Four options, all parallel.** They match in grammar and length, and the correct answer must never stand out by being the longest or most detailed.
+- **Same-template distractors.** Where possible, options repeat the same clause and change only one value (e.g. "…less than 70 / 45 / 10 / 110 degrees…").
+- **Near-miss numbers.** Numeric distractors come from the same family of real values (90°/110°/140°/180°; 6/12/24/60 months; 150 m/600 m; 500 ft/1,000 ft).
+- **Stem patterns:**
+  - Sentence completion ending in `:` or `The:` with lowercase continuations, e.g. `Who is responsible for…? The:` → `pilot-in-command`.
+  - Direct recall: `Through what angle is … visible?`, `What colour are …?`
+  - Text-only sign descriptions: `What does a square sign showing a black C on a yellow background indicate?`
+  - Scenarios: `[situation]. What should the pilot do?`
+  - Reverse definitions: `What is the name of [definition]? The:`
+  - Premise + definition: `[rule], but how is "[term]" defined?`
+  - Calculations with off-by-one or wrong-rule distractors (dates, hours, distances).
+  - Yes/No + qualifier: `No` vs. three `Yes, but/as long as…` options.
+- **Inverse pairs.** Test signals and definitions both ways (meaning → signal, and signal → meaning).
+- **Word-association traps.** A plausible wrong answer that sounds right (C = "Customs", "Class C").
+- **Explanations.** One or two sentences: why the answer is right, and which trap the distractors set.

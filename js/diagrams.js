@@ -343,3 +343,77 @@ function standOnDiagram() {
     </g>
   </svg>`;
 }
+
+function altimeterDiagram() {
+  return `<svg class="diagram" viewBox="0 0 820 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QFE, QNH, standard pressure and the transition layer">
+    <rect width="820" height="330" fill="#dcecfb"/>
+    <rect y="290" width="820" height="40" fill="#2f6f9f"/>
+    <path d="M300 290 L360 250 L620 250 L680 290 Z" fill="#5b8a3c"/>
+    <rect x="420" y="244" width="140" height="6" fill="#4a4f57"/>
+    <rect x="0" y="70" width="820" height="50" fill="rgba(196,43,43,.12)"/>
+    <line x1="0" y1="120" x2="820" y2="120" stroke="#c42b2b" stroke-width="2"/>
+    <line x1="0" y1="70" x2="820" y2="70" stroke="#c42b2b" stroke-width="2" stroke-dasharray="7 5"/>
+    ${aircraftIcon(170, 40, 90, "#13203b", 1.3)}
+    ${aircraftIcon(170, 175, 90, "#13203b", 1.3)}
+    ${aircraftIcon(700, 210, 90, "#13203b", 1.3)}
+    <line x1="230" y1="175" x2="230" y2="290" stroke="#1d5bd6" stroke-width="2"/>
+    <line x1="760" y1="210" x2="760" y2="250" stroke="#16834a" stroke-width="2"/>
+    <g font-family="Inter,sans-serif" font-size="13">
+      <text x="210" y="30" font-weight="700">Above the transition level → 1013 hPa → FLIGHT LEVEL</text>
+      <text x="560" y="64" fill="#c42b2b" font-weight="700">Transition level (lowest usable FL)</text>
+      <text x="560" y="100" fill="#c42b2b" font-weight="700">Transition layer</text>
+      <text x="560" y="138" fill="#c42b2b" font-weight="700">Transition altitude (UK normally 3,000 ft)</text>
+      <text x="240" y="236" fill="#1d5bd6" font-weight="700">QNH → ALTITUDE</text>
+      <text x="240" y="252" fill="#13203b">(above mean sea level)</text>
+      <text x="560" y="200" fill="#16834a" font-weight="700">QFE → HEIGHT</text>
+      <text x="560" y="216" fill="#13203b">(above the aerodrome)</text>
+      <text x="20" y="312" fill="#fff" font-weight="700">Mean sea level</text>
+    </g>
+  </svg>`;
+}
+
+function atzDiagram() {
+  return `<svg class="diagram" viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ATZ and MATZ dimensions">
+    <rect width="820" height="260" fill="#dcecfb"/>
+    <rect y="220" width="820" height="40" fill="#5b8a3c"/>
+    <rect x="130" y="150" width="140" height="70" fill="rgba(29,91,214,.18)" stroke="#1d5bd6" stroke-width="2"/>
+    <rect x="185" y="216" width="30" height="6" fill="#4a4f57"/>
+    <g font-family="Inter,sans-serif" font-size="12.5">
+      <text x="130" y="140" font-weight="800" fill="#1d5bd6">ATZ (side view)</text>
+      <text x="280" y="160" fill="#13203b">2,000 ft above aerodrome level</text>
+      <text x="130" y="244" fill="#fff">radius 2 nm (runway ≤ 1,850 m)</text>
+      <text x="130" y="258" fill="#fff">or 2.5 nm (runway &gt; 1,850 m)</text>
+    </g>
+    <rect x="480" y="90" width="200" height="130" fill="rgba(196,43,43,.15)" stroke="#c42b2b" stroke-width="2"/>
+    <rect x="680" y="150" width="120" height="70" fill="none"/>
+    <rect x="680" y="90" width="120" height="85" fill="rgba(196,43,43,.08)" stroke="#c42b2b" stroke-dasharray="6 4"/>
+    <rect x="568" y="216" width="24" height="6" fill="#4a4f57"/>
+    <g font-family="Inter,sans-serif" font-size="12.5">
+      <text x="480" y="80" font-weight="800" fill="#c42b2b">MATZ (side view)</text>
+      <text x="484" y="110" fill="#13203b">3,000 ft aal</text>
+      <text x="484" y="244" fill="#fff">5 nm radius, surface to 3,000 ft</text>
+      <text x="686" y="110" fill="#13203b">stub: 1,000–3,000 ft</text>
+      <text x="686" y="126" fill="#13203b">4 nm wide, 5 nm long</text>
+    </g>
+  </svg>`;
+}
+
+function cruisingLevelDiagram() {
+  return `<svg class="diagram" style="max-width:520px;margin:10px auto" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Semicircular cruising levels">
+    <rect width="400" height="300" fill="#dcecfb"/>
+    <path d="M200 150 L200 30 A120 120 0 0 1 200 270 Z" fill="rgba(29,91,214,.25)" stroke="#1d5bd6"/>
+    <path d="M200 150 L200 270 A120 120 0 0 1 200 30 Z" fill="rgba(196,43,43,.2)" stroke="#c42b2b"/>
+    <g font-family="Inter,sans-serif" text-anchor="middle">
+      <text x="200" y="22" font-size="13" font-weight="700">000°</text>
+      <text x="200" y="290" font-size="13" font-weight="700">180°</text>
+      <text x="265" y="130" font-size="14" font-weight="800" fill="#1d5bd6">000°–179°</text>
+      <text x="265" y="150" font-size="12.5" fill="#13203b">IFR: ODD (FL50, 70…)</text>
+      <text x="265" y="168" font-size="12.5" fill="#13203b">VFR: ODD + 500</text>
+      <text x="265" y="184" font-size="12.5" fill="#13203b">(FL55, 75…)</text>
+      <text x="135" y="130" font-size="14" font-weight="800" fill="#c42b2b">180°–359°</text>
+      <text x="135" y="150" font-size="12.5" fill="#13203b">IFR: EVEN (FL40, 60…)</text>
+      <text x="135" y="168" font-size="12.5" fill="#13203b">VFR: EVEN + 500</text>
+      <text x="135" y="184" font-size="12.5" fill="#13203b">(FL45, 65…)</text>
+    </g>
+  </svg>`;
+}

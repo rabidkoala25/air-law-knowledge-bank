@@ -687,6 +687,77 @@ function mountPreflightCheck(element) {
 SIMULATORS.notam = { title: "NOTAM Decoder", topicId: "notams", sub: "Pick a sample NOTAM (or paste a real one) and see every field explained.", mount: mountNotamDecoder };
 SIMULATORS.preflight = { title: "Pre-Flight Paperwork: Go or No-Go?", topicId: "preflight-docs", sub: "Check each aircraft's documents and decide whether you can fly it.", mount: mountPreflightCheck };
 
+function mountCruisingLevels(element) {
+  element.innerHTML = `
+    <div class="sim-controls">
+      <label>Magnetic track: <span class="mono cl-track-out"></span><input type="range" min="0" max="359" value="90" class="cl-track"></label>
+      <label>Flight rules<select class="cl-rules"><option value="VFR">VFR</option><option value="IFR">IFR</option></select></label>
+    </div>
+    <div class="readout cl-readout"></div>`;
+  const track = element.querySelector(".cl-track");
+  const rules = element.querySelector(".cl-rules");
+  const readout = element.querySelector(".cl-readout");
+
+  function update() {
+    const trackValue = Number(track.value);
+    element.querySelector(".cl-track-out").textContent = String(trackValue).padStart(3, "0") + "°M";
+    const easterly = trackValue <= 179;
+    const isVfr = rules.value === "VFR";
+    const levels = [];
+    for (let thousands = easterly ? 3 : 4; thousands <= 19; thousands += 2) {
+      const level = thousands * 10 + (isVfr ? 5 : 0);
+      if (level <= 195) levels.push("FL" + String(level).padStart(3, "0"));
+    }
+    readout.innerHTML = `<b>${easterly ? "000°–179° → ODD" : "180°–359° → EVEN"}${isVfr ? " + 500 ft" : ""}</b><br><span class="mono">${levels.join(" · ")}</span><div style="font-size:12.5px;color:var(--muted);margin-top:6px">Flight levels apply above the transition altitude. VFR stops at FL195.</div>`;
+  }
+  track.addEventListener("input", update);
+  rules.addEventListener("input", update);
+  update();
+}
+
+function mountVmcChecker(element) {
+  element.innerHTML = `
+    <div class="sim-controls">
+      <label>Airspace class<select class="vmc-class"><option>A</option><option>C</option><option selected>D</option><option>E</option><option>G</option></select></label>
+      <label>Level<select class="vmc-band"><option value="high">At or above FL100</option><option value="mid">Below FL100, above 3,000 ft AMSL / 1,000 ft above terrain</option><option value="low" selected>At or below 3,000 ft AMSL / 1,000 ft above terrain</option></select></label>
+    </div>
+    <div class="sim-controls">
+      <label class="check"><input type="checkbox" class="vmc-day" checked> Daytime</label>
+      <label class="check"><input type="checkbox" class="vmc-slow" checked> 140 kt IAS or less</label>
+    </div>
+    <div class="readout vmc-readout"></div>`;
+  const airspaceClass = element.querySelector(".vmc-class");
+  const band = element.querySelector(".vmc-band");
+  const day = element.querySelector(".vmc-day");
+  const slow = element.querySelector(".vmc-slow");
+  const readout = element.querySelector(".vmc-readout");
+
+  function update() {
+    const classValue = airspaceClass.value;
+    if (classValue === "A") {
+      readout.className = "readout vmc-readout no";
+      readout.innerHTML = "<b>VFR is not permitted in Class A.</b>";
+      return;
+    }
+    let visibility = "5 km";
+    let cloud = "1,500 m horizontally, 1,000 ft vertically";
+    if (band.value === "high") visibility = "8 km";
+    if (band.value === "low" && classValue === "G") cloud = "Clear of cloud, surface in sight";
+    let alternative = "";
+    const ukAlternativeApplies = band.value === "low" && day.checked && slow.checked;
+    if (ukAlternativeApplies && classValue === "D") alternative = "<b>UK alternative applies:</b> 5 km, clear of cloud, surface in sight.";
+    if (ukAlternativeApplies && classValue === "G") alternative = "<b>UK alternative applies:</b> 1,500 m flight visibility, clear of cloud, surface in sight.";
+    if (band.value === "low" && (classValue === "D" || classValue === "G") && !ukAlternativeApplies) alternative = "UK alternative minima need <b>daytime</b> and <b>140 kt or less</b>.";
+    readout.className = "readout vmc-readout ok";
+    readout.innerHTML = `<b>Standard minima (Class ${classValue}):</b> flight visibility <b>${visibility}</b> · ${cloud}${alternative ? `<div style="margin-top:6px">${alternative}</div>` : ""}${classValue === "C" || classValue === "D" ? '<div style="font-size:12.5px;color:var(--muted);margin-top:6px">VFR here also needs an ATC clearance. Below VMC in a control zone? Ask for Special VFR.</div>' : ""}`;
+  }
+  [airspaceClass, band, day, slow].forEach(input => input.addEventListener("input", update));
+  update();
+}
+
+SIMULATORS.levels = { title: "Cruising Level Finder", topicId: "cruising-levels", sub: "Pick a magnetic track and flight rules to see the correct cruising levels.", mount: mountCruisingLevels };
+SIMULATORS.vmc = { title: "VMC Minima Checker", topicId: "vmc-minima", sub: "Choose the airspace class and level to see the VFR weather minima.", mount: mountVmcChecker };
+
 Object.values(SIMULATORS).forEach(simulator => {
   simulator.topic = TOPICS.find(topic => topic.id === simulator.topicId).num;
 });
