@@ -13,6 +13,7 @@ js/utils.js             localStorage wrapper and shared helpers
 js/diagrams.js          SVG signals, lighting, markings, ASI and other diagrams
 js/data/topics.js       lessons and topic notes (one object per topic)
 js/data/questions.js    question bank
+js/data/numbers.js      key figures for the Numbers cheat sheet
 js/simulators.js        interactive simulators + the SIMULATORS registry
 js/quiz.js              practice quiz
 js/exam.js              timed mock exam

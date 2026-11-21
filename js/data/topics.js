@@ -358,7 +358,8 @@ const TOPICS = [
       <ul>
         <li><b>Navigation (position) lights</b>: red on the left wingtip, green on the right wingtip, white at the tail. Their arcs together cover 360°.</li>
         <li><b>Anti-collision lights</b>: red or white <b>flashing</b> (beacon / strobes) to attract attention. Required at night, and on the ground when engines are running (beacon).</li>
-        <li>Lights must be displayed between <b>sunset and sunrise</b>. UK <b>"night"</b> for licensing/logging is <b>from 30 minutes after sunset until 30 minutes before sunrise</b>.</li>
+        <li>Lights must be displayed between <b>sunset and sunrise</b>.</li>
+        <li><b>Night (ICAO/SERA definition)</b>: from the <b>end of evening civil twilight</b> to the <b>beginning of morning civil twilight</b>, unless the authority prescribes otherwise. <b>UK ANO "night"</b> (licensing and logging): from <b>30 minutes after sunset</b> to <b>30 minutes before sunrise</b>.</li>
         <li>A pilot may switch off or reduce flashing lights if they adversely affect the pilot's duties or dazzle an observer.</li>
         <li><b>If a required light fails at night</b>, the aircraft must <b>land as soon as it can safely do so</b>, unless ATC authorises it to continue. An aircraft with a failed light must not take off at night.</li>
       </ul>
@@ -501,26 +502,19 @@ const TOPICS = [
         <tr><td>8</td><td>Handling, Servicing & Maintenance</td><td>Ground handling, servicing, owner maintenance</td></tr>
         <tr><td>9</td><td>Supplements</td><td>Optional equipment (avionics, etc.)</td></tr>
       </table>
-      <h2>Airspeed indicator markings</h2>
-      <div class="two-col" style="align-items:center">
-        <div>${asiDiagram()}<p class="diagram-cap" style="text-align:center">Example values: Cessna 152 (KIAS)</p></div>
-        <table class="ref"><tr><th>Marking</th><th>Meaning</th></tr>
-          <tr><td><span class="swatch" style="background:#fff"></span><b>White arc</b></td><td>Flap operating range: <b>V<sub>SO</sub></b> (stall, landing config) → <b>V<sub>FE</sub></b> (max flap extended)</td></tr>
-          <tr><td><span class="swatch" style="background:#2ecc71"></span><b>Green arc</b></td><td>Normal operating range: <b>V<sub>S1</sub></b> (stall, clean) → <b>V<sub>NO</sub></b> (max structural cruising)</td></tr>
-          <tr><td><span class="swatch" style="background:#f1c40f"></span><b>Yellow arc</b></td><td>Caution range <b>V<sub>NO</sub> → V<sub>NE</sub></b> — smooth air only</td></tr>
-          <tr><td><span class="swatch" style="background:#ff3030"></span><b>Red line</b></td><td><b>V<sub>NE</sub></b> — never exceed speed</td></tr>
-        </table>
-      </div>
+      <h2>Legal status</h2>
+      <ul>
+        <li>The aircraft must be operated within the <b>limitations</b> in its approved flight manual/POH (airspeeds, weights, CG, load factors, placards).</li>
+        <li>The flight manual must be <b>carried on board</b> and must be the correct, up-to-date one for that aircraft.</li>
+      </ul>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>Section 2 <b>Limitations</b> is the approved, legally binding section.</li>
         <li>Stall speeds and take-off/landing distances → Section <b>5 Performance</b>. Emergencies → Section <b>3</b>.</li>
-        <li>Bottom of white arc = V<sub>SO</sub>; bottom of green = V<sub>S1</sub>; top of green = V<sub>NO</sub>; red line = V<sub>NE</sub>.</li>
+        <li>Operating outside the limitations breaches the conditions of the C of A.</li>
       </ul></div>
       <div class="callout law">Source: Part-NCO (AFM to be carried and complied with); GAMA Specification No. 1 (POH layout).</div>`,
     mnemonics: [
-      { title: "\"Good Landings Every Night Prove Wise Student Habits Stick\"", text: "General · Limitations · Emergency · Normal · Performance · Weight & balance · Systems · Handling · Supplements." },
-      { title: "\"White Wings (flaps), Green Go, Yellow Yikes, Red Rip\"", text: "White = flaps OK, green = normal, yellow = smooth air only, red = never exceed." },
-      { title: "\"S-O = Stall Out (flaps out)\"", text: "VSO is stall with flaps Out (landing config, bottom of white). VS1 is stall clean (bottom of green)." }
+      { title: "\"Good Landings Every Night Prove Wise Student Habits Stick\"", text: "General · Limitations · Emergency · Normal · Performance · Weight & balance · Systems · Handling · Supplements." }
     ]
   },
   {
@@ -556,7 +550,7 @@ const TOPICS = [
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li><b>1000 ft / 600 m</b> over towns and crowds. <b>500 ft</b> from people, vessels, vehicles and structures elsewhere (UK).</li>
         <li>Over congested areas you must <b>also</b> be able to glide clear if the engine fails.</li>
-        <li>Exception: <b>taking off and landing</b> in accordance with normal aviation practice.</li>
+        <li>Exception: <b>taking off and landing</b> in accordance with normal aviation practice. At a <b>Government or licensed aerodrome</b> (including practising approaches) this exempts you from <b>all</b> the low-flying rules; elsewhere (e.g. a farm strip) only from the <b>500 ft rule</b>.</li>
         <li>Regardless of minima, you must never fly in a way that is <b>negligent or reckless</b> and endangers people or property.</li>
       </ul></div>
       <div class="callout trap"><b class="title">Exam traps</b><ul>
@@ -582,13 +576,7 @@ const TOPICS = [
         <li>The aircraft with right of way <b>maintains heading and speed</b> — but must still act if a collision becomes likely.</li>
         <li>An <b>ATC clearance</b> doesn't remove the pilot's responsibility. In many classes (e.g. D, E, G) ATC don't separate VFR from VFR — they may only pass <b>traffic information</b>.</li>
       </ul>
-      <h2>Lookout technique</h2>
-      <ul>
-        <li>Scan systematically in <b>sectors of about 10–15°</b>, pausing about <b>1 second</b> in each so your eyes can focus.</li>
-        <li>Clear blind spots: lift a wing before turning; gentle S-turns or lowering the nose in a long climb.</li>
-        <li><b>Empty-field myopia</b>: with nothing to focus on (haze, clear sky) your eyes relax to a short focus — focus deliberately on distant objects.</li>
-        <li>An aircraft on a collision course appears <b>stationary</b> on the windscreen, then grows rapidly at the last moment ("blossoming").</li>
-      </ul>
+      <p>An aircraft on a collision course stays at a <b>constant relative bearing</b> while getting closer.</p>
       <div class="sim-slot" data-sim="collision"></div>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>Ultimate responsibility for collision avoidance: <b>the pilot-in-command</b>.</li>
@@ -598,8 +586,7 @@ const TOPICS = [
       <div class="callout law">Source: SERA.3201, SERA.3205, SERA.3210(a)–(b); SERA.2010 (responsibilities of the PIC).</div>`,
     mnemonics: [
       { title: "\"Right of way is not a right to collide\"", text: "Having priority never removes your duty to avoid the other aircraft." },
-      { title: "\"Still and growing — get going\"", text: "If another aircraft doesn't move on your windscreen but gets bigger, you're on a collision course — act now." },
-      { title: "\"10 degrees, 1 second\"", text: "Scan in ~10° sectors, ~1 second each." }
+      { title: "\"Still and growing — get going\"", text: "If another aircraft doesn't move on your windscreen but gets bigger, you're on a collision course — act now." }
     ]
   },
   {
@@ -847,8 +834,8 @@ const TOPICS = [
       <h2>Light colours</h2>
       <table class="ref"><tr><th>Lighting</th><th>Colour</th><th>Notes</th></tr>
         <tr><td>Runway edge</td><td><span class="swatch" style="background:#fff"></span>White</td><td>May be <b>yellow</b> over the last 600 m (or last third) of an instrument runway — the "caution zone".</td></tr>
-        <tr><td>Runway threshold & wing bars</td><td><span class="swatch" style="background:#2ecc71"></span>Green</td><td>Seen by aircraft on approach. "Green to go in."</td></tr>
-        <tr><td>Runway end</td><td><span class="swatch" style="background:#e53935"></span>Red</td><td>Seen by aircraft on the runway. (A green threshold light is usually red from the other side.)</td></tr>
+        <tr><td>Runway threshold & wing bars</td><td><span class="swatch" style="background:#2ecc71"></span>Green</td><td><b>Fixed, unidirectional</b>, showing green in the direction of <b>approach</b>. "Green to go in."</td></tr>
+        <tr><td>Runway end</td><td><span class="swatch" style="background:#e53935"></span>Red</td><td><b>Fixed, unidirectional</b>, showing red in the direction of the <b>runway</b>. (A green threshold light is usually red from the other side.)</td></tr>
         <tr><td>Runway centreline</td><td><span class="swatch" style="background:#fff"></span>White</td><td>Alternating red/white from 900 m to 300 m before the end, then all red for the last 300 m.</td></tr>
         <tr><td>Touchdown zone</td><td><span class="swatch" style="background:#fff"></span>White</td><td>Barrettes either side of centreline.</td></tr>
         <tr><td>Approach lighting</td><td><span class="swatch" style="background:#fff"></span>White</td><td>Centreline with crossbars (UK "Calvert" pattern).</td></tr>
@@ -1072,9 +1059,8 @@ const TOPICS = [
         <tr><td><b>Standard pressure 1013 hPa</b></td><td><b>Flight level</b> (pressure altitude ÷ 100)</td><td>Above the transition altitude/level; for vertical separation en route</td></tr>
       </table>
       <ul>
-        <li>1 hPa ≈ <b>27–30 ft</b>. Setting a higher pressure makes the altimeter read higher.</li>
-        <li>Flying from high to low pressure without resetting, the altimeter <b>over-reads</b> — you're lower than indicated: "<b>High to low, look out below</b>".</li>
         <li>Because the RPS is the lowest forecast QNH, using it gives a reading that's equal to or below your true altitude — a safety margin over terrain.</li>
+        <li>In the circuit, pilots use QFE or QNH as the aerodrome's procedures require; en route below the TA outside controlled airspace, the RPS; inside controlled airspace below the TA, the QNH ATC gives you.</li>
       </ul>
       <div class="sim-slot" data-sim="altimeter"></div>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
@@ -1083,8 +1069,7 @@ const TOPICS = [
       </ul></div>
       <div class="callout law">Source: UK AIP ENR 1.7 (altimeter setting procedures).</div>`,
     mnemonics: [
-      { title: "\"QFE = Field Elevation zero, QNH = Nautical Height\"", text: "QFE gives height above the field; QNH gives height above the sea (altitude)." },
-      { title: "\"High to low, look out below\"", text: "Flying into lower pressure (or colder air) without resetting: you're lower than the altimeter says." }
+      { title: "\"QFE = Field Elevation zero, QNH = Nautical Height\"", text: "QFE gives height above the field; QNH gives height above the sea (altitude)." }
     ]
   },
   {
@@ -1229,7 +1214,6 @@ const TOPICS = [
         <tr><td><b>RMZ</b> (Radio Mandatory Zone)</td><td>—</td><td>Must carry a radio, call and maintain a listening watch.</td></tr>
         <tr><td><b>TMZ</b> (Transponder Mandatory Zone)</td><td>—</td><td>Must carry and operate a suitable transponder.</td></tr>
       </table>
-      <p>On UK charts, the figure after the slash is the <b>upper limit</b> in thousands of feet (e.g. <span class="mono">D201/5.5</span> = up to 5,500 ft). A solid boundary means active during the published hours; a pecked (dashed) boundary means activated by NOTAM. Activity times are in the AIP.</p>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>P = prohibited, R = restricted, D = danger.</li>
         <li>MATZ: 5 nm / 3,000 ft aal + stubs; penetration not compulsory for civil aircraft.</li>
@@ -1274,6 +1258,7 @@ const TOPICS = [
         <tr><td><b>Flight information service</b></td><td>Advice and information useful for safe and efficient flight.</td></tr>
         <tr><td><b>Alerting service</b></td><td>Notify the right organisations about aircraft needing search and rescue, and assist them.</td></tr>
       </table>
+      <p><b>Air traffic</b> is defined as <b>all aircraft in flight or operating on the manoeuvring area of an aerodrome</b> (not the apron).</p>
       <h2>UK Flight Information Services (outside controlled airspace)</h2>
       <table class="ref"><tr><th>Service</th><th>What you get</th><th>Who avoids collisions?</th></tr>
         <tr><td><b>Basic Service</b></td><td>Information useful for safe flight (weather, aerodrome info). Traffic information not normally given — may be if the controller sees a definite risk.</td><td>You</td></tr>
@@ -1282,6 +1267,10 @@ const TOPICS = [
         <tr><td><b>Procedural Service</b></td><td>Non-surveillance (no radar): deconfliction between participating aircraft using reported positions.</td><td>You</td></tr>
       </table>
       <p>In all UK FIS services, the pilot remains responsible for collision avoidance and terrain clearance. Services are agreed by a request and acknowledgement on the radio.</p>
+      <ul>
+        <li><b>LARS</b> (Lower Airspace Radar Service): Traffic or Deconfliction Service from participating units, outside controlled airspace, up to and including <b>FL95</b> and within about <b>30 nm</b> of the unit.</li>
+        <li>A VFR pilot without an instrument qualification must <b>stay in VMC</b>. If a controller's heading or level would take you out of VMC, <b>tell the controller and ask for an alternative</b>.</li>
+      </ul>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>ATC → clearances. FIS → information. Alerting → SAR.</li>
         <li>Only the Deconfliction Service gives <b>avoiding action advice</b>; it's never an instruction.</li>
@@ -1409,10 +1398,7 @@ const TOPICS = [
     body: () => `
       <ul>
         <li>The <b>PIC</b> is responsible for the security of the aircraft and its occupants during flight.</li>
-        <li><b>Secure unattended aircraft</b>: lock it, remove keys, use control locks — and check for interference during the pre-flight inspection.</li>
-        <li>Know your passengers and check their baggage on private flights: you are responsible for what is carried.</li>
-        <li><b>Weapons, munitions of war and dangerous goods</b> must not be carried without the required permission/compliance (ICAO Technical Instructions; CAA permission for munitions of war).</li>
-        <li>Report suspicious activity at an aerodrome to the police (e.g. via Project Pegasus / "Airport Watch" schemes for GA).</li>
+        <li>The <b>aim of ICAO Annex 17</b> is to <b>safeguard civil aviation against acts of unlawful interference</b> — the safety of passengers, crew, ground personnel and the public is the primary objective.
         <li>In flight, unlawful interference → squawk <b>7500</b>.</li>
       </ul>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
@@ -1515,6 +1501,7 @@ const TOPICS = [
         <li><b>Changing IFR → VFR</b>: only when the flight is in VMC and expected to remain so. Tell ATS "<b>cancelling my IFR flight</b>". ATC don't suggest it.</li>
         <li>To fly under IFR you need an <b>instrument rating</b> — in the UK, the national <b>IR(R)</b> (Instrument Rating (Restricted), formerly the IMC rating) allows IFR in UK airspace outside Class A.</li>
       </ul>
+      <p style="font-size:13.5px;color:var(--muted)">Older UK rules (and some question banks) word the IFR minimum as 1,000 ft above the highest obstacle within <b>5 nm</b>. Current SERA wording is <b>8 km</b> of the estimated position — learn both forms.</p>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>IFR minimum: 1,000 ft within 8 km (2,000 ft in mountains).</li>
         <li>IR(R) = UK only, not Class A.</li>
@@ -1667,24 +1654,6 @@ const TOPICS = [
     ]
   },
   {
-    id: "fuel-planning", lesson: "l8", title: "Fuel Planning", tag: "Operations",
-    summary: "Minimum fuel reserves for VFR flights in aeroplanes, day and night.",
-    body: () => `
-      <table class="ref"><tr><th>VFR flight in an aeroplane</th><th>Fuel required</th></tr>
-        <tr><td><b>By day</b></td><td>Enough to fly to the aerodrome of intended landing <b>and then at least 30 minutes</b> at normal cruising altitude</td></tr>
-        <tr><td><b>At night</b></td><td>Enough to fly to the aerodrome of intended landing <b>and then at least 45 minutes</b> at normal cruising altitude</td></tr>
-      </table>
-      <p>Also plan for: forecast winds and weather, expected ATC routings and delays, taxi fuel, contingencies and diversions — and check the fuel on board visually before flight.</p>
-      <div class="sim-slot" data-sim="fuel"></div>
-      <div class="callout key"><b class="title">Exam must-knows</b><ul>
-        <li>Day VFR reserve: <b>30 min</b>. Night VFR reserve: <b>45 min</b>.</li>
-      </ul></div>
-      <div class="callout law">Source: Part-NCO.OP.125 (fuel and oil supply — aeroplanes).</div>`,
-    mnemonics: [
-      { title: "\"Day 30, night 45 — keep the engine alive\"", text: "VFR reserves: 30 minutes by day, 45 minutes at night." }
-    ]
-  },
-  {
     id: "fitness-alcohol", lesson: "l8", title: "Fitness to Fly: Alcohol, Drugs and Fatigue", tag: "Operations",
     summary: "The legal alcohol limit for pilots in the UK, and other reasons not to fly.",
     body: () => `
@@ -1693,7 +1662,6 @@ const TOPICS = [
         <li>A pilot must not fly while <b>impaired</b> by alcohol or drugs, whatever the level.</li>
         <li>No-one may <b>enter an aircraft when drunk</b>, or be drunk on board.</li>
         <li>Don't fly with medication that may affect performance; seek aeromedical advice (see Medical Certificates).</li>
-        <li>Avoid flying when fatigued, unwell, or soon after blood donation or scuba diving.</li>
       </ul>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>Pilot alcohol limit: <b>20 mg / 100 ml blood</b>.</li>
@@ -1701,25 +1669,6 @@ const TOPICS = [
       <div class="callout law">Source: Railways and Transport Safety Act 2003 (Part 5); ANO 2016 (drunkenness in aircraft); Part-MED MED.A.020.</div>`,
     mnemonics: [
       { title: "\"Twenty is plenty — too much\"", text: "20 mg per 100 ml of blood is the pilot limit — a quarter of the drink-drive limit." }
-    ]
-  },
-  {
-    id: "passenger-safety", lesson: "l8", title: "Passenger Briefing and Safety", tag: "Operations",
-    summary: "What passengers must be told, and when they must be strapped in.",
-    body: () => `
-      <ul>
-        <li>Before flight, brief passengers on: <b>seat belts/harnesses</b>, <b>emergency exits</b> and how to open doors, <b>emergency equipment</b> (life jackets, fire extinguisher, ELT/PLB), the brace position, and smoking/PED rules.</li>
-        <li>Each person on board must occupy a seat with the <b>seat belt fastened</b> during <b>taxi, take-off and landing</b>, and whenever the PIC considers it necessary (e.g. turbulence).</li>
-        <li><b>Life jackets</b> are required for everyone on board when flying a single-engine landplane over water <b>beyond gliding distance from land</b>.</li>
-        <li>The PIC may refuse to carry passengers who are drunk or behaving dangerously.</li>
-      </ul>
-      <div class="callout key"><b class="title">Exam must-knows</b><ul>
-        <li>Belts: taxi, take-off, landing and turbulence.</li>
-        <li>Life jackets: single-engine, beyond gliding distance from land.</li>
-      </ul></div>
-      <div class="callout law">Source: Part-NCO (passenger briefing; seats, safety belts and restraint systems; flight over water equipment).</div>`,
-    mnemonics: [
-      { title: "\"SEE-PB: Seat belts, Exits, Equipment, PEDs, Brace\"", text: "The core of every passenger briefing." }
     ]
   },
   {
@@ -1739,24 +1688,6 @@ const TOPICS = [
       <div class="callout law">Source: Air Navigation Order 2016 (endangering safety, dropping articles and animals); SERA.3115.</div>`,
     mnemonics: [
       { title: "\"Sand and water, nothing harder\"", text: "Permitted ballast drops: fine sand or water only." }
-    ]
-  },
-  {
-    id: "oxygen-equipment", lesson: "l8", title: "Oxygen and Survival Equipment", tag: "Operations",
-    summary: "When pilots must use oxygen, and emergency equipment requirements.",
-    body: () => `
-      <ul>
-        <li><b>Supplemental oxygen</b> must be used by the pilot whenever the cabin pressure altitude exceeds <b>10,000 ft for more than 30 minutes</b>, and <b>always above 13,000 ft</b>.</li>
-        <li>Aircraft must carry an <b>ELT</b>; small aeroplanes (up to 6 seats) may instead carry a <b>PLB</b> carried by a crew member or passenger.</li>
-        <li><b>Life jackets</b>: single-engine landplanes over water beyond gliding distance from land.</li>
-        <li>Additional survival and signalling equipment is needed over areas where search and rescue would be especially difficult.</li>
-      </ul>
-      <div class="callout key"><b class="title">Exam must-knows</b><ul>
-        <li>Oxygen: <b>10,000 ft for more than 30 min</b>, or any time above <b>13,000 ft</b>.</li>
-      </ul></div>
-      <div class="callout law">Source: Part-NCO.OP.190 (use of supplemental oxygen); Part-NCO.IDE.A (ELT; flight over water).</div>`,
-    mnemonics: [
-      { title: "\"10 for 30, 13 for keeps\"", text: "Oxygen above 10,000 ft for more than 30 minutes; always above 13,000 ft." }
     ]
   },
   {
@@ -1888,20 +1819,12 @@ const TOPICS = [
         <tr><td class="mono"><b>↑</b></td><td><b>Proceeding</b> in this direction</td></tr>
       </table>
       <p>Symbols should be at least <b>2.5 m (8 ft)</b> long and contrast with the background. An aircraft acknowledges by <b>rocking its wings</b> (day) or flashing its landing/navigation lights twice (night).</p>
-      <h2>Dropped supplies — colour codes</h2>
-      <table class="ref"><tr><th>Colour</th><th>Contents</th></tr>
-        <tr><td><span class="swatch" style="background:#e53935"></span>Red</td><td>Medical supplies and first aid</td></tr>
-        <tr><td><span class="swatch" style="background:#1e88e5"></span>Blue</td><td>Food and water</td></tr>
-        <tr><td><span class="swatch" style="background:#fdd835"></span>Yellow</td><td>Blankets and protective clothing</td></tr>
-        <tr><td><span class="swatch" style="background:#111"></span>Black</td><td>Miscellaneous equipment (stoves, axes, compasses…)</td></tr>
-      </table>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>V = assistance; X = medical; N = no; Y = yes; ↑ = going this way.</li>
       </ul></div>
       <div class="callout law">Source: ICAO Annex 12 Appendix; SERA Appendix 1.</div>`,
     mnemonics: [
-      { title: "\"V for Victim, X for eXamine (medical)\"", text: "V = require assistance; X = require medical assistance." },
-      { title: "\"Red Bandage, Blue Bottle, Yellow Blanket, Black Box\"", text: "Supply drop colours: medical, food/water, clothing/blankets, equipment." }
+      { title: "\"V for Victim, X for eXamine (medical)\"", text: "V = require assistance; X = require medical assistance." }
     ]
   },
   {
