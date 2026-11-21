@@ -758,6 +758,308 @@ function mountVmcChecker(element) {
 SIMULATORS.levels = { title: "Cruising Level Finder", topicId: "cruising-levels", sub: "Pick a magnetic track and flight rules to see the correct cruising levels.", mount: mountCruisingLevels };
 SIMULATORS.vmc = { title: "VMC Minima Checker", topicId: "vmc-minima", sub: "Choose the airspace class and level to see the VFR weather minima.", mount: mountVmcChecker };
 
+const SIGNAL_DECKS = {
+  marshalling: [
+    { prompt: "Pilot: raises arm and hand with fingers extended horizontally in front of face, then clenches fist", answer: "Brakes engaged" },
+    { prompt: "Pilot: raises arm with fist clenched horizontally in front of face, then extends fingers", answer: "Brakes released" },
+    { prompt: "Pilot: arms extended, palms outwards, moves hands inwards to cross in front of face", answer: "Insert chocks" },
+    { prompt: "Pilot: hands crossed in front of face, palms outwards, moves arms outwards", answer: "Remove chocks" },
+    { prompt: "Pilot: raises a number of fingers on one hand", answer: "Ready to start that engine number" },
+    { prompt: "Marshaller: arms extended at 90° to the sides, slowly raised above the head until the wands cross", answer: "Normal stop" },
+    { prompt: "Marshaller: arms abruptly raised to the top of the head, wands crossed", answer: "Emergency stop" },
+    { prompt: "Marshaller: wand drawn across the throat in a slicing motion", answer: "Cut engines" },
+    { prompt: "Marshaller: extended arms moved downwards in a patting gesture, waist to knees", answer: "Slow down" },
+    { prompt: "Marshaller: arms above head, wands jabbed inwards until they touch", answer: "Chocks inserted" },
+    { prompt: "Marshaller: arms above head, wands jabbed outwards", answer: "Chocks removed" }
+  ],
+  signals: [
+    { prompt: "Interceptor rocks its wings and flashes its lights, then makes a slow level turn", answer: "You have been intercepted — follow me" },
+    { prompt: "Interceptor makes an abrupt climbing turn of 90° or more without crossing your path", answer: "You may proceed" },
+    { prompt: "Interceptor lowers its gear, shows steady landing lights and overflies the runway", answer: "Land at this aerodrome" },
+    { prompt: "Red and green stars fired from the ground every 10 seconds", answer: "You are in or near a restricted, prohibited or danger area" },
+    { prompt: "Ground signal laid out by survivors: V", answer: "Require assistance" },
+    { prompt: "Ground signal laid out by survivors: X", answer: "Require medical assistance" },
+    { prompt: "Ground signal laid out by survivors: N", answer: "No or negative" },
+    { prompt: "Ground signal laid out by survivors: Y", answer: "Yes or affirmative" },
+    { prompt: "Ground signal laid out by survivors: ↑", answer: "Proceeding in this direction" },
+    { prompt: "Dropped supply container coloured red", answer: "Medical supplies and first aid" },
+    { prompt: "Dropped supply container coloured blue", answer: "Food and water" },
+    { prompt: "Dropped supply container coloured yellow", answer: "Blankets and protective clothing" },
+    { prompt: "Dropped supply container coloured black", answer: "Miscellaneous equipment" }
+  ],
+  codes: [
+    { prompt: "Squawk 7700", answer: "Emergency" },
+    { prompt: "Squawk 7600", answer: "Radio failure" },
+    { prompt: "Squawk 7500", answer: "Unlawful interference" },
+    { prompt: "Squawk 7000", answer: "UK conspicuity code" },
+    { prompt: "Squawk 2000", answer: "Entering an FIR with no code assigned" },
+    { prompt: "INCERFA", answer: "Uncertainty phase" },
+    { prompt: "ALERFA", answer: "Alert phase" },
+    { prompt: "DETRESFA", answer: "Distress phase" },
+    { prompt: "MAYDAY MAYDAY MAYDAY", answer: "Distress — immediate assistance required" },
+    { prompt: "PAN PAN, PAN PAN, PAN PAN", answer: "Urgency — no immediate assistance required" },
+    { prompt: "121.5 MHz", answer: "International emergency frequency" },
+    { prompt: "135.480 MHz", answer: "SafetyCom (no aerodrome service)" },
+    { prompt: "Call sign suffix 'Radio'", answer: "Air/Ground Communication Service" },
+    { prompt: "Call sign suffix 'Information'", answer: "Aerodrome Flight Information Service" }
+  ]
+};
+
+function mountDeckTrainer(element, deckName) {
+  const deck = SIGNAL_DECKS[deckName];
+  let reversed = false;
+  let current = null;
+  let correctCount = 0;
+  let attemptCount = 0;
+  element.innerHTML = `
+    <div class="sim-controls">
+      <button class="btn small" data-direction="forward">Signal → meaning</button>
+      <button class="btn small ghost" data-direction="reverse">Meaning → signal</button>
+      <span style="margin-left:auto;font-weight:700" class="deck-score">Score: 0/0</span>
+    </div>
+    <div class="readout deck-prompt" style="font-size:16px;font-weight:600"></div>
+    <div class="option-list deck-options"></div>
+    <div class="readout hidden deck-feedback"></div>
+    <div class="sim-controls"><button class="btn small deck-next">Next →</button></div>`;
+  const promptBox = element.querySelector(".deck-prompt");
+  const optionList = element.querySelector(".deck-options");
+  const feedback = element.querySelector(".deck-feedback");
+
+  function showCard() {
+    current = pickRandom(deck);
+    const questionText = reversed ? current.answer : current.prompt;
+    const correctText = reversed ? current.prompt : current.answer;
+    const distractors = shuffle(deck.filter(card => card !== current)).slice(0, 3).map(card => reversed ? card.prompt : card.answer);
+    promptBox.textContent = questionText;
+    optionList.innerHTML = shuffle([correctText, ...distractors]).map(text => `<button class="option" data-correct="${text === correctText}">${text}</button>`).join("");
+    feedback.classList.add("hidden");
+  }
+  optionList.addEventListener("click", event => {
+    const button = event.target.closest(".option");
+    if (!button || button.disabled) return;
+    attemptCount++;
+    const isCorrect = button.dataset.correct === "true";
+    if (isCorrect) correctCount++;
+    optionList.querySelectorAll(".option").forEach(option => {
+      option.disabled = true;
+      if (option.dataset.correct === "true") option.classList.add("correct");
+    });
+    if (!isCorrect) button.classList.add("wrong");
+    feedback.className = "readout deck-feedback " + (isCorrect ? "ok" : "no");
+    feedback.innerHTML = `<b>${isCorrect ? "✅ Correct" : "❌ Not quite"}</b> — ${current.prompt} → <b>${current.answer}</b>`;
+    element.querySelector(".deck-score").textContent = `Score: ${correctCount}/${attemptCount}`;
+  });
+  element.querySelectorAll("[data-direction]").forEach(button => button.addEventListener("click", () => {
+    reversed = button.dataset.direction === "reverse";
+    element.querySelectorAll("[data-direction]").forEach(other => other.classList.toggle("ghost", other !== button));
+    showCard();
+  }));
+  element.querySelector(".deck-next").addEventListener("click", showCard);
+  showCard();
+}
+
+function mountAltimeterSimulator(element) {
+  element.innerHTML = `
+    <div class="sim-controls">
+      <label>Local QNH: <span class="mono alt-qnh-out"></span><input type="range" min="980" max="1040" value="1003" class="alt-qnh"></label>
+      <label>Aerodrome elevation: <span class="mono alt-elev-out"></span><input type="range" min="0" max="1000" step="10" value="270" class="alt-elev"></label>
+      <label>Your true altitude: <span class="mono alt-true-out"></span><input type="range" min="0" max="7000" step="50" value="2500" class="alt-true"></label>
+    </div>
+    <div class="two-col">
+      <div class="readout alt-readings"></div>
+      <div class="readout alt-transition"></div>
+    </div>
+    <h3 style="margin:16px 0 4px">"High to low, look out below"</h3>
+    <div class="sim-controls">
+      <label>Subscale left set to: <span class="mono alt-set-out"></span><input type="range" min="980" max="1040" value="1020" class="alt-set"></label>
+      <label>Actual QNH where you are now: <span class="mono alt-actual-out"></span><input type="range" min="980" max="1040" value="1000" class="alt-actual"></label>
+      <label>Altimeter indicates: <span class="mono alt-indicated-out"></span><input type="range" min="1000" max="6000" step="50" value="2000" class="alt-indicated"></label>
+    </div>
+    <div class="readout alt-error"></div>`;
+  const read = selector => Number(element.querySelector(selector).value);
+  const feetPerHectopascal = 30;
+
+  function update() {
+    const qnh = read(".alt-qnh");
+    const elevation = read(".alt-elev");
+    const trueAltitude = read(".alt-true");
+    element.querySelector(".alt-qnh-out").textContent = qnh + " hPa";
+    element.querySelector(".alt-elev-out").textContent = elevation + " ft";
+    element.querySelector(".alt-true-out").textContent = trueAltitude + " ft AMSL";
+    const qfe = qnh - Math.round(elevation / feetPerHectopascal);
+    const pressureAltitude = trueAltitude + (1013 - qnh) * feetPerHectopascal;
+    const transitionAltitude = 3000;
+    let transitionLevel = 35;
+    while (transitionLevel * 100 - (1013 - qnh) * feetPerHectopascal < transitionAltitude + 500) transitionLevel += 5;
+    element.querySelector(".alt-readings").innerHTML = `
+      <b>What the altimeter reads</b>
+      <ul class="check-list">
+        <li><span class="mono">QNH ${qnh}</span><span>→ <b>${trueAltitude} ft</b> altitude</span></li>
+        <li><span class="mono">QFE ${qfe}</span><span>→ <b>${trueAltitude - elevation} ft</b> height above the aerodrome</span></li>
+        <li><span class="mono">1013</span><span>→ <b>${Math.round(pressureAltitude)} ft</b> pressure altitude = <b>FL${String(Math.round(pressureAltitude / 100)).padStart(3, "0")}</b></span></li>
+      </ul>
+      <div style="font-size:12.5px;color:var(--muted)">Using 1 hPa ≈ 30 ft. QFE ≈ QNH − elevation ÷ 30.</div>`;
+    const belowTransition = trueAltitude <= transitionAltitude;
+    element.querySelector(".alt-transition").innerHTML = `
+      <b>Transition (TA ${transitionAltitude} ft)</b>
+      <p style="margin:6px 0">With QNH ${qnh}, the transition level would be around <b>FL${String(transitionLevel).padStart(3, "0")}</b> (illustrative — ATC/AIP publish the actual TL).</p>
+      <p style="margin:6px 0">${qnh < 1013 ? "Low QNH → the transition layer is <b>thicker</b>." : "High QNH → the transition layer is <b>thinner</b>."}</p>
+      <p style="margin:6px 0">At ${trueAltitude} ft you should be using <b>${belowTransition ? "QNH (altitude)" : "1013 (flight level) once above the transition altitude"}</b>.</p>`;
+    const setPressure = read(".alt-set");
+    const actualPressure = read(".alt-actual");
+    const indicated = read(".alt-indicated");
+    element.querySelector(".alt-set-out").textContent = setPressure + " hPa";
+    element.querySelector(".alt-actual-out").textContent = actualPressure + " hPa";
+    element.querySelector(".alt-indicated-out").textContent = indicated + " ft";
+    const actualAltitude = indicated - (setPressure - actualPressure) * feetPerHectopascal;
+    const difference = actualAltitude - indicated;
+    const errorBox = element.querySelector(".alt-error");
+    errorBox.className = "readout alt-error " + (difference < 0 ? "no" : "ok");
+    errorBox.innerHTML = difference === 0
+      ? `Subscale matches the local QNH — you really are at <b>${indicated} ft</b>.`
+      : `You're actually at <b>${Math.round(actualAltitude)} ft</b> — <b>${Math.abs(Math.round(difference))} ft ${difference < 0 ? "LOWER" : "higher"}</b> than indicated. ${difference < 0 ? "High to low, look out below!" : "Low to high: you're higher than you think."}`;
+  }
+  element.querySelectorAll("input").forEach(input => input.addEventListener("input", update));
+  update();
+}
+
+function addMonths(date, months) {
+  const result = new Date(date.getTime());
+  result.setMonth(result.getMonth() + months);
+  return result;
+}
+
+function mountDateCalculator(element) {
+  element.innerHTML = `
+    <div class="sim-controls">
+      <label>Your date of birth<input type="date" class="dc-birth" value="1983-06-15"></label>
+      <label>Date of Class 2 medical<input type="date" class="dc-medical" value="2026-11-21"></label>
+      <label>SEP skill test / last revalidation date<input type="date" class="dc-sep" value="2025-03-10"></label>
+      <label>Date of your 3rd most recent landing<input type="date" class="dc-landing" value="2026-10-01"></label>
+    </div>
+    <div class="readout dc-output"></div>`;
+  const output = element.querySelector(".dc-output");
+  const dateValue = selector => {
+    const value = element.querySelector(selector).value;
+    return value ? new Date(value + "T12:00:00") : null;
+  };
+  const birthdayAt = (birth, age) => new Date(birth.getFullYear() + age, birth.getMonth(), birth.getDate(), 12);
+
+  function update() {
+    const birth = dateValue(".dc-birth");
+    const medical = dateValue(".dc-medical");
+    const sep = dateValue(".dc-sep");
+    const landing = dateValue(".dc-landing");
+    const lines = [];
+    if (birth && medical) {
+      let ageAtExam = medical.getFullYear() - birth.getFullYear();
+      if (medical < birthdayAt(birth, ageAtExam)) ageAtExam--;
+      let months = 12;
+      let capAge = null;
+      if (ageAtExam < 40) { months = 60; capAge = 42; }
+      else if (ageAtExam < 50) { months = 24; capAge = 51; }
+      let expiry = addMonths(medical, months);
+      let capped = false;
+      if (capAge !== null && expiry > birthdayAt(birth, capAge)) { expiry = birthdayAt(birth, capAge); capped = true; }
+      lines.push(`<li><span>🩺</span><span><b>Class 2 medical</b> (age ${ageAtExam} at exam → ${months} months${capped ? `, capped at your ${capAge}${capAge === 42 ? "nd" : "st"} birthday` : ""}): valid until <b>${formatDate(expiry)}</b></span></li>`);
+    }
+    if (sep) {
+      const endOfTestMonth = new Date(sep.getFullYear(), sep.getMonth() + 1, 0, 12);
+      const expiry = new Date(endOfTestMonth.getFullYear() + 2, endOfTestMonth.getMonth() + 1, 0, 12);
+      const windowStart = addMonths(expiry, -3);
+      const experienceStart = addMonths(expiry, -12);
+      lines.push(`<li><span>🛩️</span><span><b>SEP rating</b>: expires <b>${formatDate(expiry)}</b> (24 months from the end of ${MONTH_NAMES[sep.getMonth()]} ${sep.getFullYear()}). Proficiency-check window opens ${formatDate(windowStart)}; experience must be flown from ${formatDate(experienceStart)}.</span></li>`);
+    }
+    if (landing) {
+      const lastDay = new Date(landing.getTime() + 90 * 24 * 60 * 60 * 1000);
+      const today = new Date();
+      lines.push(`<li><span>👥</span><span><b>Passenger currency</b>: you can carry passengers until <b>${formatDate(lastDay)}</b> (90 days) — ${today <= lastDay ? "✅ current today" : "❌ lapsed — fly 3 take-offs and landings solo or with an instructor first"}.</span></li>`);
+    }
+    output.innerHTML = `<ul class="check-list">${lines.join("")}</ul><div style="font-size:12.5px;color:var(--muted)">Study aid only — always check the dates printed on your own licence and medical.</div>`;
+  }
+  element.querySelectorAll("input").forEach(input => input.addEventListener("input", update));
+  update();
+}
+
+function mountFuelPlanner(element) {
+  element.innerHTML = `
+    <div class="sim-controls">
+      <label>Planned flight time: <span class="mono fp-time-out"></span><input type="range" min="10" max="300" step="5" value="80" class="fp-time"></label>
+      <label>Fuel burn: <span class="mono fp-burn-out"></span><input type="range" min="15" max="60" step="1" value="25" class="fp-burn"></label>
+      <label>Taxi and run-up allowance: <span class="mono fp-taxi-out"></span><input type="range" min="0" max="10" step="1" value="3" class="fp-taxi"></label>
+      <label>Fuel on board: <span class="mono fp-onboard-out"></span><input type="range" min="20" max="200" step="1" value="90" class="fp-onboard"></label>
+    </div>
+    <div class="sim-controls"><label class="check"><input type="checkbox" class="fp-night"> Night flight</label></div>
+    <div class="readout fp-output"></div>`;
+  const read = selector => Number(element.querySelector(selector).value);
+
+  function update() {
+    const minutes = read(".fp-time");
+    const burn = read(".fp-burn");
+    const taxi = read(".fp-taxi");
+    const onBoard = read(".fp-onboard");
+    const night = element.querySelector(".fp-night").checked;
+    element.querySelector(".fp-time-out").textContent = `${Math.floor(minutes / 60)} h ${minutes % 60} min`;
+    element.querySelector(".fp-burn-out").textContent = burn + " L/h";
+    element.querySelector(".fp-taxi-out").textContent = taxi + " L";
+    element.querySelector(".fp-onboard-out").textContent = onBoard + " L";
+    const reserveMinutes = night ? 45 : 30;
+    const tripFuel = burn * minutes / 60;
+    const reserveFuel = burn * reserveMinutes / 60;
+    const required = tripFuel + reserveFuel + taxi;
+    const enough = onBoard >= required;
+    const output = element.querySelector(".fp-output");
+    output.className = "readout fp-output " + (enough ? "ok" : "no");
+    output.innerHTML = `
+      <div class="mono">Trip ${tripFuel.toFixed(1)} L + reserve (${reserveMinutes} min) ${reserveFuel.toFixed(1)} L + taxi ${taxi} L = <b>${required.toFixed(1)} L minimum</b></div>
+      <div style="margin-top:6px"><b>${enough ? `✅ Enough — ${(onBoard - required).toFixed(1)} L spare` : `❌ Not enough — ${(required - onBoard).toFixed(1)} L short`}</b>. Remember extra for headwinds, diversions and holding.</div>`;
+  }
+  element.querySelectorAll("input").forEach(input => input.addEventListener("input", update));
+  update();
+}
+
+const AIRSPACE_RULES = {
+  A: { IFR: ["Permitted", "Clearance required", "Two-way radio required", "Separated from all traffic", "No speed limit"], VFR: null },
+  C: { IFR: ["Permitted", "Clearance required", "Two-way radio required", "Separated from IFR and VFR", "No speed limit"], VFR: ["Permitted", "Clearance required", "Two-way radio required", "Separated from IFR; traffic information on VFR", "250 kt IAS below FL100"] },
+  D: { IFR: ["Permitted", "Clearance required", "Two-way radio required", "Separated from IFR; traffic information on VFR", "250 kt IAS below FL100"], VFR: ["Permitted", "Clearance required", "Two-way radio required", "Not separated; traffic information on all traffic", "250 kt IAS below FL100"] },
+  E: { IFR: ["Permitted", "Clearance required", "Two-way radio required", "Separated from IFR; traffic information where practicable", "250 kt IAS below FL100"], VFR: ["Permitted", "No clearance needed", "Radio not required", "Not separated; traffic information where practicable", "250 kt IAS below FL100"] },
+  G: { IFR: ["Permitted", "No clearance needed", "Radio not required (UK FIS available)", "Not separated", "250 kt IAS below FL100"], VFR: ["Permitted", "No clearance needed", "Radio not required (UK FIS available)", "Not separated", "250 kt IAS below FL100"] }
+};
+
+function mountAirspaceExplorer(element) {
+  element.innerHTML = `
+    <div class="sim-controls">
+      <label>Airspace class<select class="ae-class"><option>A</option><option>C</option><option selected>D</option><option>E</option><option>G</option></select></label>
+      <label>Flight rules<select class="ae-rules"><option>VFR</option><option>IFR</option></select></label>
+    </div>
+    <div class="readout ae-output"></div>`;
+  const labels = ["Allowed?", "ATC clearance", "Radio", "Separation / service", "Speed limit"];
+
+  function update() {
+    const classValue = element.querySelector(".ae-class").value;
+    const rules = element.querySelector(".ae-rules").value;
+    const facts = AIRSPACE_RULES[classValue][rules];
+    const output = element.querySelector(".ae-output");
+    if (!facts) {
+      output.className = "readout ae-output no";
+      output.innerHTML = `<b>VFR is not permitted in Class ${classValue}.</b>`;
+      return;
+    }
+    output.className = "readout ae-output";
+    output.innerHTML = `<table class="ref" style="margin:0">${facts.map((fact, index) => `<tr><td><b>${labels[index]}</b></td><td>${fact}</td></tr>`).join("")}</table>`;
+  }
+  element.querySelectorAll("select").forEach(select => select.addEventListener("input", update));
+  update();
+}
+
+SIMULATORS.altimeter = { title: "Altimeter Simulator", topicId: "altimeter-settings", sub: "See what QNH, QFE and 1013 make the altimeter read — and what happens if you forget to reset it.", mount: mountAltimeterSimulator };
+SIMULATORS.airspace = { title: "Airspace Requirements Explorer", topicId: "airspace-classes", sub: "Pick a class and flight rules to see what you need and what ATC provides.", mount: mountAirspaceExplorer };
+SIMULATORS.dates = { title: "Licence & Currency Date Calculator", topicId: "medical-certificates", sub: "Work out medical expiry, SEP rating expiry and passenger currency from real dates.", mount: mountDateCalculator };
+SIMULATORS.fuel = { title: "VFR Fuel Planner", topicId: "fuel-planning", sub: "Check whether you have the legal minimum fuel, day or night.", mount: mountFuelPlanner };
+SIMULATORS.marshalling = { title: "Marshalling Signals Trainer", topicId: "marshalling-signals", sub: "Signal → meaning, or flip it round: meaning → signal.", mount: element => mountDeckTrainer(element, "marshalling") };
+SIMULATORS.signals = { title: "Interception & SAR Signals Trainer", topicId: "interception", sub: "Interception, warning and search-and-rescue signals, both ways round.", mount: element => mountDeckTrainer(element, "signals") };
+SIMULATORS.codes = { title: "Codes, Calls & Phases Trainer", topicId: "transponder-codes", sub: "Squawks, emergency phases, distress calls and frequencies.", mount: element => mountDeckTrainer(element, "codes") };
+
 Object.values(SIMULATORS).forEach(simulator => {
   simulator.topic = TOPICS.find(topic => topic.id === simulator.topicId).num;
 });

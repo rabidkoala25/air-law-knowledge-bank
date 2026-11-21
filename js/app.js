@@ -25,6 +25,8 @@ function route() {
     renderFlashcards();
   } else if (hash === "mnemonics") {
     renderMnemonics();
+  } else if (hash === "numbers") {
+    renderNumbers();
   } else {
     renderHome();
   }
@@ -154,6 +156,34 @@ function mountSimSlots(container) {
     slot.innerHTML = `<div class="sim"><div class="sim-title">🎮 ${simulator.title}</div><div class="sim-sub">${simulator.sub}</div><div class="sim-body"></div></div>`;
     simulator.mount(slot.querySelector(".sim-body"));
   });
+}
+
+function renderNumbers() {
+  currentView = "numbers";
+  setActiveTab("numbers");
+  appElement.innerHTML = `
+    <h1 style="margin:4px 0 4px;letter-spacing:-.02em">Numbers to Know</h1>
+    <p style="color:var(--muted);margin:0 0 12px">Every key figure in one place. Click a row to open its topic.</p>
+    <div class="sim-controls"><label class="check"><input type="checkbox" id="hideNumbers"> Hide the values — test yourself (click a value to reveal)</label></div>
+    ${LESSON_ORDER.map(lessonId => {
+      const rows = KEY_NUMBERS.filter(item => item.lesson === lessonId);
+      if (!rows.length) return "";
+      return `<div class="section-title">${LESSONS[lessonId].name}</div>
+        <div class="card" style="padding:6px 14px;margin-bottom:14px"><table class="ref" style="margin:0">${rows.map(item => {
+          const topic = TOPICS.find(entry => entry.id === item.topicId);
+          return `<tr><td style="cursor:pointer" data-topic="${topic.num}">${item.fact}<div style="font-size:12px;color:var(--muted)">#${topic.num} ${topic.title}</div></td><td class="number-value" style="font-weight:700">${item.value}</td></tr>`;
+        }).join("")}</table></div>`;
+    }).join("")}`;
+  const toggle = document.getElementById("hideNumbers");
+  toggle.addEventListener("change", () => {
+    appElement.querySelectorAll(".number-value").forEach(cell => {
+      cell.style.filter = toggle.checked ? "blur(6px)" : "";
+      cell.dataset.hidden = toggle.checked ? "true" : "";
+    });
+  });
+  appElement.querySelectorAll(".number-value").forEach(cell => cell.addEventListener("click", () => {
+    if (cell.dataset.hidden === "true") cell.style.filter = cell.style.filter ? "" : "blur(6px)";
+  }));
 }
 
 function renderMnemonics() {

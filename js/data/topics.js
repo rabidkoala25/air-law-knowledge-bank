@@ -1076,6 +1076,7 @@ const TOPICS = [
         <li>Flying from high to low pressure without resetting, the altimeter <b>over-reads</b> — you're lower than indicated: "<b>High to low, look out below</b>".</li>
         <li>Because the RPS is the lowest forecast QNH, using it gives a reading that's equal to or below your true altitude — a safety margin over terrain.</li>
       </ul>
+      <div class="sim-slot" data-sim="altimeter"></div>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>QFE → height; QNH → altitude; 1013 → flight level.</li>
         <li>RPS = lowest forecast QNH in the region for the hour.</li>
@@ -1153,6 +1154,7 @@ const TOPICS = [
         <li>Two-way radio is required in C and D (and for IFR in E).</li>
         <li>Most UK airspace from FL195 upward is Class C; airways below that are mostly Class A.</li>
       </ul>
+      <div class="sim-slot" data-sim="airspace"></div>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>No VFR in <b>Class A</b>.</li>
         <li>VFR in C and D needs an <b>ATC clearance</b>; VFR in E doesn't.</li>
@@ -1359,6 +1361,7 @@ const TOPICS = [
         <li>When changing code, avoid passing through 7500, 7600 or 7700 by mistake (or switch to standby first, as advised by your instructor).</li>
         <li>"Squawk ident" = press the IDENT button once.</li>
       </ul>
+      <div class="sim-slot" data-sim="codes"></div>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>75 = taken alive, 76 = radio fix, 77 = going to heaven.</li>
       </ul></div>
@@ -1566,6 +1569,7 @@ const TOPICS = [
         <li><b>pregnancy</b></li>
         <li>first needing corrective lenses</li>
       </ul>
+      <div class="sim-slot" data-sim="dates"></div>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>Class 2 at age 43 → <b>24 months</b>.</li>
         <li>60 → 24 → 12 months as you pass 40 and 50.</li>
@@ -1671,6 +1675,7 @@ const TOPICS = [
         <tr><td><b>At night</b></td><td>Enough to fly to the aerodrome of intended landing <b>and then at least 45 minutes</b> at normal cruising altitude</td></tr>
       </table>
       <p>Also plan for: forecast winds and weather, expected ATC routings and delays, taxi fuel, contingencies and diversions — and check the fuel on board visually before flight.</p>
+      <div class="sim-slot" data-sim="fuel"></div>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>Day VFR reserve: <b>30 min</b>. Night VFR reserve: <b>45 min</b>.</li>
       </ul></div>
@@ -1775,6 +1780,7 @@ const TOPICS = [
         <tr><td><b>Chocks inserted</b></td><td>Arms fully extended above head, wands moved <b>inwards</b> in a jabbing motion until they touch.</td></tr>
         <tr><td><b>Chocks removed</b></td><td>Arms fully extended above head, wands moved <b>outwards</b> in a jabbing motion.</td></tr>
       </table>
+      <div class="sim-slot" data-sim="marshalling"></div>
       <div class="callout trap"><b class="title">Exam traps</b><ul>
         <li>Paired opposites: open → fist = brakes <b>on</b>; fist → open = brakes <b>off</b>.</li>
         <li>Hands moving in to cross = chocks <b>in</b>; crossed hands moving out = chocks <b>out</b>.</li>
@@ -1842,6 +1848,7 @@ const TOPICS = [
         <tr><td>Abrupt <b>break-away</b>: climbing turn of 90° or more without crossing your flight path</td><td><b>You may proceed.</b></td><td>Rock wings</td></tr>
         <tr><td>Lowers landing gear, shows steady landing lights, overflies the runway</td><td><b>Land at this aerodrome.</b></td><td>Lower gear (if possible), follow, and land</td></tr>
       </table>
+      <div class="sim-slot" data-sim="signals"></div>
       <div class="callout key"><b class="title">Exam must-knows</b><ul>
         <li>121.5 MHz and squawk 7700.</li>
         <li>Rocking wings = "follow me"; break-away climbing turn = "you may proceed".</li>
