@@ -191,6 +191,7 @@ function startFlightGame() {
   }
 
   function spawnGate() {
+    if (!renderer.domElement.isConnected) return;
     removeGate();
     const pair = questionPool[state.questionIndex % questionPool.length];
     state.questionIndex++;
@@ -274,11 +275,12 @@ function startFlightGame() {
       loseLife(hit ? "Flew through the wrong gate." : "Missed the gates.");
     }
     removeGate();
-    if (state.running) setTimeout(() => { if (state.running) spawnGate(); }, 1600);
+    if (state.running) setTimeout(() => { if (state.running && renderer.domElement.isConnected) spawnGate(); }, 1600);
   }
 
   function step(time) {
     if (!renderer.domElement.isConnected) {
+      state.running = false;
       renderer.dispose();
       return;
     }

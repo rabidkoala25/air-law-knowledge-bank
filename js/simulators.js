@@ -781,11 +781,7 @@ const SIGNAL_DECKS = {
     { prompt: "Ground signal laid out by survivors: X", answer: "Require medical assistance" },
     { prompt: "Ground signal laid out by survivors: N", answer: "No or negative" },
     { prompt: "Ground signal laid out by survivors: Y", answer: "Yes or affirmative" },
-    { prompt: "Ground signal laid out by survivors: ↑", answer: "Proceeding in this direction" },
-    { prompt: "Dropped supply container coloured red", answer: "Medical supplies and first aid" },
-    { prompt: "Dropped supply container coloured blue", answer: "Food and water" },
-    { prompt: "Dropped supply container coloured yellow", answer: "Blankets and protective clothing" },
-    { prompt: "Dropped supply container coloured black", answer: "Miscellaneous equipment" }
+    { prompt: "Ground signal laid out by survivors: ↑", answer: "Proceeding in this direction" }
   ],
   codes: [
     { prompt: "Squawk 7700", answer: "Emergency" },
@@ -799,7 +795,6 @@ const SIGNAL_DECKS = {
     { prompt: "MAYDAY MAYDAY MAYDAY", answer: "Distress — immediate assistance required" },
     { prompt: "PAN PAN, PAN PAN, PAN PAN", answer: "Urgency — no immediate assistance required" },
     { prompt: "121.5 MHz", answer: "International emergency frequency" },
-    { prompt: "135.480 MHz", answer: "SafetyCom (no aerodrome service)" },
     { prompt: "Call sign suffix 'Radio'", answer: "Air/Ground Communication Service" },
     { prompt: "Call sign suffix 'Information'", answer: "Aerodrome Flight Information Service" }
   ]
@@ -869,13 +864,7 @@ function mountAltimeterSimulator(element) {
       <div class="readout alt-readings"></div>
       <div class="readout alt-transition"></div>
     </div>
-    <h3 style="margin:16px 0 4px">"High to low, look out below"</h3>
-    <div class="sim-controls">
-      <label>Subscale left set to: <span class="mono alt-set-out"></span><input type="range" min="980" max="1040" value="1020" class="alt-set"></label>
-      <label>Actual QNH where you are now: <span class="mono alt-actual-out"></span><input type="range" min="980" max="1040" value="1000" class="alt-actual"></label>
-      <label>Altimeter indicates: <span class="mono alt-indicated-out"></span><input type="range" min="1000" max="6000" step="50" value="2000" class="alt-indicated"></label>
-    </div>
-    <div class="readout alt-error"></div>`;
+`;
   const read = selector => Number(element.querySelector(selector).value);
   const feetPerHectopascal = 30;
 
@@ -905,19 +894,6 @@ function mountAltimeterSimulator(element) {
       <p style="margin:6px 0">With QNH ${qnh}, the transition level would be around <b>FL${String(transitionLevel).padStart(3, "0")}</b> (illustrative — ATC/AIP publish the actual TL).</p>
       <p style="margin:6px 0">${qnh < 1013 ? "Low QNH → the transition layer is <b>thicker</b>." : "High QNH → the transition layer is <b>thinner</b>."}</p>
       <p style="margin:6px 0">At ${trueAltitude} ft you should be using <b>${belowTransition ? "QNH (altitude)" : "1013 (flight level) once above the transition altitude"}</b>.</p>`;
-    const setPressure = read(".alt-set");
-    const actualPressure = read(".alt-actual");
-    const indicated = read(".alt-indicated");
-    element.querySelector(".alt-set-out").textContent = setPressure + " hPa";
-    element.querySelector(".alt-actual-out").textContent = actualPressure + " hPa";
-    element.querySelector(".alt-indicated-out").textContent = indicated + " ft";
-    const actualAltitude = indicated - (setPressure - actualPressure) * feetPerHectopascal;
-    const difference = actualAltitude - indicated;
-    const errorBox = element.querySelector(".alt-error");
-    errorBox.className = "readout alt-error " + (difference < 0 ? "no" : "ok");
-    errorBox.innerHTML = difference === 0
-      ? `Subscale matches the local QNH — you really are at <b>${indicated} ft</b>.`
-      : `You're actually at <b>${Math.round(actualAltitude)} ft</b> — <b>${Math.abs(Math.round(difference))} ft ${difference < 0 ? "LOWER" : "higher"}</b> than indicated. ${difference < 0 ? "High to low, look out below!" : "Low to high: you're higher than you think."}`;
   }
   element.querySelectorAll("input").forEach(input => input.addEventListener("input", update));
   update();
@@ -981,43 +957,6 @@ function mountDateCalculator(element) {
   update();
 }
 
-function mountFuelPlanner(element) {
-  element.innerHTML = `
-    <div class="sim-controls">
-      <label>Planned flight time: <span class="mono fp-time-out"></span><input type="range" min="10" max="300" step="5" value="80" class="fp-time"></label>
-      <label>Fuel burn: <span class="mono fp-burn-out"></span><input type="range" min="15" max="60" step="1" value="25" class="fp-burn"></label>
-      <label>Taxi and run-up allowance: <span class="mono fp-taxi-out"></span><input type="range" min="0" max="10" step="1" value="3" class="fp-taxi"></label>
-      <label>Fuel on board: <span class="mono fp-onboard-out"></span><input type="range" min="20" max="200" step="1" value="90" class="fp-onboard"></label>
-    </div>
-    <div class="sim-controls"><label class="check"><input type="checkbox" class="fp-night"> Night flight</label></div>
-    <div class="readout fp-output"></div>`;
-  const read = selector => Number(element.querySelector(selector).value);
-
-  function update() {
-    const minutes = read(".fp-time");
-    const burn = read(".fp-burn");
-    const taxi = read(".fp-taxi");
-    const onBoard = read(".fp-onboard");
-    const night = element.querySelector(".fp-night").checked;
-    element.querySelector(".fp-time-out").textContent = `${Math.floor(minutes / 60)} h ${minutes % 60} min`;
-    element.querySelector(".fp-burn-out").textContent = burn + " L/h";
-    element.querySelector(".fp-taxi-out").textContent = taxi + " L";
-    element.querySelector(".fp-onboard-out").textContent = onBoard + " L";
-    const reserveMinutes = night ? 45 : 30;
-    const tripFuel = burn * minutes / 60;
-    const reserveFuel = burn * reserveMinutes / 60;
-    const required = tripFuel + reserveFuel + taxi;
-    const enough = onBoard >= required;
-    const output = element.querySelector(".fp-output");
-    output.className = "readout fp-output " + (enough ? "ok" : "no");
-    output.innerHTML = `
-      <div class="mono">Trip ${tripFuel.toFixed(1)} L + reserve (${reserveMinutes} min) ${reserveFuel.toFixed(1)} L + taxi ${taxi} L = <b>${required.toFixed(1)} L minimum</b></div>
-      <div style="margin-top:6px"><b>${enough ? `✅ Enough — ${(onBoard - required).toFixed(1)} L spare` : `❌ Not enough — ${(required - onBoard).toFixed(1)} L short`}</b>. Remember extra for headwinds, diversions and holding.</div>`;
-  }
-  element.querySelectorAll("input").forEach(input => input.addEventListener("input", update));
-  update();
-}
-
 const AIRSPACE_RULES = {
   A: { IFR: ["Permitted", "Clearance required", "Two-way radio required", "Separated from all traffic", "No speed limit"], VFR: null },
   C: { IFR: ["Permitted", "Clearance required", "Two-way radio required", "Separated from IFR and VFR", "No speed limit"], VFR: ["Permitted", "Clearance required", "Two-way radio required", "Separated from IFR; traffic information on VFR", "250 kt IAS below FL100"] },
@@ -1052,10 +991,9 @@ function mountAirspaceExplorer(element) {
   update();
 }
 
-SIMULATORS.altimeter = { title: "Altimeter Simulator", topicId: "altimeter-settings", sub: "See what QNH, QFE and 1013 make the altimeter read — and what happens if you forget to reset it.", mount: mountAltimeterSimulator };
+SIMULATORS.altimeter = { title: "Altimeter Simulator", topicId: "altimeter-settings", sub: "See what QNH, QFE and 1013 make the altimeter read, and where the transition layer sits.", mount: mountAltimeterSimulator };
 SIMULATORS.airspace = { title: "Airspace Requirements Explorer", topicId: "airspace-classes", sub: "Pick a class and flight rules to see what you need and what ATC provides.", mount: mountAirspaceExplorer };
 SIMULATORS.dates = { title: "Licence & Currency Date Calculator", topicId: "medical-certificates", sub: "Work out medical expiry, SEP rating expiry and passenger currency from real dates.", mount: mountDateCalculator };
-SIMULATORS.fuel = { title: "VFR Fuel Planner", topicId: "fuel-planning", sub: "Check whether you have the legal minimum fuel, day or night.", mount: mountFuelPlanner };
 SIMULATORS.marshalling = { title: "Marshalling Signals Trainer", topicId: "marshalling-signals", sub: "Signal → meaning, or flip it round: meaning → signal.", mount: element => mountDeckTrainer(element, "marshalling") };
 SIMULATORS.signals = { title: "Interception & SAR Signals Trainer", topicId: "interception", sub: "Interception, warning and search-and-rescue signals, both ways round.", mount: element => mountDeckTrainer(element, "signals") };
 SIMULATORS.codes = { title: "Codes, Calls & Phases Trainer", topicId: "transponder-codes", sub: "Squawks, emergency phases, distress calls and frequencies.", mount: element => mountDeckTrainer(element, "codes") };

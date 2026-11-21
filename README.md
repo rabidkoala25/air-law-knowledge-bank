@@ -18,6 +18,7 @@ js/simulators.js        interactive simulators + the SIMULATORS registry
 js/quiz.js              practice quiz
 js/exam.js              timed mock exam
 js/flashcards.js        flashcards
+js/game.js              3D "Air Law Gates" flight game (three.js from cdnjs)
 js/app.js               routing, views and event handling (loads last)
 ```
 

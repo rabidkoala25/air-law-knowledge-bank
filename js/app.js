@@ -27,6 +27,8 @@ function route() {
     renderMnemonics();
   } else if (hash === "numbers") {
     renderNumbers();
+  } else if (hash === "game") {
+    renderGame();
   } else {
     renderHome();
   }
